@@ -9,8 +9,14 @@
       font-family: "Courier New", monospace;
       margin-left: 40px;
       margin-right: 40px;
+      font-size: 3vmin;
     }
-
+    @media only screen and (min-width: 992px) {
+      #content {
+	width: 60%;
+        margin: 0 auto;
+      }
+    } 
     .new-post {
       margin-top: 50px;
     }
@@ -19,7 +25,7 @@
 
   <body>
     <!-- Put content in centered column -->
-    <div style="max-width:60%; margin: 0 auto">
+    <div id="content">
       <h1 style="margin-bottom: 0px">Hello, World</h1>
       <h1 style="margin-top:    0px">------------</h1>
       <h3>A collection of thoughts.</h3>
