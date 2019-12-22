@@ -1,3 +1,3 @@
 .PHONY: install
 install:
-	cp -f index.html /srv/http/index.html
+	cp -f index.html style.css /srv/http/

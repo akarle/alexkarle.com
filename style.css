@@ -1,0 +1,18 @@
+body {
+  background-color: #F5F5F5;
+  font-family: "Courier New", monospace;
+  margin-left: 40px;
+  margin-right: 40px;
+  font-size: 1em;
+}
+
+@media only screen and (min-width: 992px) {
+  #content {
+    width: 60%;
+    margin: 0 auto;
+  }
+} 
+
+.new-post {
+  margin-top: 80px;
+}
