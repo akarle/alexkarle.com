@@ -27,7 +27,11 @@ body {
     text-decoration: none;
 }
 
-h1 {
+h1.path {
     margin-top: 0px;
     margin-bottom: 0px;
+}
+
+ul.find-me {
+    padding-left: 1.5em;
 }
