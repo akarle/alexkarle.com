@@ -1,3 +1,6 @@
+DEST = /var/www/htdocs/karleco
+
 .PHONY: install
 install:
-	cp -f *.html style.css /srv/http/
+	mkdir -p $(DEST)
+	cp -f *.html style.css $(DEST)
