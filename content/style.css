@@ -13,9 +13,22 @@ body {
   }
 } 
 
-.new-post {
-  margin-top: 80px;
+a:link {
+    color: #0a7899;
 }
+
+a:visited {
+    color: #033a4a;
+}
+
+.new-post:link {
+    text-decoration: none;
+}
+
+.new-post:hover {
+    text-decoration: underline;
+}
+
 
 #nav {
     text-align: center;

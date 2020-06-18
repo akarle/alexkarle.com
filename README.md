@@ -1,3 +1,6 @@
-# www
+alexkarle.com
+=============
 
-My first take at a static website
+My soap box on the internet.
+
+A static site with a small templating system, build with `make`.
