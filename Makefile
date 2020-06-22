@@ -8,3 +8,8 @@ build:
 install: build
 	mkdir -p $(DEST)
 	cp build/* $(DEST)
+
+.PHONY: release
+release:
+	rsync --delete --exclude=.git -av ./ alexkarle.com:karleco/ && \
+	    ssh -t alexkarle.com doas make -C karleco install
