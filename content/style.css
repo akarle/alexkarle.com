@@ -56,6 +56,11 @@ header {
     text-decoration: none;
 }
 
+#nav > a:hover {
+    color: #3f3f3f;
+    text-decoration: underline;
+}
+
 h1.path {
     margin-top: 0px;
     margin-bottom: 0px;
