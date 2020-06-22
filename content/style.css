@@ -13,6 +13,22 @@ body {
   }
 } 
 
+@media only screen and (min-width: 600px) and (max-width: 991px) {
+  #content {
+    width: 80%;
+    margin: 0 auto;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+  }
+}
+
 a:link {
     color: #0a7899;
 }
@@ -30,15 +46,14 @@ a:visited {
 }
 
 
-#nav {
+header {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 3em;
 }
 
 #nav > a {
     color: dimgray;
     text-decoration: none;
-    padding: 1em;
 }
 
 h1.path {
