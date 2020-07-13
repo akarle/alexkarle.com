@@ -1,0 +1,10 @@
+#!/bin/sh
+# based off of: https://rgz.ee/stagit.html
+set -e
+dst="/var/www/htdocs/git/$(basename "$(pwd)" '.git')"
+src="$(pwd)"
+
+# KEY: run in background (saves a slow push)
+mkdir -p "$dst"
+(cd "$dst" && stagit "$src")
+cp -f "$dst/log.html" "$dst/index.html"
