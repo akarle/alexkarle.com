@@ -4,10 +4,11 @@ body {
 	color: #ebdbb2;
 	background-color: #282828;
 	font-family: monospace;
+	font-size: 1.3em;
 }
 
 h1, h2, h3, h4, h5, h6 {
-	font-size: 1em;
+	font-size: 1.3em;
 	margin: 0;
 }
 
