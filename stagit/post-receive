@@ -8,3 +8,7 @@ src="$(pwd)"
 mkdir -p "$dst"
 (cd "$dst" && stagit "$src")
 cp -f "$dst/log.html" "$dst/index.html"
+
+# Assume run as git, so $HOME has the repos
+exported="$(ls $HOME/*.git/git-daemon-export-ok | sed 's/\/git-daemon-export-ok//g')"
+stagit-index $exported > /var/www/htdocs/git/index.html
