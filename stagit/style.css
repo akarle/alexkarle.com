@@ -1,8 +1,8 @@
 /* style.css -- stagit style.css, almost stock from the stagit
- * examples (changes marked) */
+ * only changes made were to add gruvbox colors */
 body {
-	color: #000;
-	background-color: #f5f5f5; /* ajk: changed to darker */
+	color: #ebdbb2;
+	background-color: #282828;
 	font-family: monospace;
 }
 
@@ -20,7 +20,7 @@ img {
 }
 
 a:target {
-	background-color: #ccc;
+	background-color: #504945;
 }
 
 a.d,
@@ -31,12 +31,24 @@ a.line {
 }
 
 #blob a {
-	color: #777;
+	color: #458588;
 }
 
 #blob a:hover {
-	color: blue;
+	color: #d79921;
 	text-decoration: none;
+}
+
+a {
+	color: #83a598;
+}
+
+a:hover {
+	color: #d79921;
+}
+
+a:visited {
+	color: #458588;
 }
 
 table thead td {
@@ -57,7 +69,7 @@ table td {
 #index tr:hover td,
 #log tr:hover td,
 #files tr:hover td {
-	background-color: #dddddd; /* ajk: changed to darker */
+	background-color: #584945;
 }
 
 #index tr td:nth-child(2),
@@ -72,12 +84,12 @@ td.num {
 }
 
 .desc {
-	color: #777;
+	color: #689d6a;
 }
 
 hr {
 	border: 0;
-	border-top: 1px solid #777;
+	border-top: 1px solid #928374;
 	height: 1px;
 }
 
@@ -86,19 +98,19 @@ pre {
 }
 
 pre a.h {
-	color: #00a;
+	color: #458588;
 }
 
 .A,
 span.i,
 pre a.i {
-	color: #070;
+	color: #98971a;
 }
 
 .D,
 span.d,
 pre a.d {
-	color: #e00;
+	color: #cc241d;
 }
 
 pre a.h:hover,
