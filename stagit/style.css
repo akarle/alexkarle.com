@@ -3,12 +3,12 @@
 body {
 	color: #ebdbb2;
 	background-color: #282828;
-	font-family: monospace;
-	font-size: 1.3em;
+	font-family: "Courrier New", monospace;
+	font-size: 1.0em;
 }
 
 h1, h2, h3, h4, h5, h6 {
-	font-size: 1.3em;
+	font-size: 1.0em;
 	margin: 0;
 }
 
@@ -95,7 +95,7 @@ hr {
 }
 
 pre {
-	font-family: monospace;
+	font-family: "Courrier New", monospace;
 }
 
 pre a.h {
