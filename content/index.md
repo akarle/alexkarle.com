@@ -11,7 +11,7 @@ and OpenBSD), SCM systems (mostly git), and developer tooling.
 
 ### Find me online:
 
-* GitHub: [@akarle](https://github.com/akarle)
-* Email: alex AT this-domain
+* GitHub: [`@akarle`](https://github.com/akarle)
+* Email: `alex AT this-domain`
 
 <!-- {% include=tail %} -->

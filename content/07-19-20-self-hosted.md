@@ -28,7 +28,7 @@ I'm currently running (in no particular order):
 * **OS:** OpenBSD
 * **Web server:** OpenBSD's `httpd(8)`
   - Serves the `www.` static content
-  - Also serves [git.alexkarle.com][git]
+  - Also serves [`git.alexkarle.com`][git]
 * **Reverse proxy:** OpenBSD's `relayd(8)`
   - Used to send traffic between [`euchre.live`][el] (which uses a [Mojolicious][mojo]
     web server as the backend) and `alexkarle.com` based on URL
@@ -41,7 +41,7 @@ I'm currently running (in no particular order):
 * **Git:**
   - Public repos served with `git-daemon(1)` over the `git://` protocol
   - Push access via the `ssh://` protocol
-  - static HTML of content generated via post-receive hook with [stagit][stagit]
+  - static HTML of content generated via post-receive hook with [`stagit(1)`][stagit]
 
 That's all for now!
 
