@@ -1,6 +1,6 @@
 #!/bin/sh
 mkdir -p build
 cp content/*.css build
-for f in content/*.html; do
-    ./bin/tm.pl $f > build/`basename $f`
+for f in content/*.md; do
+    Markdown.pl $f | ./bin/tm.pl > build/`basename $f md`html
 done

@@ -1,21 +1,17 @@
 <!-- {% include=head %} -->
 
-<h3>About me:</h3>
-<p>
-Hi, I'm Alex! I'm a software engineer living in the Boston area.
-</p>
+### About me:
 
-<p>
+Hi, I'm Alex! I'm a software engineer living in the Boston area.
+
 I'm currently interested in free Operating Systems (particularly Linux
 and OpenBSD), SCM systems (mostly git), and developer tooling.
-</p>
 
 <br>
-<h3>Find me online:</h3>
 
-<ul class="find-me">
-  <li>GitHub: <a href="https://github.com/akarle">@akarle</a></li>
-  <li>Email: alex AT this-domain
-</ul>
+### Find me online:
+
+* GitHub: [@akarle](https://github.com/akarle)
+* Email: alex AT this-domain
 
 <!-- {% include=tail %} -->

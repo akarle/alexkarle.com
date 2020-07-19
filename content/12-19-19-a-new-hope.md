@@ -1,17 +1,14 @@
 <!-- {% include=head %} -->
 
-<h3>Dec. 19, 2019: A New Hope</h3>
-<p>
+### Dec. 19, 2019: A New Hope
+
 Toying with the thought of starting a website/blog.
-</p>
-<p>
+
 Exploring my hosting options and pleasantly surprised that
-<a href="https://fastmail.com">Fastmail</a> has free static site hosting!
-</p>
-<p>
+[Fastmail](https://fastmail.com) has free static site hosting!
+
 Inspired by Jeff Huang's article on websites
-<a href="https://jeffhuang.com/designed_to_last">Designed to Last</a> and
+[Designed to Last](https://jeffhuang.com/designed_to_last) and
 a general desire for a simpler web.
-</p>
 
 <!-- {% include=post-tail %} -->
