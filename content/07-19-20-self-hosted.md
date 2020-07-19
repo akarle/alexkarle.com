@@ -1,6 +1,6 @@
 <!-- {% include=head %} -->
 
-### July 17, 2020: Migrating to a Self-Hosted Site
+### July 19, 2020: Migrating to a Self-Hosted Site
 
 If you look at the [first post][1] on this site, you'll see that this site
 started as a series of static HTML files that I was, by hand, uploading to
