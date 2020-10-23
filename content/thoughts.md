@@ -4,6 +4,7 @@
 
 <p style="color:grey">(Because I couldn't commit to calling it a blog)</p>
 
+* [Oct. 22, 2020: On Writing Without an Audience](10-22-20-on-writing.html)
 * [Jul. 19, 2020: Migrating to a Self-Hosted Site](07-19-20-self-hosted.html)
 * [Jul. 13, 2020: Black Lives Matter](07-13-20-blm.html)
 * [Mar. 24, 2020: What's in a (domain) name?](03-24-20-domain-name.html)
