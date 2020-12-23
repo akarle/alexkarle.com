@@ -1,4 +1,5 @@
-DEST = /var/www/htdocs/karleco
+HOST = alexkarle.com
+DEST = /var/www/htdocs
 
 .PHONY: build
 build:
@@ -11,5 +12,5 @@ install: build
 
 .PHONY: release
 release:
-	rsync --delete --exclude=.git -av ./ alexkarle.com:karleco/ && \
-	    ssh -t alexkarle.com doas make -C karleco install
+	rsync --delete --exclude=.git -av ./ $(HOST):karleco/ && \
+	    ssh -t $(HOST) doas make -C karleco install
