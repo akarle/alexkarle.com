@@ -1,1 +1,4 @@
 /build/
+
+# generated html from man pages
+*.[1-9].html

@@ -1,0 +1,49 @@
+/* general defaults */
+body {
+  background-color: #F5F5F5;
+  margin-left: 20px;
+  margin-right: 20px;
+  font-size: 1.3em;
+  line-height: 1.3;
+  font-family: monospace;
+}
+
+/* style tweaks */
+a:link { color: #0a7899; }
+a:visited { color: #033a4a; }
+code { font-size: 1em; }
+h1 { font-size: 1em; }
+h1 > a { text-decoration: none; }
+
+/* Responsive screen sizes */
+@media only screen and (min-width: 992px) {
+  body {
+    width: 60%;
+    margin: 0 auto;
+  }
+} 
+@media only screen and (min-width: 600px) and (max-width: 991px) {
+  body {
+    width: 80%;
+    margin: 0 auto;
+  }
+}
+
+/* margins around head/foot */
+table.foot { margin-top: 3em; }
+table.head { margin-bottom: 3em; }
+
+/* hide the "miscellaneous" section bit -- too big on mobile */
+td.head-vol { visibility: hidden; }
+
+/* defaults from mandoc(1)'s inlined CSS */
+table.head, table.foot { width: 100%; }
+td.head-rtitle, td.foot-os { text-align: right; }
+td.head-vol { text-align: center; }
+.Nd, .Bf, .Op { display: inline; }
+.Pa, .Ad { font-style: italic; }
+.Ms { font-weight: bold; }
+.Bl-diag > dt { font-weight: bold; }
+code.Nm, .Fl, .Cm, .Ic, code.In, .Fd, .Fn, .Cd {
+    font-weight: bold;
+}

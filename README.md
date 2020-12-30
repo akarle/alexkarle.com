@@ -1,13 +1,13 @@
 alexkarle.com
 =============
-
 My small corner of the internet.
 
 www.
 ----
-A static site with a small templating system, build with `make`.
+A static site comprised of `mdoc(7)` flavored man pages, built to HTML via
+`mandoc(1)`.
 
-Currently hosted with OpenBSD's `httpd`, but any web server should be able to
+Currently hosted with OpenBSD's `httpd(8)`, but any web server should be able to
 serve it up.
 
 git.
@@ -19,14 +19,10 @@ views into the diffs and files of each repo.
 I like the stagit approach in that it is simple, modular, and emphasizes the use
 of regular git for larger operations (i.e. diff between refs, etc).
 
-In the stagit/ directory, find:
+I use the default post-receive and create scripts that ship with the tool (with
+small modifications for the installation). The logo is in this repo as
+`logo.png`.
 
-  * style.css    -- CSS for all pages
-  * post-receive -- the git-hook to update the pages
-  * logo.png     -- AK logo
-  * setup.sh     -- small script to setup all exported repos with proper hooks, etc
-                    also used to bulk update style.css/post-receive/logo.png
-
-The content, being static, is served up with `httpd` as well.
+The content, being static, is served up with `httpd(8)` as well.
 
 [1]: https://git.codemadness.org/stagit

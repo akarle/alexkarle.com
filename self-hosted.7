@@ -1,0 +1,96 @@
+.Dd July 19, 2020
+.Dt SELF-HOSTED 7
+.Os
+.Sh NAME
+.Nm self-hosted
+.Nd a tale of migrating to my own server
+.Sh DESCRIPTION
+If you look at the first post
+.Xr ( a-new-hope 7 )
+on this site, you'll see that this site started as a series of static HTML
+files that I was, by hand, uploading to Fastmail via their "files" GUI.
+.Pp
+Being a total nerd for automation, I was always on the lookout for an excuse to
+migrate to my own server, where I could (over)engineer a pipeline to build my
+static content and deploy it without ever leaving the terminal.
+.Pp
+That excuse presented itself in the form of needing to get a VPS to stand up my
+hobby-project, `euchre.live`.
+If I was going to pay for a tiny VM, it was a no-brainer to move my personal
+site to it too.
+.Pp
+This turned out to be a great learning experience -- getting hands on experience
+with reverse proxies, DNS, and a variety of operating systems and webservers
+(first hosted on Alpine Linux and migrated to OpenBSD).
+Additionally, I could self-host git repos, which has long been a nerd-goal of mine :)
+.Pp
+I plan to write a lengthier post about the joys of self-hosting in the future,
+but for now, I really just wanted to give a brief update on where I landed and
+what the current stack is.
+.Pp
+I'm currently running (in no particular order):
+.Bl -compact -bullet -format=indent
+.It
+.Sy OS :
+OpenBSD
+.It
+.Sy Web server :
+OpenBSD's
+.Xr httpd 8
+.Bl -compact -dash -format=indent
+.It
+Serves the `www.` static content
+.It
+Also serves
+.Lk https://git.alexkarle.com
+.El
+.It
+.Sy Reverse proxy :
+OpenBSD's
+.Xr relayd 8
+.Bl -compact -dash -format=indent
+.It
+Used to send traffic between `euchre.live` (which uses a Mojolicious
+web server as the backend) and `alexkarle.com` based on URL
+.El
+.It
+.Sy `www` content :
+.Bl -compact -dash -format=indent
+.It
+100% static content
+.It
+No metrics, ads, or tracking
+.It
+Posts and pages written in markdown
+.It
+HTML generated with a pipeline of the original `Markdown.pl` into a small
+templating Perl script that I home-rolled
+.El
+.It
+.Sy Git :
+.Bl -compact -dash -format=indent
+.It
+Public repos served with
+.Sy git-daemon(1)
+over the `git://` protocol
+.It
+Push access via the `ssh://` protocol
+.It
+static HTML of content generated via post-receive hook with
+.Sy stagit(1)
+.El
+.El
+That's all for now!
+.Sh SEE ALSO
+.Bl -compact -bullet -format=indent
+.It
+.Xr blog 7
+.It
+.Xr a-new-hope 7
+.It
+.Lk https://euchre.live
+.It
+.Lk https://mojolicious.org Mojolicious
+.It
+.Lk https://git.codemadness.org/stagit/ stagit(1)
+.El
