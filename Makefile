@@ -1,6 +1,7 @@
 # sub-Makefile so that mandoc -Oman can find the Xr references
 HIDE = @
 HTML := \
+    index.html \
     intro.7.html \
     blog.7.html \
     a-new-hope.7.html \
@@ -15,6 +16,9 @@ build: $(HTML)
 .PHONY: clean
 clean:
 	rm -f $(HTML)
+
+index.html:
+	ln -sf intro.7.html $@
 
 .SUFFIXES: .7 .7.html
 .7.7.html:
