@@ -8,7 +8,8 @@ HTML := \
     domain-names.7.html \
     BLM.7.html \
     self-hosted.7.html \
-    on-writing.7.html
+    on-writing.7.html \
+    my-old-man.7.html
 
 .PHONY: build
 build: $(HTML)

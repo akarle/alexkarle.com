@@ -12,7 +12,9 @@ body {
 a:link { color: #0a7899; }
 a:visited { color: #033a4a; }
 code { font-size: 1em; }
-h1 { font-size: 1em; }
+h1 { font-size: 1.1em; }
+h2 { font-size: 1em; }
+.Bd-indent { margin-left: 1em; }
 
 /* override bold/italic colors within permalinks */
 a.permalink { text-decoration: none }
