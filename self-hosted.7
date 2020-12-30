@@ -29,7 +29,7 @@ but for now, I really just wanted to give a brief update on where I landed and
 what the current stack is.
 .Pp
 I'm currently running (in no particular order):
-.Bl -compact -bullet -format=indent
+.Bl -compact -bullet
 .It
 .Sy OS :
 OpenBSD
@@ -37,7 +37,7 @@ OpenBSD
 .Sy Web server :
 OpenBSD's
 .Xr httpd 8
-.Bl -compact -dash -format=indent
+.Bl -compact -dash
 .It
 Serves the `www.` static content
 .It
@@ -48,14 +48,14 @@ Also serves
 .Sy Reverse proxy :
 OpenBSD's
 .Xr relayd 8
-.Bl -compact -dash -format=indent
+.Bl -compact -dash
 .It
 Used to send traffic between `euchre.live` (which uses a Mojolicious
 web server as the backend) and `alexkarle.com` based on URL
 .El
 .It
 .Sy `www` content :
-.Bl -compact -dash -format=indent
+.Bl -compact -dash
 .It
 100% static content
 .It
@@ -68,7 +68,7 @@ templating Perl script that I home-rolled
 .El
 .It
 .Sy Git :
-.Bl -compact -dash -format=indent
+.Bl -compact -dash
 .It
 Public repos served with
 .Sy git-daemon(1)
@@ -82,7 +82,7 @@ static HTML of content generated via post-receive hook with
 .El
 That's all for now!
 .Sh SEE ALSO
-.Bl -compact -bullet -format=indent
+.Bl -compact -bullet
 .It
 .Xr blog 7
 .It
