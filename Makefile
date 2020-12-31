@@ -2,14 +2,14 @@
 HIDE = @
 HTML := \
     index.html \
-    intro.7.html \
-    blog.7.html \
-    a-new-hope.7.html \
-    domain-names.7.html \
-    BLM.7.html \
-    self-hosted.7.html \
-    on-writing.7.html \
-    my-old-man.7.html
+    intro.html \
+    blog.html \
+    a-new-hope.html \
+    domain-names.html \
+    BLM.html \
+    self-hosted.html \
+    on-writing.html \
+    my-old-man.html
 
 .PHONY: build
 build: $(HTML)
@@ -19,11 +19,11 @@ clean:
 	rm -f $(HTML)
 
 index.html:
-	ln -sf intro.7.html $@
+	ln -sf intro.html $@
 
-.SUFFIXES: .7 .7.html
-.7.7.html:
+.SUFFIXES: .7 .html
+.7.html:
 	@echo "mandoc $<"
-	$(HIDE)mandoc -Thtml -O 'man=%N.%S.html;https://man.openbsd.org/%N.%S,style=style.css' $< \
+	$(HIDE)mandoc -Thtml -O 'man=%N.html;https://man.openbsd.org/%N.%S,style=style.css' $< \
 	    | sed 's#</head>#<meta name="viewport" content="width=device-width,initial-scale=1">&# ' \
 	    > $@

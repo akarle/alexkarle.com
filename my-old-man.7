@@ -21,7 +21,7 @@ from a markdown based templated site to a
 based site.
 .Pp
 After pointing out that
-.Lk https://alexkarle.com/git/alexkarle.com/file/intro.7.html I really did
+.Lk /git/alexkarle.com/file/intro.7.html I really did
 rewrite my site in
 .Xr mdoc 7 ,
 you might be wondering
@@ -78,12 +78,12 @@ to the master branch. Doing so involved two steps.
 .Ss Building the mdoc
 I created a small Makefile that builds each HTML file from each man page source.
 .Pp
-The relevant bit is the implicit suffix rule to convert each .7 file to .7.html:
+The relevant bit is the implicit suffix rule to convert each .7 file to .html:
 .Bd -literal -offset indent
-\).SUFFIXES: .7 .7.html
-\).7.7.html:
+\).SUFFIXES: .7 .html
+\).7.html:
 	@echo "mandoc $<"
-	$(HIDE)mandoc -Thtml -O 'man=%N.%S.html;https://man.openbsd.org/%N.%S,style=style.css' $< \\
+	$(HIDE)mandoc -Thtml -O 'man=%N.html;https://man.openbsd.org/%N.%S,style=style.css' $< \\
 	    | sed 's#</head>#<meta name="viewport" content="width=device-width,initial-scale=1">&# ' \\
 	    > $@
 .Ed
