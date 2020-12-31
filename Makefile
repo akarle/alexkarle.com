@@ -1,5 +1,7 @@
-# sub-Makefile so that mandoc -Oman can find the Xr references
-HIDE = @
+# alexkarle.com makefile
+# targets:
+# 	build [default] -- generates HTML in current dir
+# 	clean -- deletes said HTML
 HTML := \
     index.html \
     intro.html \
@@ -10,6 +12,10 @@ HTML := \
     self-hosted.html \
     on-writing.html \
     my-old-man.html
+
+# Running with HIDE="" shows the full build command instead
+# of the abbreviated version (@ suppresses the command in make)
+HIDE = @
 
 .PHONY: build
 build: $(HTML)
