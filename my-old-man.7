@@ -26,7 +26,8 @@ rewrite my site in
 .Xr mdoc 7 ,
 you might be wondering
 .Em why
-I would do this. This blog post is intended to answer just that.
+I would do this.
+This blog post is intended to answer just that.
 .Sh WHY
 .Ss For the learning experience
 The single biggest motivator of the rewrite was that
@@ -74,7 +75,8 @@ If you read this far, I thought you might be interested to hear how I'm
 deploying the content.
 .Pp
 I'm a big fan of automation, so I've rigged up the site to deploy on a push
-to the master branch. Doing so involved two steps.
+to the master branch.
+Doing so involved two steps.
 .Ss Building the mdoc
 I created a small Makefile that builds each HTML file from each man page source.
 .Pp
@@ -87,7 +89,8 @@ The relevant bit is the implicit suffix rule to convert each .7 file to .html:
 	    | sed 's#</head>#<meta name="viewport" content="width=device-width,initial-scale=1">&# ' \\
 	    > $@
 .Ed
-This looks crazy, but it's not too complex. First, know that
+This looks crazy, but it's not too complex.
+First, know that
 .Sy $<
 is the source (the <name>.7 page), and
 .Sy $@
@@ -110,9 +113,11 @@ Finally, I use a
 oneliner to splice in a <meta> viewport tag for mobile
 devices.
 .Pp
-And that's really it! The rest is just listing the man pages I want built,
+And that's really it!
+The rest is just listing the man pages I want built,
 with a phony default target depending on the html pages so that a `make` builds
-them all. Check out the full source
+them all.
+Check out the full source
 .Lk https://alexkarle.com/git/alexkarle.com/file/Makefile.html here .
 .Ss Deploying via git hook
 Since I'm self-hosting git on the same server as the website, it's trivial to
@@ -141,7 +146,7 @@ and the git history at
 .Lk https://alexkarle.com/git ,
 so I don't see any harm to having the README.md accessible from the root.
 .Sh SEE ALSO
-.Bl -compact -bullet -offset indent
+.Bl -bullet -compact
 .It
 .Xr blog 7
 .It

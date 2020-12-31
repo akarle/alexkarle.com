@@ -19,7 +19,9 @@ hobby-project, `euchre.live`.
 If I was going to pay for a tiny VM, it was a no-brainer to move my personal
 site to it too.
 .Pp
-This turned out to be a great learning experience -- getting hands on experience
+This turned out to be a great learning experience
+\(em
+getting hands on experience
 with reverse proxies, DNS, and a variety of operating systems and webservers
 (first hosted on Alpine Linux and migrated to OpenBSD).
 Additionally, I could self-host git repos, which has long been a nerd-goal of mine :)
@@ -29,7 +31,7 @@ but for now, I really just wanted to give a brief update on where I landed and
 what the current stack is.
 .Pp
 I'm currently running (in no particular order):
-.Bl -compact -bullet
+.Bl -bullet -compact
 .It
 .Sy OS :
 OpenBSD
@@ -37,7 +39,7 @@ OpenBSD
 .Sy Web server :
 OpenBSD's
 .Xr httpd 8
-.Bl -compact -dash
+.Bl -dash -compact
 .It
 Serves the `www.` static content
 .It
@@ -48,14 +50,14 @@ Also serves
 .Sy Reverse proxy :
 OpenBSD's
 .Xr relayd 8
-.Bl -compact -dash
+.Bl -dash -compact
 .It
 Used to send traffic between `euchre.live` (which uses a Mojolicious
 web server as the backend) and `alexkarle.com` based on URL
 .El
 .It
 .Sy `www` content :
-.Bl -compact -dash
+.Bl -dash -compact
 .It
 100% static content
 .It
@@ -68,7 +70,7 @@ templating Perl script that I home-rolled
 .El
 .It
 .Sy Git :
-.Bl -compact -dash
+.Bl -dash -compact
 .It
 Public repos served with
 .Sy git-daemon(1)
@@ -82,7 +84,7 @@ static HTML of content generated via post-receive hook with
 .El
 That's all for now!
 .Sh SEE ALSO
-.Bl -compact -bullet
+.Bl -bullet -compact
 .It
 .Xr blog 7
 .It
