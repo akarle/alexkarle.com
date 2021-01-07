@@ -2,16 +2,7 @@
 # targets:
 # 	build [default] -- generates HTML in current dir
 # 	clean -- deletes said HTML
-HTML := \
-    index.html \
-    intro.html \
-    blog.html \
-    a-new-hope.html \
-    domain-names.html \
-    BLM.html \
-    self-hosted.html \
-    on-writing.html \
-    my-old-man.html
+HTML != echo index.html *.[1-9] | sed 's/\.[1-9]/.html/g'
 
 # Running with HIDE="" shows the full build command instead
 # of the abbreviated version (@ suppresses the command in make)
