@@ -14,7 +14,6 @@ a:visited { color: #033a4a; }
 code { font-size: 1em; }
 h1 { font-size: 1.1em; }
 h2 { font-size: 1em; }
-.Bd-indent { margin-left: 1em; }
 
 /* override bold/italic colors within permalinks */
 a.permalink { text-decoration: none }
@@ -42,6 +41,14 @@ table.head { margin-bottom: 3em; }
 td.head-vol { visibility: hidden; }
 
 /* scrollbars on the block-display content */
+div.Bd-indent {
+    border-left-color: gray;
+    border-left-style: solid;
+    border-left-width: 2px;
+    border-radius: 5px;
+    padding-left: 1em;
+}
+
 .Bd > pre {
     overflow-x: auto;
 }
