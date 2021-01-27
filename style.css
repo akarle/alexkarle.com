@@ -41,6 +41,11 @@ table.head { margin-bottom: 3em; }
 /* hide the "miscellaneous" section bit -- too big on mobile */
 td.head-vol { visibility: hidden; }
 
+/* scrollbars on the block-display content */
+.Bd > pre {
+    overflow-x: auto;
+}
+
 /* defaults from mandoc(1)'s inlined CSS */
 table.head, table.foot { width: 100%; }
 td.head-rtitle, td.foot-os { text-align: right; }
