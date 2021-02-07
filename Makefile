@@ -18,7 +18,7 @@ clean:
 index.html:
 	ln -sf intro.html $@
 
-atom.xml:
+atom.xml: blog.7 genatom.sh
 	./genatom.sh > $@
 
 .SUFFIXES: .7 .html
