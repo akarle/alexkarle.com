@@ -36,7 +36,8 @@ for p in $POSTS; do
     <![CDATA[
 ENTRY
     # Print fragment (no need for escapes -- in CDATA
-    mandoc -Thtml -O'fragment,man=%N.html;https://man.openbsd.org/%N.%S' $p.7
+    mandoc -Thtml -O'fragment,man=%N.html;https://man.openbsd.org/%N.%S' $p.7 \
+        | sed '/<td class="head-vol">Miscellaneous Information Manual<\/td>/d'
     cat <<EOENTRY
     ]]>
     </content>

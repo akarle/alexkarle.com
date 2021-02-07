@@ -37,9 +37,6 @@ b,i { color: #000000 }
 table.foot { margin-top: 3em; }
 table.head { margin-bottom: 3em; }
 
-/* hide the "miscellaneous" section bit -- too big on mobile */
-td.head-vol { visibility: hidden; }
-
 /* scrollbars on the block-display content */
 div.Bd-indent {
     border-left-color: gray;
@@ -56,7 +53,6 @@ div.Bd-indent {
 /* defaults from mandoc(1)'s inlined CSS */
 table.head, table.foot { width: 100%; }
 td.head-rtitle, td.foot-os { text-align: right; }
-td.head-vol { text-align: center; }
 .Nd, .Bf, .Op { display: inline; }
 .Pa, .Ad { font-style: italic; }
 .Ms { font-weight: bold; }

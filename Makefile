@@ -26,4 +26,5 @@ atom.xml: blog.7 genatom.sh
 	@echo "mandoc $<"
 	$(HIDE)mandoc -Thtml -O 'man=%N.html;https://man.openbsd.org/%N.%S,style=style.css' $< \
 	    | sed 's#</head>#<meta name="viewport" content="width=device-width,initial-scale=1">&# ' \
+	    | sed '/<td class="head-vol">Miscellaneous Information Manual<\/td>/d' \
 	    > $@
