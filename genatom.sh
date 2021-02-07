@@ -33,17 +33,14 @@ for p in $POSTS; do
     <updated>${d}T00:00Z</updated>
     <published>${d}T00:00Z</published>
     <content type="html">
+    <![CDATA[
 ENTRY
-    # Print fragment, with XML escaped properly:
-    # https://stackoverflow.com/questions/1091945/what-characters-do-i-need-to-escape-in-xml-documents
-    # Note that & is already escaped in the HTML content by mandoc
-    mandoc -Thtml -O'fragment,man=%N.html;https://man.openbsd.org/%N.%S' $p.7 \
-        | sed \
-            -e 's/^/      /' \
-            -e 's/"/\&quot;/g' \
-            -e "s/'/\\&apos;/g" \
-            -e 's/</\&lt;/g' \
-            -e 's/>/\&gt;/g'
-    printf "    </content>\n  </entry>\n"
+    # Print fragment (no need for escapes -- in CDATA
+    mandoc -Thtml -O'fragment,man=%N.html;https://man.openbsd.org/%N.%S' $p.7
+    cat <<EOENTRY
+    ]]>
+    </content>
+  </entry>
+EOENTRY
 done
 printf "</feed>\n"
