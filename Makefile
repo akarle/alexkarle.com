@@ -9,14 +9,17 @@ HTML != echo index.html *.[1-9] | sed 's/\.[1-9]/.html/g'
 HIDE = @
 
 .PHONY: build
-build: $(HTML)
+build: $(HTML) atom.xml
 
 .PHONY: clean
 clean:
-	rm -f $(HTML)
+	rm -f $(HTML) atom.xml
 
 index.html:
 	ln -sf intro.html $@
+
+atom.xml:
+	./genatom.sh > $@
 
 .SUFFIXES: .7 .html
 .7.html:
