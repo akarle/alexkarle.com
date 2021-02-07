@@ -21,7 +21,7 @@ cat <<HEADER
 HEADER
 
 set $DATES
-printf "  %s\n" "<updated>${1}T00:00Z</updated>"
+printf "  %s\n" "<updated>${1}T00:00:00Z</updated>"
 for p in $POSTS; do
     d="$1"
     shift
@@ -30,8 +30,8 @@ for p in $POSTS; do
     <title>$p</title>
     <link rel="alternate" type="text/html" href="https://alexkarle.com/$p.html"/>
     <id>https://alexkarle.com/$p.html</id>
-    <updated>${d}T00:00Z</updated>
-    <published>${d}T00:00Z</published>
+    <updated>${d}T00:00:00Z</updated>
+    <published>${d}T00:00:00Z</published>
     <content type="html">
     <![CDATA[
 ENTRY
