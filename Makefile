@@ -24,6 +24,7 @@ atom.xml: blog.7 genatom.sh
 .SUFFIXES: .7 .html
 .7.html:
 	@echo "mandoc $<"
+	$(HIDE)mandoc -Tlint -Wwarning $<
 	$(HIDE)mandoc -Thtml -O 'man=%N.html;https://man.openbsd.org/%N.%S,style=style.css' $< \
 	    | sed 's#</head>#<meta name="viewport" content="width=device-width,initial-scale=1">&# ' \
 	    | sed 's#^<html#& lang="en"#' \
