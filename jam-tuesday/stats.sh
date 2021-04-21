@@ -23,15 +23,11 @@ topN() {
     sort -n -r | head -n "$N"
 }
 
-count() {
-    wc -l | cut -d' ' -f 1
-}
-
 echo "Play Stats:"
 echo "-----------"
-printf "%7d Songs Total\\n" "$(count < "$TMP")"
-printf "%7d Unique Songs\\n" "$(songs | count)"
-printf "%7d Unique Artists\\n\\n" "$(artists | count)"
+printf "%4d Songs Total\\n" "$(wc -l < "$TMP")"
+printf "%4d Unique Songs\\n" "$(songs | wc -l)"
+printf "%4d Unique Artists\\n\\n" "$(artists | wc -l)"
 
 echo "Top $N Artists (Frequency, Name):"
 echo "---------------------------------"
