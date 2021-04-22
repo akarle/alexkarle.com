@@ -30,7 +30,7 @@ jam-tuesday/greatest-hits: $(SETS) jam-tuesday/stats.sh
 	@echo "mandoc $<"
 	$(HIDE)mandoc -Tlint -Werror $<
 	$(HIDE)mandoc -Thtml -O 'man=%N.html;https://man.openbsd.org/%N.%S,style=style.css' $< \
-	    | sed 's#</head>#<meta name="viewport" content="width=device-width,initial-scale=1">&# ' \
-	    | sed 's#^<html#& lang="en"#' \
-	    | sed '/<td class="head-vol">Miscellaneous Information Manual<\/td>/d' \
+	    | sed -e 's#</head>#<meta name="viewport" content="width=device-width,initial-scale=1">&# ' \
+	          -e 's#^<html#& lang="en"#' \
+	          -e '/<td class="head-vol">Miscellaneous Information Manual<\/td>/d' \
 	    > $@
