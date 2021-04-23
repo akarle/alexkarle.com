@@ -27,9 +27,11 @@ The content, being static, is served up with httpd(8) as well.
 
 See Also:
 ---------
-* stagit: https://git.codemadness.org/stagit
-* httpd: https://man.openbsd.org/httpd.8
-* git-daemon: https://git-scm.com/docs/git-daemon
+* [mandoc(1)](https://man.openbsd.org/mandoc.1)
+* [mdoc(7)](https://man.openbsd.org/mdoc.7)
+* [stagit(1)](https://git.codemadness.org/stagit)
+* [httpd(8)](https://man.openbsd.org/httpd.8)
+* [git-daemon(1)](https://git-scm.com/docs/git-daemon)
 
 I also discuss the setup in my blog post,
 [self-hosted(7)](https://alexkarle.com/self-hosted.html).
