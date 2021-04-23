@@ -33,5 +33,7 @@ See Also:
 * [httpd(8)](https://man.openbsd.org/httpd.8)
 * [git-daemon(1)](https://git-scm.com/docs/git-daemon)
 
-I also discuss the setup in my blog post,
-[self-hosted(7)](https://alexkarle.com/self-hosted.html).
+I also discuss the setup in my blog posts
+[self-hosted(7)](https://alexkarle.com/self-hosted.html)
+and
+[my-old-man(7)](https://alexkarle.com/my-old-man.html).
