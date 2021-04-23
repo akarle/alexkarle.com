@@ -25,4 +25,11 @@ logo.png.
 
 The content, being static, is served up with httpd(8) as well.
 
-[stagit]: https://git.codemadness.org/stagit
+See Also:
+---------
+* stagit: https://git.codemadness.org/stagit
+* httpd: https://man.openbsd.org/httpd.8
+* git-daemon: https://git-scm.com/docs/git-daemon
+
+I also discuss the setup in my blog post,
+[self-hosted(7)](https://alexkarle.com/self-hosted.html).
