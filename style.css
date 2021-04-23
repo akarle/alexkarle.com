@@ -14,6 +14,12 @@ a:visited { color: #033a4a; }
 code { font-size: 1em; }
 h1 { font-size: 1.1em; }
 h2 { font-size: 1em; }
+.foot-license {
+    margin-top: 16px;
+    font-size: .7em;
+    position: static;
+    bottom: 0;
+}
 
 /* override bold/italic colors within permalinks */
 a.permalink { text-decoration: none }
