@@ -25,6 +25,8 @@ atom.xml: blog.7 genatom.sh
 jam-tuesday/greatest-hits: $(SETS) jam-tuesday/stats.sh
 	(date; echo; ./jam-tuesday/stats.sh) > $@
 
+$(HTML): Makefile
+
 .SUFFIXES: .7 .html
 .7.html:
 	@echo "mandoc $<"
