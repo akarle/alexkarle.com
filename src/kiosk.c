@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <limits.h>
+#include <err.h>
 
 int list(void) {
     DIR *dirp = opendir(MANDIR);
@@ -70,6 +71,8 @@ void prompt(int n) {
      * simple DDOS via < /dev/random */
 
     FILE *tty = fopen("/dev/tty", "r");
+    if (tty == NULL)
+        err(1, "unable to open tty");
     char *line = NULL;
     size_t line_len;
     ssize_t nread = getline(&line, &line_len, tty);
