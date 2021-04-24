@@ -30,7 +30,7 @@ jam-tuesday/greatest-hits: $(SETS) jam-tuesday/stats.sh
 
 bin/kiosk: src/kiosk.c
 	mkdir -p bin
-	$(CC) $(CFLAGS) -DMANDIR="\"`pwd`\"" $< -o $@
+	$(CC) $(CFLAGS) -DMANDIR="\"`pwd`\"" src/kiosk.c -o $@
 
 $(HTML): Makefile
 
