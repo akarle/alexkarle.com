@@ -9,8 +9,11 @@ SETS != find jam-tuesday -name '[01][0-9]-*'
 # of the abbreviated version (@ suppresses the command in make)
 HIDE = @
 
+CC = cc
+CFLAGS = -g -O2 -Wall -Wpedantic -Wextra
+
 .PHONY: build
-build: $(HTML) atom.xml jam-tuesday/greatest-hits
+build: $(HTML) atom.xml jam-tuesday/greatest-hits bin/kiosk
 
 .PHONY: clean
 clean:
@@ -24,6 +27,10 @@ atom.xml: blog.7 genatom.sh
 
 jam-tuesday/greatest-hits: $(SETS) jam-tuesday/stats.sh
 	(date; echo; ./jam-tuesday/stats.sh) > $@
+
+bin/kiosk: src/kiosk.c
+	mkdir -p bin
+	$(CC) $(CFLAGS) -DMANDIR="\"`pwd`\"" $< -o $@
 
 $(HTML): Makefile
 
