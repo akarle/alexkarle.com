@@ -65,7 +65,7 @@ void mandoc(int choice) {
 }
 
 void prompt(int n) {
-    printf("choice> ");
+    printf("kiosk> ");
     fflush(stdout);
 
     /* NOTE: Read from /dev/tty instead of stdin to prevent
