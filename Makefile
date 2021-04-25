@@ -22,14 +22,13 @@ clean:
 index.html:
 	ln -sf intro.html $@
 
-atom.xml: blog.7 genatom.sh
-	./genatom.sh > $@
+atom.xml: blog.7 bin/genatom.sh
+	./bin/genatom.sh > $@
 
 jam-tuesday/greatest-hits: $(SETS) jam-tuesday/stats.sh
 	(date; echo; ./jam-tuesday/stats.sh) > $@
 
 bin/kiosk: src/kiosk.c
-	mkdir -p bin
 	$(CC) $(CFLAGS) -DMANDIR="\"`pwd`\"" src/kiosk.c -o $@
 
 $(HTML): Makefile
