@@ -31,19 +31,10 @@ jam-tuesday/greatest-hits: $(SETS) jam-tuesday/stats.sh
 bin/kiosk: src/kiosk.c
 	$(CC) $(CFLAGS) -DMANDIR="\"`pwd`\"" src/kiosk.c -o $@
 
-$(HTML): Makefile
+$(HTML): bin/genpost.sh
 
 .SUFFIXES: .7 .html
 .7.html:
 	@echo "mandoc $<"
 	$(HIDE)mandoc -Tlint -Werror $<
-	$(HIDE)mandoc -Thtml -O 'man=%N.html;https://man.openbsd.org/%N.%S,style=style.css' $< \
-	    | sed -e 's#</head>#<meta name="viewport" content="width=device-width,initial-scale=1">&# ' \
-	          -e 's#^<html#& lang="en"#' \
-	          -e '/<td class="head-vol">Miscellaneous Information Manual<\/td>/d' \
-	          -e 's#</body># \
-<p class="foot-license"> \
-  © 2019-2021 Alex Karle | <a href="/license.html">License</a> \
-</p> \
-&#' \
-	    > $@
+	$(HIDE)./bin/genpost.sh	< $< > $@
