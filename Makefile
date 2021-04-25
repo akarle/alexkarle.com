@@ -4,6 +4,7 @@
 # 	clean -- deletes said HTML
 HTML != echo index.html *.[1-9] | sed 's/\.[1-9]/.html/g'
 SETS != find jam-tuesday -name '[01][0-9]-*'
+JAMGEN = jam-tuesday/index.html jam-tuesday/greatest-hits
 
 # Running with HIDE="" shows the full build command instead
 # of the abbreviated version (@ suppresses the command in make)
@@ -13,17 +14,20 @@ CC = cc
 CFLAGS = -g -O2 -Wall -Wpedantic -Wextra
 
 .PHONY: build
-build: $(HTML) atom.xml jam-tuesday/greatest-hits bin/kiosk
+build: $(HTML) atom.xml $(JAMGEN) bin/kiosk
 
 .PHONY: clean
 clean:
-	rm -f $(HTML) atom.xml jam-tuesday/greatest-hits
+	rm -f $(HTML) atom.xml $(JAMGEN)
 
 index.html:
 	ln -sf intro.html $@
 
 atom.xml: blog.7 bin/genatom.sh
 	./bin/genatom.sh > $@
+
+jam-tuesday/index.html: $(SETS) bin/jam-index.sh
+	./bin/jam-index.sh > $@
 
 jam-tuesday/greatest-hits: $(SETS) bin/jam-stats.sh
 	(date; echo; ./bin/jam-stats.sh) > $@
