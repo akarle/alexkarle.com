@@ -16,6 +16,6 @@ mandoc -Thtml -O 'man=%N.html;https://man.openbsd.org/%N.%S,style=style.css' \
     -e 's#^<html#& lang="en"#' \
     -e '/<td class="head-vol">Miscellaneous Information Manual<\/td>/d' \
     -e 's#</body>#<p class="foot-license">\
-  © 2019-2021 Alex Karle | <a href="/license.html">License</a>\
+  © 2019-2021 Alex Karle | <a href="/">Home</a> | <a href="/license.html">License</a>\
 </p>\
 &#'
