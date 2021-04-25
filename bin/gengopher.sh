@@ -15,7 +15,7 @@ done
 
 # Remove/move some non-phlog cruft
 mv $PHLOG/intro.txt $DEPLOY/intro.txt
-rm $PHLOG/template.txt
+rm -f $PHLOG/template.txt
 
 # Set the mtimes so they show nicely in the directory listing
 # by parsing the .Dd lines using grep(1) and date(1)

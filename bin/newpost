@@ -1,0 +1,27 @@
+#!/bin/sh
+set -e
+die() {
+    echo "$1" 1>&2
+    exit 1
+}
+
+[ -z "$1" ] && die "usage: $(basename "$0") NAME"
+
+name="$1"
+TITLE=$(printf "$name" | tr [a-z] [A-Z])
+
+cat <<EOM > "$name".7
+.Dd $(date +"%B %d, %Y")
+.Dt $TITLE 7
+.Os
+.Sh NAME
+.Nm $name
+.Nd <desc>
+.Sh DESCRIPTION
+entry
+.Sh SEE ALSO
+.Bl -bullet -compact
+.It
+.Xr blog 7
+.El
+EOM
