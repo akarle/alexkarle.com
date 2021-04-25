@@ -39,6 +39,11 @@ b,i { color: #000000 }
   }
 }
 
+/* Smaller font on small screens */
+@media only screen and (max-width: 599px) {
+  body { font-size: 1.1em; }
+}
+
 /* margins around head/foot */
 table.foot { margin-top: 3em; }
 table.head { margin-bottom: 3em; }
