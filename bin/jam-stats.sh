@@ -3,7 +3,8 @@
 set -e
 
 N=${1:-10}
-DIR=$(dirname "$0")
+REPO=$(dirname "$(dirname "$0")")
+DIR="$REPO/jam-tuesday"
 TMP=$(mktemp)
 for set in "$DIR"/[01][0-9]-*; do
     # Remove leading notes, blank lines, and instrument/reprise
