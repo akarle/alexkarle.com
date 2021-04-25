@@ -1,9 +1,10 @@
-#include <stdio.h>
 #include <dirent.h>
-#include <string.h>
-#include <stdlib.h>
-#include <limits.h>
 #include <err.h>
+#include <limits.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
 
 int list(void) {
     DIR *dirp = opendir(MANDIR);
@@ -101,6 +102,9 @@ void prompt(int n) {
 }
 
 int main(void) {
+#ifdef __OpenBSD__
+    pledge("stdio rpath proc exec", NULL);
+#endif
     int n = list();
     setenv("MANPAGER", "less", 0);
     setenv("LESSSECURE", "1", 1);
