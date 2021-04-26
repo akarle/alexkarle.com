@@ -11,11 +11,8 @@ int list(void) {
     struct dirent *dp;
     int n = 0;
     while ((dp = readdir(dirp)) != NULL) {
-        size_t len = strlen(dp->d_name);
-        if (len < 3)
-            continue;
-        if (strcmp(dp->d_name + (len - 2), ".7") == 0) {
-            dp->d_name[len - 2] = '\0'; /* truncate extension */
+        /* ignore hidden files (and, conveniently, . and ..) */
+        if (dp->d_name[0] != '.') {
             printf("%2d: %s(7)\n", ++n, dp->d_name);
         }
     }
@@ -48,17 +45,12 @@ void mandoc(int choice) {
     struct dirent *dp;
     int i = 0;
     while ((dp = readdir(dirp)) != NULL) {
-        size_t len = strlen(dp->d_name);
-        if (len < 3)
-            continue;
-        if (strcmp(dp->d_name + (len - 2), ".7") == 0) {
-            if (++i == choice) {
-                char *cmd_base = "mandoc -l";
-                char cmd[sizeof(cmd_base) + PATH_MAX + 2];
-                sprintf(cmd, "%s %s/%s", cmd_base, MANDIR, dp->d_name);
-                system(cmd);
-                break;
-            }
+        if (dp->d_name[0] != '.' && ++i == choice) {
+            char *cmd_base = "less";
+            char cmd[sizeof(cmd_base) + PATH_MAX + 2];
+            sprintf(cmd, "%s %s/%s", cmd_base, MANDIR, dp->d_name);
+            system(cmd);
+            break;
         }
     }
     closedir(dirp);
@@ -103,10 +95,20 @@ void prompt(int n) {
 
 int main(void) {
 #ifdef __OpenBSD__
-    pledge("stdio rpath proc exec", NULL);
+    /* All unveils for this proc only (not for less) */
+    if (unveil(MANDIR, "r") == -1)
+        err(1, "unveil");
+    if (unveil("/usr/bin/less", "rx") == -1)
+        err(1, "unveil");
+    if (unveil("/dev/tty", "r") == -1)
+        err(1, "unveil");
+    if (unveil("/bin/sh", "rx") == -1) /* for system(3) */
+        err(1, "unveil");
+    /* no more unveil's past here! requires pledge*/
+    if (pledge("stdio rpath proc exec", NULL) == -1)
+        err(1, "pledge");
 #endif
     int n = list();
-    setenv("MANPAGER", "less", 0);
     setenv("LESSSECURE", "1", 1);
     for(;;)
         prompt(n);

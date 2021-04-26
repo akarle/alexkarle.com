@@ -33,7 +33,7 @@ jam-tuesday/greatest-hits: $(SETS) bin/jam-stats.sh
 	(date; echo; ./bin/jam-stats.sh) > $@
 
 bin/kiosk: src/kiosk.c
-	$(CC) $(CFLAGS) -DMANDIR="\"`pwd`\"" src/kiosk.c -o $@
+	$(CC) $(CFLAGS) -DMANDIR="\"`pwd`/kiosk\"" src/kiosk.c -o $@
 
 $(HTML): bin/genpost.sh
 
@@ -42,3 +42,5 @@ $(HTML): bin/genpost.sh
 	@echo "mandoc $<"
 	$(HIDE)mandoc -Tlint -Werror $<
 	$(HIDE)./bin/genpost.sh	< $< > $@
+	$(HIDE)mkdir -p kiosk
+	$(HIDE)mandoc $< > kiosk/`basename $@ .html`
