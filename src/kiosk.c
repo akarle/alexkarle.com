@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <fcntl.h>
 
 int list(void) {
     DIR *dirp = opendir(MANDIR);
@@ -46,10 +47,16 @@ void mandoc(int choice) {
     int i = 0;
     while ((dp = readdir(dirp)) != NULL) {
         if (dp->d_name[0] != '.' && ++i == choice) {
-            char *cmd_base = "less";
-            char cmd[sizeof(cmd_base) + PATH_MAX + 2];
-            sprintf(cmd, "%s %s/%s", cmd_base, MANDIR, dp->d_name);
-            system(cmd);
+            char path[PATH_MAX];
+            sprintf(path, "%s/%s", MANDIR, dp->d_name);
+            FILE *fd = fopen(path, "r");
+            if (fd == NULL)
+                err(1, "open");
+            char c;
+            while ((c = getc(fd)) != EOF) {
+                putc(c, stdout);
+            }
+            fclose(fd);
             break;
         }
     }
@@ -98,14 +105,10 @@ int main(void) {
     /* All unveils for this proc only (not for less) */
     if (unveil(MANDIR, "r") == -1)
         err(1, "unveil");
-    if (unveil("/usr/bin/less", "rx") == -1)
-        err(1, "unveil");
     if (unveil("/dev/tty", "r") == -1)
         err(1, "unveil");
-    if (unveil("/bin/sh", "rx") == -1) /* for system(3) */
-        err(1, "unveil");
     /* no more unveil's past here! requires pledge*/
-    if (pledge("stdio rpath proc exec", NULL) == -1)
+    if (pledge("stdio rpath", NULL) == -1)
         err(1, "pledge");
 #endif
     int n = list();
