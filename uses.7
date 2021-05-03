@@ -1,9 +1,9 @@
-.Dd $Mdocdate$
+.Dd May 11, 2021
 .Dt USES 7
 .Os
 .Sh NAME
 .Nm uses
-.Nd up-to-date list of software/hardware I use
+.Nd list of software/hardware I use
 .Sh DESCRIPTION
 I really enjoy a good "uses" post.
 I think the first I ever stumbled across was Wes Bos',
@@ -12,107 +12,129 @@ As someone fascinated by developer tooling,
 I loved hearing what other programmers use in their day-to-day lives.
 .Pp
 I try to keep this page up to date,
-both for my future nostalgia,
-as well as anyone else out there who enjoys the "genre".
+both for my future nostalgia
+as well as for anyone else out there who enjoys the "genre".
 .Sh SOFTWARE
 .Ss Editor
-I use a lightly customized
+I got hooked on
 .Lk https://www.vim.org vim(1)
-for development and
-.Xr vi 1
-in a pinch.
+mid-college (~2017) and never looked back.
+It's first on this list (with a dedicated section!)
+because it was the "gateway program"
+that got me interested in developer tooling in the first place!
+If not my most important tool,
+it's definitely the most impactful.
 .Pp
-Of the plugins I use, the ones I feel really give me a lift are:
+Other editors I use:
 .Bl -bullet -compact
 .It
-.Lk https://github.com/tpope/vim-fugitive vim-fugitive
-for interactive staging, diffs (cross branches even), and :Ggrep.
+.Xr vi 1
+for system configs (super snappy on OpenBSD)
 .It
-.Lk https://github.com/tpope/vim-surround vim-surround
-really just helps refactoring code (especially strings)
-.It
-.Lk https://github.com/justinmk/vim-dirvish vim-dirvish
-as a faster,
-safer file-browser.
-I know Vim ships with netrw,
-but I like knowing that a stray key won't delete my files.
-.El
-Oh and being a general fan of retro-computing, I've really enjoyed learning
 .Xr ed 1
-(blog post pending).
-.Ss OS
-I use OpenBSD to host this site (big fan \(em see 
+for fun and for slow/serial connections (yes, really!)
+.El
+I try emacs every once and a while because I think Lisp is awesome
+(and far superior to VimScript),
+but I don't really dig the "run everything in emacs" approach.
+.Ss Operating System
+I've been passionate about running free and open source (FOSS)
+operating systems
+since ~2019 when I first started using Linux seriously at work.
+I'm currently running:
+.Bl -compact -bullet
+.It
+.Lk https://openbsd.org OpenBSD
+for my server (hosting this site \(em see
 .Xr self-hosted 7 ) ,
-but due to a couple unfortunate graphics bugs,
-haven't been successful in using it on the Desktop.
-.Pp
-I use Debian on my PC (plays nicely with necessary software for work) 
-and Alpine on an old ThinkPad X220.
-.Pp
-I've been using solely free OS' for a couple years now and really
-appreciate the transparency and ability to dive-deeply into the source.
-.Ss Desktop Environment / Window Manager
-I've been using
-.Lk https://dwm.suckless.org/ dwm(1)
-for about as long as I've been on Linux and keep coming back to it.
-.Pp
-I really dig how snappy it is on my old laptop and that it is heavily keyboard driven.
-While configurability is certainly a feature,
-I've found that after an initial period of making changes in the first few months,
-my config has stayed mostly unchanged.
-.Pp
-.Ss Miscellaneous
-Core to my setup is
-.Xr tmux 1 ,
-which I use to manage any number of terminal programs I might
-have running (open
-.Xr ssh 1
-connections,
-Vim instances,
-and a multitude of shells to do any number of tasks).
-.Pp
-Since moving to primarily WFH during the COVID pandemic, I've especially
-come to appreciate the client-server architecture of
-.Xr tmux 1 ,
-which saves me almost daily when spotty VPN connections drop.
-.Pp
-Other honorable mentions are
-.Lk http://mutt.org mutt(1)
-for email and 
+as well as my home router/firewall (as of early 2021)
+.It
+.Lk https://debian.org Debian
+for my desktop (good support for work-related software)
+.It
+.Lk https://alpinelinux.org Alpine Linux
+on my laptop (OpenBSD sometimes too, although it runs hot)
+.El
+In the past I've also used
+.Lk https://archlinux.org Arch Linux
+(~2 years) and before that I was on macOS.
+.Ss Other
+Generally, you'll see a skew towards keyboard driven,
+"simple" (less features),
+and terminal applications.
+Roughly in order of first-use:
+.Bl -compact -bullet
+.It
 .Lk https://git-scm.com/ git(1)
-for backing up code, notes, and config files.
-.Pp
+for notes, code, config backups (~2016, usage increased over time)
+.It
+.Xr tmux 1
+for terminal scrollback, searching, copy/paste buffers, multiplexing,
+persistent sessions over dropped
+.Xr ssh 1
+connections... really a necessity! (~2018)
+.It
+.Lk https://www.gnu.org/software/bash/ bash(1)
+as my Linux shell (zsh previously, moved for work reasons early-2018)
+.It
+.Lk https://dwm.suckless.org/ dwm(1)
+as my window manager (since early Linux days, early-2019)
+.It
+.Lk https://st.suckless.org/ st(1)
+as my terminal emulator (also early-2019)
+.It
+.Lk http://mutt.org mutt(1)
+for personal email (great for mailing lists, mid-2019)
+.It
+.Xr ksh 1
+on OpenBSD for shells (late-2019)
+.It
+.Lk https://www.passwordstore.org pass(1)
+for password/secret management (late-2020)
+.El
+Not currently in use but notable:
+.Bl -compact -bullet
+.It
+.Lk https://xfce.org/ Xfce
+really helped me transition to Linux.
+I revisit occasionally to see what's going on,
+but I always go back to the more minimal, keyboard-driven, dwm.
+.El
 .Sh HARDWARE
 .Ss Keyboard
-I used the
+After years of mushy laptop keyboards,
+I discovered mechanical keyboards through a coworker and
+I've been clicking and clacking happily ever since!
+.Bl -bullet -compact
+.It
 .Lk https://uhk.io Ultimate Hacking Keyboard
-for about two years before deciding
-I wanted to try something a bit more ergonomic.
-I've been using the
-.Lk https://shop.keyboard.io/pages/atreus Keyboardio Atreus 
-since December 2020 and really enjoying it. 
+was my first (Kailh browns, early-2019 to Dec-2020)
+.It
+.Lk https://shop.keyboard.io/pages/atreus Keyboardio Atreus
+currently, successfully reducing finger movement / strain (Kailh BOX white, Dec-2020)
+.El
 .Ss Laptop
 When I started really getting into Linux at work and home ~2019,
 I installed Arch on my old macbook and suffered at the hands of
 NVIDIA and poor hardware support until I ditched my macbook for
-a X220 that I bought off Ebay and put a SSD in.
-I've been using that same X220 (i7, 2GB RAM) ever since,
-although when I started working from home during the COVID-19 pandemic
-I had to upgrade to something that could run my work environment,
-so I invested in a desktop.
+a ThinkPad X220 (2011, i7, 2GB RAM) that I bought used for ~$130 off Ebay.
+A simple upgrade to a SSD and it runs great!
 .Pp
-I run either Alpine Linux or OpenBSD on my laptop (swapping hard drives
-like nintendo cartidges :) ).
-I prefer the latter, but the former runs much cooler.
+I use the laptop for casual browsing and hobby coding
+(I try to ensure my hobby projects all run on old hardware!),
+but its CPU age really shows on big websites or compilations.
 .Ss Desktop
 I built my first desktop (a long standing nerd goal of mine) at the
-start of the COVID-19 pandemic in 2020.
-I use it for all work-related development,
-and use my laptop for casual browsing and hobby coding
-(I try to ensure my hobby projects all run on old hardware!).
+start of the COVID-19 pandemic in 2020 when it became clear I'd be
+working from home and my 2GB of laptop RAM wouldn't cut it.
 .Pp
-My desktop runs Debian,
-since I find most work-related software runs on it.
+I tried (and failed) to keep the parts entirely FOSS-friendly,
+but I ended up getting a GPU that needed the AMDGPU firmware blobs
+(hard to find a fully free graphics card these days it seems).
+With a high-end CPU (AMD Ryzen 7 3700X)
+but a low-end GPU (Radeon RX 560),
+it was a reasonable price.
+And with 16GB of RAM, it handles my work environment well.
 .Sh SEE ALSO
 .Bl -bullet -compact
 .It
