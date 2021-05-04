@@ -13,6 +13,9 @@ for f in $WWW/*.7; do
 	mandoc -Tascii -Owidth=72 $f | col -b > $PHLOG/`basename $f .7`.txt
 done
 
+# Copy over jam-tuesday
+cp -a "$WWW/jam-tuesday" "$PHLOG"
+
 # Remove/move some non-phlog cruft
 mv $PHLOG/intro.txt $DEPLOY/intro.txt
 rm -f $PHLOG/template.txt
