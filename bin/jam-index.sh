@@ -3,6 +3,12 @@ set -e
 REPO=$(dirname "$(dirname "$0")")
 DIR="$REPO/jam-tuesday"
 
+# Prep for the by artist listing
+ALL=$(mktemp)
+for f in "$DIR"/[01][0-9]-*; do
+	sed '1,/---/d' $f | grep -v '^ *$' | sed 's/ *([^)]*) *//g'
+done | sort -f > "$ALL"
+
 cat <<EOM
 <html lang="en">
 <head>
@@ -54,15 +60,25 @@ done
 
 cat <<EOM
 </ul>
-<h2>All Songs, Alphabetical</h2>
+<h2>All Songs, by Artist</h2>
 <hr>
-<ul>
+<table class="jam-artists">
+<tr><th>Artist</th><th>Song</th><th>Plays</th></tr>
 EOM
-for f in "$DIR"/[01][0-9]-*; do
-	sed '1,/---/d' $f | grep -v '^ *$' | sed 's/ *([^)]*) *//g'
-done | sort -f | uniq -i -c | sed 's/ *\([0-9]*\) *\(.*\)/<li>\2 (\1)<\/li>/'
+sed 's/.*, *//' "$ALL" | sort -u -f | while read artist; do
+	first=""
+	grep ", *$artist\$" "$ALL" | sort -f | sed "s#, *$artist *##" | uniq -c -i | \
+		while read plays song; do
+			if [ -z "$first" ]; then
+				first=1
+				echo "<tr><td>$artist</td><td>$song</td><td>$plays</td></tr>"
+			else
+				echo "<tr><td></td><td>$song</td><td>$plays</td></tr>"
+			fi
+		done
+done
 cat <<EOM
-</ul>
+</table>
 <br><br>
 <p style="font-size: 0.7em">Last Updated: $(date)</p>
 <p class="foot-license">

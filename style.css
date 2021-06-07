@@ -71,3 +71,10 @@ td.head-rtitle, td.foot-os { text-align: right; }
 code.Nm, .Fl, .Cm, .Ic, code.In, .Fd, .Fn, .Cd {
     font-weight: bold;
 }
+
+.jam-artists tr:nth-child(even) {
+    background-color: #e3e3e3;
+}
+td.jam-artists, th.jam-artists, table.jam-artists {
+    border: 1px solid black;
+}
