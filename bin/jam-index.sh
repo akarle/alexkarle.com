@@ -54,6 +54,15 @@ done
 
 cat <<EOM
 </ul>
+<h2>All Songs, Alphabetical</h2>
+<hr>
+<ul>
+EOM
+for f in "$DIR"/[01][0-9]-*; do
+	sed '1,/---/d' $f | grep -v '^ *$' | sed 's/ *([^)]*) *//g'
+done | sort -f | uniq -i -c | sed 's/ *\([0-9]*\) *\(.*\)/<li>\2 (\1)<\/li>/'
+cat <<EOM
+</ul>
 <br><br>
 <p style="font-size: 0.7em">Last Updated: $(date)</p>
 <p class="foot-license">
