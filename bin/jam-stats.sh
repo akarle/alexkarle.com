@@ -6,7 +6,7 @@ N=${1:-10}
 REPO=$(dirname "$(dirname "$0")")
 DIR="$REPO/jam-tuesday"
 TMP=$(mktemp)
-for set in "$DIR"/[01][0-9]-*; do
+for set in "$DIR"/[0-9][0-9][0-9][0-9]-*; do
     # Remove leading notes, blank lines, and instrument/reprise
     # comments (and blank lines before or after the comments)
     sed '1,/---/d' "$set" | grep -v '^ *$' | sed 's/ *([^)]*) *//g'

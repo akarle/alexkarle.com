@@ -5,7 +5,7 @@ DIR="$REPO/jam-tuesday"
 
 # Prep for the by artist listing
 ALL=$(mktemp)
-for f in "$DIR"/[01][0-9]-*; do
+for f in "$DIR"/[0-9][0-9][0-9][0-9]-*; do
 	sed '1,/---/d' $f | grep -v '^ *$' | sed 's/ *([^)]*) *//g'
 done | sort -f > "$ALL"
 
@@ -53,7 +53,7 @@ Updated weekly:
 <ul>
 EOM
 
-for f in "$DIR"/[01][0-9]-*; do
+for f in "$DIR"/[0-9][0-9][0-9][0-9]-*; do
     name=$(basename "$f")
     echo "<li><a href=\"$name\">$name</a></li>"
 done
