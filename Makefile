@@ -3,7 +3,7 @@
 # 	build [default] -- generates HTML in current dir
 # 	clean -- deletes said HTML
 HTML != echo index.html *.[1-9] | sed 's/\.[1-9]/.html/g'
-SETS != find jam-tuesday -name '[01][0-9]-*'
+SETS != find jam-tuesday -name '[0-9][0-9][0-9][0-9]-*'
 JAMGEN = jam-tuesday/index.html jam-tuesday/greatest-hits
 
 # Running with HIDE="" shows the full build command instead
