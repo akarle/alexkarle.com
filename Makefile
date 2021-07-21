@@ -26,7 +26,7 @@ index.html:
 atom.xml: blog.7 bin/genatom.sh
 	./bin/genatom.sh > $@
 
-jam-tuesday/index.html: $(SETS) bin/jam-index.sh
+jam-tuesday/index.html: $(SETS) bin/jam-index.sh bin/jam-stats.sh
 	./bin/jam-index.sh > $@
 
 jam-tuesday/greatest-hits: $(SETS) bin/jam-stats.sh
