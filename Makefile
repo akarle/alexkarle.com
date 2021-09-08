@@ -1,46 +1,89 @@
 # alexkarle.com makefile
+#
+# a tale of two builds
+#
+# This Makefile builds both text.alexkarle.com (text-only) and
+# alexkarle.com (html) from the same mdoc(7) by leveraging "timestamp"
+# (*.ts) files which indicate when the two for each *.7 file were made.
+# On OpenBSD, all artifacts are built into the obj/ dir (after make obj)
+# for an out-of-tree build, but care was taken to maintain gmake
+# compatibility.
+#
 # targets:
-# 	build [default] -- generates HTML in current dir
-# 	clean -- deletes said HTML
-HTML != echo index.html *.[1-9] | sed 's/\.[1-9]/.html/g'
-SETS != find jam-tuesday -name '[0-9][0-9][0-9][0-9]-*'
-JAMGEN = jam-tuesday/index.html jam-tuesday/greatest-hits
+# 	build [default] -- generates html and text in obj (OpenBSD) or $PWD
+#	obj   -- makes the obj/ directory for out-of-tree build on OpenBSD
+# 	clean -- deletes html and text artifacts
 
-# Running with HIDE="" shows the full build command instead
-# of the abbreviated version (@ suppresses the command in make)
-HIDE = @
+# gmake defines CURDIR, OpenBSD defines .CURDIR -- one should work
+DIR = $(.CURDIR)$(CURDIR)
 
-CC = cc
-CFLAGS = -g -O2 -Wall -Wpedantic -Wextra
+#----------------------------------------------------------
+# Variables to store timestamp and setlist dependencies
+TS != echo $(DIR)/*.[1-9] | sed 's@$(DIR)/\([^\.]*\)\.[1-9]@\1.ts@g'
+SETS != find $(DIR)/jam-tuesday -name '[0-9][0-9][0-9][0-9]-*'
 
+
+#----------------------------------------------------------
+# Top Level Targets
 .PHONY: build
-build: $(HTML) atom.xml $(JAMGEN) bin/kiosk
+build: $(TS) html/atom.xml jam-text.ts jam-html.ts \
+	html/index.html html/style.css html/logo.png text/000-welcome.txt
+
+obj:
+	mkdir -p obj
 
 .PHONY: clean
 clean:
-	rm -f $(HTML) atom.xml $(JAMGEN)
+	rm -f *.ts
+	rm -rf text html obj
 
-index.html:
-	ln -sf intro.html $@
+#----------------------------------------------------------
+# jam-tuesday targets
+jam-text.ts: $(SETS) bin/jam-stats.sh
+	@mkdir -p text/jam-tuesday
+	(date; echo; $(DIR)/bin/jam-stats.sh) > text/jam-tuesday/stats
+	@cp $(SETS) text/jam-tuesday
+	@echo 'cp $$SETS html/jam-tuesday'
+	@touch $@
+	
+jam-html.ts: $(SETS) bin/jam-index.sh bin/jam-stats.sh
+	@mkdir -p html/jam-tuesday
+	$(DIR)/bin/jam-index.sh > html/jam-tuesday/index.html
+	@cp $(SETS) html/jam-tuesday
+	@echo 'cp $$SETS html/jam-tuesday'
+	@touch $@
 
-atom.xml: blog.7 bin/genatom.sh
-	./bin/genatom.sh > $@
 
-jam-tuesday/index.html: $(SETS) bin/jam-index.sh bin/jam-stats.sh
-	./bin/jam-index.sh > $@
+#----------------------------------------------------------
+# Various files that just need to be copied into html/text
+html/index.html:
+	cd html && ln -sf intro.html index.html
 
-jam-tuesday/greatest-hits: $(SETS) bin/jam-stats.sh
-	(date; echo; ./bin/jam-stats.sh) > $@
+html/style.css: style.css
+	cp $(DIR)/style.css $@
 
-bin/kiosk: src/kiosk.c
-	$(CC) $(CFLAGS) -DMANDIR="\"`pwd`/kiosk\"" src/kiosk.c -o $@
+html/logo.png: logo.png
+	cp $(DIR)/logo.png $@
 
-$(HTML): bin/genpost.sh
+html/atom.xml: blog.7 bin/genatom.sh
+	$(DIR)/bin/genatom.sh > $@
 
-.SUFFIXES: .7 .html
-.7.html:
+text/000-welcome.txt: welcome.txt
+	cp $(DIR)/welcome.txt $@
+
+
+#----------------------------------------------------------------------
+# Finally, the actual meat -- generating *.html/*.txt from the mdoc(7)
+# The most egregious hack here is the live renaming of the files via
+# grepping through the ORDER file so that text.alexkarle.com presents
+# the files in a reasonable order for viewing
+$(TS): bin/genpost.sh
+
+.SUFFIXES: .7 .ts
+.7.ts:
 	@echo "mandoc $<"
-	$(HIDE)mandoc -Tlint -Werror $<
-	$(HIDE)./bin/genpost.sh	< $< > $@
-	$(HIDE)mkdir -p kiosk
-	$(HIDE)mandoc $< > kiosk/`basename $@ .html`
+	@mkdir -p text html
+	@mandoc -Tlint -Werror $<
+	@$(DIR)/bin/genpost.sh < $< > html/$$(basename $< .7).html
+	@mandoc -Tascii -Owidth=72 < $< | col -b > text/$$(grep $$(basename $< .7) $(DIR)/ORDER)
+	@touch $@

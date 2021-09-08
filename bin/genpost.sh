@@ -1,6 +1,9 @@
 #!/bin/sh
 # genpost.sh -- reads mdoc(7) from stdin, generates HTML to stdout
+REPO=$(dirname "$(dirname "$0")")
 
+# cd into $REPO so that the includes work!
+cd $REPO
 
 # Command Explained
 # -----------------
