@@ -89,6 +89,7 @@ The relevant bit is the implicit suffix rule to convert each .7 file to .html:
 	    | sed 's#</head>#<meta name="viewport" content="width=device-width,initial-scale=1">&# ' \\
 	    > $@
 .Ed
+.Pp
 This looks crazy, but it's not too complex.
 First, know that
 .Sy $<
@@ -136,6 +137,7 @@ git -C ${dir} --work-tree=${WT} checkout -f master
 make -C ${WT}
 echo "done"
 .Ed
+.Pp
 So, on any push, it checks out the entire source tree into the webserver's content
 area and rebuilds only the necessary HTML files (thanks to
 .Xr make 1 ) .
