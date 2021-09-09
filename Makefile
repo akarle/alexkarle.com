@@ -27,7 +27,8 @@ SETS != find $(DIR)/jam-tuesday -name '[0-9][0-9][0-9][0-9]-*'
 # Top Level Targets
 .PHONY: build
 build: $(TS) html/atom.xml jam-text.ts jam-html.ts \
-	html/index.html html/style.css html/logo.png text/000-welcome.txt
+	html/index.html html/style.css html/logo.png \
+	text/000-welcome.txt text/LICENSE
 
 obj:
 	mkdir -p obj
@@ -70,6 +71,9 @@ html/atom.xml: blog.7 bin/genatom.sh
 
 text/000-welcome.txt: welcome.txt
 	cp $(DIR)/welcome.txt $@
+
+text/LICENSE: LICENSE
+	cp $(DIR)/LICENSE $@
 
 
 #----------------------------------------------------------------------
