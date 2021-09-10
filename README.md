@@ -10,6 +10,20 @@ HTML via [mandoc(1)][mandoc] (managed by [make(1)][make]).
 Currently hosted with OpenBSD's [httpd(8)][httpd], but any web server
 should be able to serve it up.
 
+The Makefile to build the HTML is portable between gmake and BSD make.
+On OpenBSD, running `make obj` is recommended before running `make` to
+leverage the out-of-tree build extension (see the bit about `.OBJDIR` in
+the man page!).
+
+text.
+-----
+A pure ascii dump of the [mdoc(7)][mdoc] content of the www site, served
+over HTTP, HTTPS, and Gopher (by [httpd(8)][httpd] and
+[gophernicus(1)][gophernicus] respectively!
+
+Builds via [make(1)][make] at the same time as the HTML. See above for
+instructions.
+
 git.
 ----
 I use a simple setup of git-daemon for anonymous (read-only) downloads,
@@ -38,3 +52,4 @@ and [my-old-man(7)][my-old-man].
 [git-daemon]: https://git-scm.com/docs/git-daemon
 [self-hosted]: https://alexkarle.com/self-hosted.html
 [my-old-man]: https://alexkarle.com/my-old-man.html
+[gophernicus]: https://www.gophernicus.org/
