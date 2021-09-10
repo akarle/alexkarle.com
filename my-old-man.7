@@ -21,7 +21,7 @@ from a markdown based templated site to a
 based site.
 .Pp
 After pointing out that
-.Lk /git/alexkarle.com/file/intro.7.html I really did
+.Lk https://git.alexkarle.com/alexkarle.com/file/intro.7.html I really did
 rewrite my site in
 .Xr mdoc 7 ,
 you might be wondering
@@ -119,7 +119,7 @@ The rest is just listing the man pages I want built,
 with a phony default target depending on the html pages so that a `make` builds
 them all.
 Check out the full source
-.Lk https://alexkarle.com/git/alexkarle.com/file/Makefile.html here .
+.Lk https://git.alexkarle.com/alexkarle.com/file/Makefile.html here .
 .Ss Deploying via git hook
 Since I'm self-hosting git on the same server as the website, it's trivial to
 deploy when it receives a push by leveraging git hooks.
@@ -145,7 +145,7 @@ area and rebuilds only the necessary HTML files (thanks to
 If I had files I didn't want served, I would modify it to build elsewhere and
 copy the contents to /var/www; however, I'm publishing both the source for the site
 and the git history at
-.Lk https://alexkarle.com/git ,
+.Lk https://git.alexkarle.com ,
 so I don't see any harm to having the README.md accessible from the root.
 .Sh SEE ALSO
 .Bl -bullet -compact
