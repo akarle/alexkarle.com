@@ -39,7 +39,9 @@ for p in $POSTS; do
 ENTRY
     # Print fragment (no need for escapes -- in CDATA
     mandoc -Thtml -O'fragment,man=%N.html;https://man.openbsd.org/%N.%S' "$REPO/$p.7" \
-        | sed '/<td class="head-vol">Miscellaneous Information Manual<\/td>/d'
+        | sed '/<td class="head-vol">Miscellaneous Information Manual<\/td>/d' \
+        | eval \
+            "sed $(awk '{ printf " \\\n  -e s#https://man.openbsd.org/%s#%s#g", $1, $2 } END { printf "\n" }' "$REPO/LINKS")"
     cat <<EOENTRY
     ]]>
     </content>
