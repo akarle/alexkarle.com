@@ -4,6 +4,9 @@ set -e
 
 REPO=$(dirname "$(dirname "$0")")
 
+# Find fixlinks in either bin or the out-of-tree obj build
+PATH="$REPO/bin:$REPO/obj/bin:$PATH"
+
 # All posts are a item (.It) in the list, and linked via .Xr
 POSTS=$(sed '/SEE ALSO/q' "$REPO/blog.7" | grep -A1 '\.It' | grep '\.Xr' | sed 's/^\.Xr \([^ ]*\) 7/\1/')
 # Assume dates are 1-1
@@ -40,8 +43,7 @@ ENTRY
     # Print fragment (no need for escapes -- in CDATA
     mandoc -Thtml -O'fragment,man=%N.html;https://man.openbsd.org/%N.%S' "$REPO/$p.7" \
         | sed '/<td class="head-vol">Miscellaneous Information Manual<\/td>/d' \
-        | eval \
-            "sed $(awk '{ printf " \\\n  -e s#https://man.openbsd.org/%s#%s#g", $1, $2 } END { printf "\n" }' "$REPO/LINKS")"
+        | fixlinks
     cat <<EOENTRY
     ]]>
     </content>

@@ -13,5 +13,11 @@ jam-tuesday/greatest-hits
 # text files (gopher, text.alexkarle.com)
 text/
 
+# html files (www.alexkarle.com)
+html/
+
 # obj directory on OpenBSD for out-of-tree builds
 obj/
+
+# Generated sed command to touch up out-of-base Xr references
+bin/fixlinks

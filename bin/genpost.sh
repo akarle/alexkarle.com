@@ -5,6 +5,9 @@ REPO=$(dirname "$(dirname "$0")")
 # cd into $REPO so that the includes work!
 cd $REPO
 
+# Find fixlinks in either bin or the out-of-tree obj build
+PATH="$REPO/bin:$REPO/obj/bin:$PATH"
+
 # Command Explained
 # -----------------
 # man=%N.html;man.openbsd.org -- look for files in CWD for .Xr, then link to openbsd.org
@@ -22,5 +25,4 @@ mandoc -Thtml -O 'man=%N.html;https://man.openbsd.org/%N.%S,style=style.css' \
     -e 's#</body>#<p class="foot-license">\
   © 2019-2021 Alex Karle | <a href="/">Home</a> | <a href="/license.html">License</a>\
 </p>\
-&#' | eval \
-    "sed $(awk '{ printf " \\\n  -e s#https://man.openbsd.org/%s#%s#g", $1, $2 } END { printf "\n" }' LINKS)"
+&#' | fixlinks

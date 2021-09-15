@@ -35,7 +35,7 @@ obj:
 
 .PHONY: clean
 clean:
-	rm -f *.ts
+	rm -f *.ts bin/fixlinks
 	rm -rf text html obj
 
 #----------------------------------------------------------
@@ -81,7 +81,14 @@ text/LICENSE: LICENSE
 # The most egregious hack here is the live renaming of the files via
 # grepping through the ORDER file so that text.alexkarle.com presents
 # the files in a reasonable order for viewing
-$(TS): bin/genpost.sh
+$(TS): bin/genpost.sh bin/fixlinks
+
+bin/fixlinks: LINKS
+	mkdir -p bin
+	printf "#!/bin/sh\n# GENERATED DO NOT EDIT\nsed" > $@
+	awk '{ printf " \\\n  -e s#https://man.openbsd.org/%s#%s#g", $$1, $$2 } END { printf "\n" }' $(DIR)/LINKS >> $@
+	chmod +x $@
+
 
 .SUFFIXES: .7 .ts
 .7.ts:
