@@ -1,4 +1,4 @@
-.Dd May 11, 2021
+.Dd September 14, 2021
 .Dt USES 7
 .Os
 .Sh NAME
@@ -43,69 +43,46 @@ but I don't really dig the "run everything in emacs" approach.
 I've been passionate about running free and open source (FOSS)
 operating systems
 since ~2019 when I first started using Linux seriously at work.
+At some point in ~2020, I discovered OpenBSD and
+slowly started putting it on all of my personal machines.
 I'm currently running:
 .Pp
 .Bl -compact -bullet
 .It
-.Lk https://openbsd.org OpenBSD
-for my server (hosting this site \(em see
+OpenBSD for my laptop, desktop,
+server (hosting this site \(em see
 .Xr self-hosted 7 ) ,
-as well as my home router/firewall (as of early 2021)
+and home router/firewall
 .It
-.Lk https://debian.org Debian
-for my desktop (good support for work-related software)
-.It
-.Lk https://alpinelinux.org Alpine Linux
-on my laptop (OpenBSD sometimes too, although it runs hot)
+Arch Linux for work
+(needed a cutting edge kernel for newer work laptop)
 .El
 .Pp
-In the past I've also used
-.Lk https://archlinux.org Arch Linux
-(~2 years) and before that I was on macOS.
-.Ss Other
-Generally, you'll see a skew towards keyboard driven,
-"simple" (less features),
-and terminal applications.
-Roughly in order of first-use:
+In the past I've also used Alpine Linux on my laptop and Debian
+on my desktop.
+.Ss Other Tools
+I'm a huge fan of command line tools for their composability and
+keyboard-centric UI. Some of my favorites include:
 .Pp
 .Bl -compact -bullet
 .It
 .Xr git 1
-for notes, code, config backups (~2016, usage increased over time)
+for all things plaintext: notes, code, config backups, etc
 .It
 .Xr tmux 1
 for terminal scrollback, searching, copy/paste buffers, multiplexing,
 persistent sessions over dropped
 .Xr ssh 1
-connections... really a necessity! (~2018)
-.It
-.Xr bash 1
-as my Linux shell (zsh previously, moved for work reasons early-2018)
-.It
-.Xr dwm 1
-as my window manager (since early Linux days, early-2019)
-.It
-.Xr st 1
-as my terminal emulator (also early-2019)
+connections... really a necessity!
 .It
 .Xr mutt 1
-for personal email (great for mailing lists, mid-2019)
-.It
-.Xr ksh 1
-on OpenBSD for shells (late-2019)
+for personal email (great for mailing lists!)
 .It
 .Xr pass 1
-for password/secret management (late-2020)
-.El
-.Pp
-Not currently in use but notable:
-.Pp
-.Bl -compact -bullet
+for password/secret management
 .It
-.Lk https://xfce.org/ Xfce
-really helped me transition to Linux.
-I revisit occasionally to see what's going on,
-but I always go back to the more minimal, keyboard-driven, dwm.
+.Xr sh 1
+for glueing it all together, of course!
 .El
 .Sh HARDWARE
 .Ss Keyboard
@@ -113,14 +90,14 @@ After years of mushy laptop keyboards,
 I discovered mechanical keyboards through a coworker and
 I've been clicking and clacking happily ever since!
 .Pp
-.Bl -bullet -compact
-.It
-.Lk https://uhk.io Ultimate Hacking Keyboard
-was my first (Kailh browns, early-2019 to Dec-2020)
-.It
-.Lk https://shop.keyboard.io/pages/atreus Keyboardio Atreus
-currently, successfully reducing finger movement / strain (Kailh BOX white, Dec-2020)
-.El
+I started off with an Ultimate Hacking Keyboard
+with Kailh browns (had to be quiet in a shared office),
+but I've been using a Keyboardio Atreus for about a year.
+I switched in a (successful!) attempt to reduce finger movement
+and strain.
+Plus, I'm a remote worker now,
+and I get to clack away at Kailh white switches,
+which is awesome.
 .Ss Laptop
 When I started really getting into Linux at work and home ~2019,
 I installed Arch on my old macbook and suffered at the hands of
