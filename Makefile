@@ -3,85 +3,69 @@
 # a tale of two builds
 #
 # This Makefile builds both text.alexkarle.com (text-only) and
-# alexkarle.com (html) from the same mdoc(7) by leveraging "timestamp"
-# (*.ts) files which indicate when the two for each *.7 file were made.
-# On OpenBSD, all artifacts are built into the obj/ dir (after make obj)
-# for an out-of-tree build, but care was taken to maintain gmake
-# compatibility.
+# alexkarle.com (html) from the same mdoc(7) by leveraging inference
+# rules. Since this generates a LOT of derived files, it's recommended
+# to run BSD make and run `make obj` first to get an out-of-tree build.
+# GNU make should work in a pinch though!
 #
 # targets:
 # 	build [default] -- generates html and text in obj (OpenBSD) or $PWD
 #	obj   -- makes the obj/ directory for out-of-tree build on OpenBSD
 # 	clean -- deletes html and text artifacts
+# 	install -- install to $DESTDIR/{www,text} (default: /var/www/htdocs)
 
 # gmake defines CURDIR, OpenBSD defines .CURDIR -- one should work
 DIR = $(.CURDIR)$(CURDIR)
+DESTDIR = /var/www/htdocs
 
-#----------------------------------------------------------
-# Variables to store timestamp and setlist dependencies
-TS != echo $(DIR)/*.[1-9] | sed 's@$(DIR)/\([^\.]*\)\.[1-9]@\1.ts@g'
+# Variables used to determine what to build (and clean)
+HTML != echo $(DIR)/*.[1-9] | sed 's@$(DIR)/\([^\.]*\)\.[1-9]@\1.html@g'
+TEXT != echo $(DIR)/*.[1-9] | sed 's@$(DIR)/\([^\.]*\)\.[1-9]@\1.txt@g'
 SETS != find $(DIR)/jam-tuesday -name '[0-9][0-9][0-9][0-9]-*'
 
+BUILT = $(HTML) \
+	$(TEXT) \
+	atom.xml \
+	index.html \
+	jam-tuesday/index.html \
+	jam-tuesday/stats
 
-#----------------------------------------------------------
-# Top Level Targets
+
+# Top level targets
 .PHONY: build
-build: $(TS) html/atom.xml jam-text.ts jam-html.ts \
-	html/index.html html/style.css html/logo.png \
-	text/000-welcome.txt text/LICENSE
+build: $(BUILT)
 
 obj:
-	mkdir -p obj
+	mkdir -p obj/jam-tuesday obj/bin
+
+.PHONY: install
+install: build
+	install -m 755 -Dd $(DESTDIR)/text/jam-tuesday $(DESTDIR)/www/jam-tuesday
+	install -m 444 $(SETS) jam-tuesday/stats $(DESTDIR)/text/jam-tuesday
+	install -m 444 $(SETS) jam-tuesday/index.html $(DESTDIR)/www/jam-tuesday
+	install -m 444 *.html atom.xml $(DIR)/LICENSE $(DIR)/style.css $(DESTDIR)/www
+	install -m 444 $(DIR)/LICENSE $(DESTDIR)/text
+	for f in *.txt; do \
+		install -m 444 $$f $(DESTDIR)/text/$$(grep $$f $(DIR)/ORDER); \
+	done
 
 .PHONY: clean
 clean:
-	rm -f *.ts bin/fixlinks
-	rm -rf text html obj
-
-#----------------------------------------------------------
-# jam-tuesday targets
-jam-text.ts: $(SETS) bin/jam-stats.sh
-	@mkdir -p text/jam-tuesday
-	(date; echo; $(DIR)/bin/jam-stats.sh) > text/jam-tuesday/stats
-	@cp $(SETS) text/jam-tuesday
-	@echo 'cp $$SETS html/jam-tuesday'
-	@touch $@
-	
-jam-html.ts: $(SETS) bin/jam-index.sh bin/jam-stats.sh
-	@mkdir -p html/jam-tuesday
-	$(DIR)/bin/jam-index.sh > html/jam-tuesday/index.html
-	@cp $(SETS) html/jam-tuesday
-	@echo 'cp $$SETS html/jam-tuesday'
-	@touch $@
+	rm -f $(BUILT) bin/fixlinks
 
 
-#----------------------------------------------------------
-# Various files that just need to be copied into html/text
-html/index.html:
-	cd html && ln -sf intro.html index.html
+# Individual files to build
+jam-tuesday/stats: $(SETS) bin/jam-stats.sh
+	(date; echo; $(DIR)/bin/jam-stats.sh) > $@
 
-html/style.css: style.css
-	cp $(DIR)/style.css $@
+jam-tuesday/index.html: $(SETS) bin/jam-index.sh bin/jam-stats.sh
+	$(DIR)/bin/jam-index.sh > $@
 
-html/logo.png: logo.png
-	cp $(DIR)/logo.png $@
+index.html:
+	ln -sf intro.html index.html
 
-html/atom.xml: blog.7 bin/genatom.sh
+atom.xml: blog.7 bin/genatom.sh
 	$(DIR)/bin/genatom.sh > $@
-
-text/000-welcome.txt: welcome.txt
-	cp $(DIR)/welcome.txt $@
-
-text/LICENSE: LICENSE
-	cp $(DIR)/LICENSE $@
-
-
-#----------------------------------------------------------------------
-# Finally, the actual meat -- generating *.html/*.txt from the mdoc(7)
-# The most egregious hack here is the live renaming of the files via
-# grepping through the ORDER file so that text.alexkarle.com presents
-# the files in a reasonable order for viewing
-$(TS): bin/genpost.sh bin/fixlinks
 
 bin/fixlinks: LINKS
 	mkdir -p bin
@@ -90,11 +74,16 @@ bin/fixlinks: LINKS
 	chmod +x $@
 
 
-.SUFFIXES: .7 .ts
-.7.ts:
-	@echo "mandoc $<"
-	@mkdir -p text html
+# Inference rules (*.txt and *.html)
+$(HTML): bin/genpost.sh bin/fixlinks
+
+.SUFFIXES: .7 .txt .html
+.7.html:
+	@echo "mandoc -Thtml $<"
 	@mandoc -Tlint -Werror $<
-	@$(DIR)/bin/genpost.sh < $< > html/$$(basename $< .7).html
-	@mandoc -Tascii -Owidth=72 < $< | col -b > text/$$(grep $$(basename $< .7) $(DIR)/ORDER)
-	@touch $@
+	@$(DIR)/bin/genpost.sh < $< > $@
+
+.7.txt:
+	@echo "mandoc -Tascii $<"
+	@mandoc -Tlint -Werror $<
+	@mandoc -Tascii -Owidth=72 < $< | col -b > $@
