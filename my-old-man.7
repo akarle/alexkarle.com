@@ -116,8 +116,9 @@ devices.
 .Pp
 And that's really it!
 The rest is just listing the man pages I want built,
-with a phony default target depending on the html pages so that a `make` builds
-them all.
+with a phony default target depending on the html pages so that a
+.Ql make
+builds them all.
 Check out the full source
 .Lk https://git.alexkarle.com/alexkarle.com/file/Makefile.html here .
 .Ss Deploying via git hook
@@ -127,9 +128,11 @@ deploy when it receives a push by leveraging git hooks.
 For the unfamiliar, git hooks are simply shell scripts that are triggered by
 specific git actions.
 In this case, I used the post-receive hook to publish
-after the refs were updated via a `git push`.
+after the refs were updated via a
+.Ql git push .
 .Pp
-More specifically, I added the following to `<git-dir>/hooks/post-receive`:
+More specifically, I added the following to
+.Pa <git-dir>/hooks/post-receive :
 .Bd -literal -offset indent
 echo "Deploying to to /var/www/htdocs... "
 WT=/var/www/htdocs
