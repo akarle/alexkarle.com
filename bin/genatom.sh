@@ -9,9 +9,6 @@ PATH="$REPO/bin:$REPO/obj/bin:$PATH"
 
 # All posts are a item (.It) in the list, and linked via .Xr
 POSTS=$(sed '/SEE ALSO/q' "$REPO/blog.7" | grep -A1 '\.It' | grep '\.Xr' | sed 's/^\.Xr \([^ ]*\) 7/\1/')
-# Assume dates are 1-1
-DATES=$(grep -o '[0-9]\{1,2\}/[0-9]\{1,2\}/[0-9]\{4\}' "$REPO/blog.7" \
-    | sed -e 's#\([0-9]\{2\}\)/\([0-9]\{2\}\)/\([0-9]\{4\}\)#\3-\1-\2#')
 
 cat <<HEADER
 <?xml version="1.0" encoding="utf-8"?>
@@ -25,11 +22,12 @@ cat <<HEADER
   </author>
 HEADER
 
-set $DATES
-printf "  %s\n" "<updated>${1}T00:00:00Z</updated>"
 for p in $POSTS; do
-    d="$1"
-    shift
+    d=$(date -juf"%b %d, %Y" +%F "$(grep '^\.Dd' "$REPO/$p.7"  | cut -d' ' -f2-)")
+    if [ -z "$printed_update" ]; then
+        printed_update=1
+        printf "  %s\n" "<updated>${d}T00:00:00Z</updated>"
+    fi
     cat <<ENTRY
   <entry>
     <title>$p</title>

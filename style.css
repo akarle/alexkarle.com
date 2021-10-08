@@ -61,6 +61,16 @@ div.Bd-indent {
     overflow-x: auto;
 }
 
+/* Bl-tag correctly with grid for blog.7 */
+dl.Bl-tag {
+    display: grid;
+    grid-template-columns: max-content auto
+}
+dl.Bl-tag dd {
+     margin-left: 16px;
+     margin-bottom: 1em;
+}
+
 /* defaults from mandoc(1)'s inlined CSS */
 table.head, table.foot { width: 100%; }
 td.head-rtitle, td.foot-os { text-align: right; }
