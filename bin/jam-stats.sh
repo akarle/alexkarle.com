@@ -19,7 +19,7 @@ artists() {
 }
 
 songs() {
-    sort -f "$TMP" | uniq -i -c
+    sed 's/ *//' "$TMP" | sort -f | uniq -i -c
 }
 
 topN() {
