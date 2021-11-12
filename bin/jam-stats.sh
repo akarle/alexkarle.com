@@ -1,8 +1,9 @@
 #!/bin/sh
 # stats.sh -- get frequencies of jam-tuesday songs/artists
+# run with -f to show a plaintext table of the "full archive"
 set -e
 
-N=${1:-10}
+N=10
 REPO=$(dirname "$(dirname "$0")")
 DIR="$REPO/jam-tuesday"
 TMP=$(mktemp)
@@ -42,5 +43,24 @@ echo "Top $N Songs (Frequency, Name):"
 echo "-------------------------------"
 songs | topN
 
+# TODO: Don't hardcode the width to be perfect (if we ever have more setlists...)
+if [ "$1" = "-f" ]; then
+    printf "\n\n\nFull Archive:\n"
+    SEP="----------------------------+---------------------------------------+--\n"
+    sed 's/.*, *//' "$TMP" | sort -u -f | while read artist; do
+            first=""
+            grep ", *$artist\$" "$TMP" | sort -f | sed "s#, *$artist *##" | uniq -c -i | \
+                    while read plays song; do
+                            if [ -z "$first" ]; then
+                                    first=1
+                                    printf "$SEP"
+                                    printf "%-27s | %-37s |%2d\n" "$artist" "$song" "$plays"
+                            else
+                                    printf "%-27s | %-37s |%2d\n" "" "$song" "$plays"
+                            fi
+                    done
+    done
+    printf "$SEP"
+fi
 
 rm "$TMP"

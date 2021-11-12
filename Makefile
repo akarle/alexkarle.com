@@ -56,7 +56,7 @@ clean:
 
 # Individual files to build
 jam-tuesday/stats: $(SETS) bin/jam-stats.sh
-	(date; echo; $(DIR)/bin/jam-stats.sh) > $@
+	(date; echo; $(DIR)/bin/jam-stats.sh -f) > $@
 
 jam-tuesday/index.html: $(SETS) bin/jam-index.sh bin/jam-stats.sh
 	$(DIR)/bin/jam-index.sh > $@
