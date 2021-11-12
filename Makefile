@@ -13,6 +13,7 @@
 #	obj   -- makes the obj/ directory for out-of-tree build on OpenBSD
 # 	clean -- deletes html and text artifacts
 # 	install -- install to $DESTDIR/{www,text} (default: /var/www/htdocs)
+# 	jams  -- regenerate jam-tuesday index and stats files
 
 # gmake defines CURDIR, OpenBSD defines .CURDIR -- one should work
 DIR = $(.CURDIR)$(CURDIR)
@@ -26,14 +27,15 @@ SETS != find $(DIR)/jam-tuesday -name '[0-9][0-9][0-9][0-9]-*'
 BUILT = $(HTML) \
 	$(TEXT) \
 	atom.xml \
-	index.html \
-	jam-tuesday/index.html \
-	jam-tuesday/stats
+	index.html
 
 
 # Top level targets
 .PHONY: build
 build: $(BUILT)
+
+.PHONY: jams
+jams: jam-tuesday/stats jam-tuesday/index.html
 
 obj:
 	mkdir -p obj/jam-tuesday obj/bin
@@ -41,8 +43,8 @@ obj:
 .PHONY: install
 install: build
 	install -m 755 -Dd $(DESTDIR)/text/jam-tuesday $(DESTDIR)/www/jam-tuesday
-	install -m 444 $(SETS) jam-tuesday/stats $(DESTDIR)/text/jam-tuesday
-	install -m 444 $(SETS) jam-tuesday/index.html $(DESTDIR)/www/jam-tuesday
+	install -m 444 $(SETS) $(DIR)/jam-tuesday/stats $(DESTDIR)/text/jam-tuesday
+	install -m 444 $(SETS) $(DIR)/jam-tuesday/index.html $(DESTDIR)/www/jam-tuesday
 	install -m 444 *.html atom.xml $(DIR)/LICENSE $(DIR)/style.css $(DESTDIR)/www
 	install -m 444 $(DIR)/LICENSE $(DESTDIR)/text
 	for f in *.txt; do \
