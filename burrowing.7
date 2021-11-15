@@ -1,0 +1,113 @@
+.Dd November 15, 2021
+.Dt BURROWING 7
+.Os
+.Sh NAME
+.Nm burrowing
+.Nd from
+.Xr text-only 7
+to gopher-only
+.Sh DESCRIPTION
+This past month,
+I've spent a lot of time learning about gopher.
+It's truly a fascinating alternative to the world wide web,
+not just in the content found there
+but also in terms of the protocol itself.
+.Pp
+As of this writing, I've decided to deprecate
+.Lk https://text.alexkarle.com
+in favor of serving that content (and more!) over gopher
+instead, exclusively.
+.Sh IMPLICATIONS
+This shouldn't have much impact on this
+.Xr blog 7 .
+After all,
+.Xr text-only 7
+was an experiment to begin with!
+I'll still keep publishing semi-regularly here,
+I just don't plan on maintaining a text dump via HTTP.
+.Pp
+I will, however, start publishing gopher-only content.
+There's two main reasons for this:
+.Pp
+.Bl -enum -compact
+.It
+I want to see more activity on gopher
+.It
+Gopher is easier to publish on
+.El
+.Pp
+Admittedly, number 2 is my own doing.
+I moved this blog to
+.Xr mdoc 7
+willingly
+.Xr ( my-old-man 7 )
+to learn the language.
+I've found that it slows my raw output,
+which,
+while fine for longer form pieces,
+is a pain for shorter-form thoughts.
+No regrets (I learned a ton!),
+but shorter-form thoughts do much better in plaintext!
+.Pp
+The first reason is a theme for this blog:
+be the change you want to see.
+I would love to see more content on gopher,
+so I'm taking the plunge.
+.Sh THE PITCH
+So, why gopher?
+Probably the biggest reason to explore gopher is
+the content.
+It's a parallel network totally untouched by
+commercial interests.
+You won't see a single ad.
+.Pp
+The second reason to try gopher lies in the
+protocol itself--gopher has a standardized menu
+interface, and individual gopherholes cannot
+change the way you interact with them beyond
+the standard.
+In a world where it seems every bit of the
+web's UI has been rewritten in JavaScript (looking
+at you, <div>'s that should be <button>'s),
+it's wildly refreshing
+to just have a predictable menu.
+.Pp
+So, gopher separates the interaction (menus)
+from the content (can be anything, but is usually
+plaintext).
+I think this is a cool design choice
+because it emphasizes what the gopher protocol
+is really about: fetching documents.
+.Pp
+Ultimately,
+it's hard to describe and much better experienced.
+For a quick dip,
+try out a proxy like
+.Lk https://gopherproxy.net .
+For client recommendations,
+I'd check out
+.Xr lynx 1 ,
+.Xr sacc 1 ,
+or
+.Xr bombadillo 1 .
+Bombadillo has gemini support too,
+gemini being another alternative internet protocol
+worth checking out.
+I'll likely put my stuff up there too,
+if time allows.
+.Pp
+Not sure where to start in your client?
+Go to
+.Lk gopher://alexkarle.com
+of course! :)
+.Sh SEE ALSO
+.Bl -bullet -compact
+.It
+.Xr blog 7
+.It
+.Lk https://datatracker.ietf.org/doc/html/rfc1436 RFC 1436 (Gopher)
+.It
+.Lk http://gopherproject.org
+.It
+.Lk http://gemini.circumlunar.space Gemini official site
+.El

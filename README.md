@@ -15,14 +15,15 @@ On OpenBSD, running `make obj` is recommended before running `make` to
 leverage the out-of-tree build extension (see the bit about `.OBJDIR` in
 the man page!).
 
-text.
------
+gopher://
+---------
 A pure ascii dump of the [mdoc(7)][mdoc] content of the www site, served
-over HTTP, HTTPS, and Gopher (by [httpd(8)][httpd] and
-[gophernicus(1)][gophernicus] respectively!
+over Gopher by [geomyidae(1)][geomyidae] respectively!
 
 Builds via [make(1)][make] at the same time as the HTML. See above for
 instructions.
+
+Also has gopher-exclusive content!
 
 git.
 ----
@@ -52,4 +53,4 @@ and [my-old-man(7)][my-old-man].
 [git-daemon]: https://git-scm.com/docs/git-daemon
 [self-hosted]: https://alexkarle.com/self-hosted.html
 [my-old-man]: https://alexkarle.com/my-old-man.html
-[gophernicus]: https://www.gophernicus.org/
+[geomyidae]: http://r-36.net/scm/geomyidae

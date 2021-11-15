@@ -2,7 +2,7 @@
 #
 # a tale of two builds
 #
-# This Makefile builds both text.alexkarle.com (text-only) and
+# This Makefile builds both gopher://alexkarle.com (text-only) and
 # alexkarle.com (html) from the same mdoc(7) by leveraging inference
 # rules. Since this generates a LOT of derived files, it's recommended
 # to run BSD make and run `make obj` first to get an out-of-tree build.
@@ -12,7 +12,7 @@
 # 	build [default] -- generates html and text in obj (OpenBSD) or $PWD
 #	obj   -- makes the obj/ directory for out-of-tree build on OpenBSD
 # 	clean -- deletes html and text artifacts
-# 	install -- install to $DESTDIR/{www,text} (default: /var/www/htdocs)
+# 	install -- install to $DESTDIR/{www,gopher} (default: /var/www/htdocs)
 # 	jams  -- regenerate jam-tuesday index and stats files
 
 # gmake defines CURDIR, OpenBSD defines .CURDIR -- one should work
@@ -23,11 +23,13 @@ DESTDIR = /var/www/htdocs
 HTML != echo $(DIR)/*.[1-9] | sed 's@$(DIR)/\([^\.]*\)\.[1-9]@\1.html@g'
 TEXT != echo $(DIR)/*.[1-9] | sed 's@$(DIR)/\([^\.]*\)\.[1-9]@\1.txt@g'
 SETS != find $(DIR)/jam-tuesday -name '[0-9][0-9][0-9][0-9]-*'
+NOTES != find $(DIR)/gopher/notes/all
 
 BUILT = $(HTML) \
 	$(TEXT) \
 	atom.xml \
-	index.html
+	index.html \
+	gopher/notes/index.gph
 
 
 # Top level targets
@@ -38,17 +40,27 @@ build: $(BUILT)
 jams: jam-tuesday/stats jam-tuesday/index.html
 
 obj:
-	mkdir -p obj/jam-tuesday obj/bin
+	mkdir -p obj/jam-tuesday obj/bin obj/gopher/notes
 
 .PHONY: install
 install: build
-	install -m 755 -Dd $(DESTDIR)/text/jam-tuesday $(DESTDIR)/www/jam-tuesday
-	install -m 444 $(SETS) $(DIR)/jam-tuesday/stats $(DESTDIR)/text/jam-tuesday
+	# HTML to DESTDIR/www
+	install -m 755 -Dd $(DESTDIR)/www/jam-tuesday
 	install -m 444 $(SETS) $(DIR)/jam-tuesday/index.html $(DESTDIR)/www/jam-tuesday
 	install -m 444 *.html atom.xml $(DIR)/LICENSE $(DIR)/style.css $(DESTDIR)/www
-	install -m 444 $(DIR)/LICENSE $(DESTDIR)/text
+	# Text + gopher exclusives to DESTDIR/gopher
+	cd $(DIR) && pax -rw gopher $(DESTDIR)
+	pax -rw gopher $(DESTDIR)  # for out-of-tree builds
+	install -m 444 $(SETS) $(DESTDIR)/gopher/jam-tuesday
+	install -m 444 $(DIR)/LICENSE $(DESTDIR)/gopher
 	for f in *.txt; do \
-		install -m 444 $$f $(DESTDIR)/text/$$(grep $$f $(DIR)/ORDER); \
+		install -m 444 $$f $(DESTDIR)/gopher/blog/$$(grep $$f $(DIR)/ORDER); \
+	done
+	cp $(DIR)/gopher/bin/* $(DESTDIR)/gopher/code
+	for d in jam-tuesday blog code; do \
+		(cat $(DIR)/gopher/$$d/index.gph; \
+		 $(DIR)/gopher/bin/dirlist $(DESTDIR)/gopher/$$d)\
+		 > $(DESTDIR)/gopher/$$d/index.gph; \
 	done
 
 .PHONY: clean
@@ -75,6 +87,8 @@ bin/fixlinks: LINKS
 	awk '{ printf " \\\n  -e s#https://man.openbsd.org/%s#%s#g", $$1, $$2 } END { printf "\n" }' $(DIR)/LINKS >> $@
 	chmod +x $@
 
+gopher/notes/index.gph: $(NOTES)
+	(cd $(DIR)/gopher/notes && $(DIR)/gopher/bin/notetag) > $@
 
 # Inference rules (*.txt and *.html)
 $(HTML): bin/genpost.sh bin/fixlinks
