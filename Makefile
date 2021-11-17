@@ -56,6 +56,7 @@ install: build
 	for f in *.txt; do \
 		install -m 444 $$f $(DESTDIR)/gopher/blog/$$(grep $$f $(DIR)/ORDER); \
 	done
+	install -m 444 atom.xml $(DESTDIR)/gopher/blog
 	cp $(DIR)/gopher/bin/* $(DESTDIR)/gopher/code
 	for d in jam-tuesday blog code; do \
 		(cat $(DIR)/gopher/$$d/index.gph; \
