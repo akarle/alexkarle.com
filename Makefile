@@ -24,12 +24,14 @@ HTML != echo $(DIR)/*.[1-9] | sed 's@$(DIR)/\([^\.]*\)\.[1-9]@\1.html@g'
 TEXT != echo $(DIR)/*.[1-9] | sed 's@$(DIR)/\([^\.]*\)\.[1-9]@\1.txt@g'
 SETS != find $(DIR)/jam-tuesday -name '[0-9][0-9][0-9][0-9]-*'
 NOTES != find $(DIR)/gopher/notes/all
+PHLOG != find $(DIR)/gopher/phlog
 
 BUILT = $(HTML) \
 	$(TEXT) \
 	atom.xml \
 	index.html \
-	gopher/notes/index.gph
+	gopher/notes/index.gph \
+	gopher.atom
 
 
 # Top level targets
@@ -63,6 +65,7 @@ install: build
 		 $(DIR)/gopher/bin/dirlist $(DESTDIR)/gopher/$$d)\
 		 > $(DESTDIR)/gopher/$$d/index.gph; \
 	done
+	install -m 444 gopher.atom $(DESTDIR)/gopher/phlog/atom.xml
 
 .PHONY: clean
 clean:
@@ -90,6 +93,9 @@ bin/fixlinks: LINKS
 
 gopher/notes/index.gph: $(NOTES)
 	(cd $(DIR)/gopher/notes && $(DIR)/gopher/bin/notetag) > $@
+
+gopher.atom: $(PHLOG) gopher/bin/gophatom.sh
+	$(DIR)/gopher/bin/gophatom.sh > $@
 
 # Inference rules (*.txt and *.html)
 $(HTML): bin/genpost.sh bin/fixlinks
