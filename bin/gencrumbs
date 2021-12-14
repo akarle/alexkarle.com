@@ -1,0 +1,26 @@
+#!/bin/sh
+# generate breadcrumbs
+set -e
+die() {
+    echo "$*" 1>&2
+    exit 1
+}
+
+[ -z "$1" ] && die "usage: gencrumbs FILE"
+
+REPO=$(dirname "$(dirname "$(readlink -f "$0")")")
+FILE=$(readlink -f "$1")
+
+rel=${FILE##$REPO/www}
+parts=$(echo "$rel" | sed 's#/# #g')
+
+printf "<small><code><a href=\"/\">/home/alex</a>"
+curr=""
+for p in $parts; do
+    if [ "$p" = "index.html" ]; then
+        continue
+    fi
+    curr="$curr/$p"
+    printf " / <a href=\"$curr\">$p</a>"
+done
+echo "</code></small>"

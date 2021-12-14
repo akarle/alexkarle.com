@@ -1,0 +1,33 @@
+# yet another weblog
+
+## About
+
+I don't write frequently, but when I do, it's usually about tech.
+
+If you'd like to get notifications on new articles, I publish an
+[Atom feed](/atom.xml) (for use with your favorite RSS/Atom client).
+
+For an up to date list of software/hardware I use, see
+[my "uses" page](/uses.html).
+
+## 2021
+
+- 12/28 [Writing a Custom Markup Parser for this Site](/blog/mdoc-to-nihdoc.html)
+- 11/21 [From text-only to gopher-only](/blog/burrowing.html)
+- 11/21 [Some Non-Standard Uses of `git(1)`](/blog/use-git.html)
+- 09/21 [Out-of-tree Builds with `BSD make(1)`](/blog/make-obj.html)
+- 09/21 [Announcing text.alexkarle.com](/blog/text-only.html)
+- 07/21 [Learning Through Creative Limitation](/blog/creative-coding.html)
+- 02/21 [RSS/Atom feeds; What, Why, and How](/blog/use-feeds.html)
+
+## 2020
+
+- 12/20 [Adventures in Using `mdoc(7)` for This Site](/blog/my-old-man.html)
+- 10/20 [On Writing Without an Audience](/blog/on-writing.html)
+- 07/20 [Migrating to a Self-Hosted Site](/blog/self-hosted.html)
+- 07/20 [Black Lives Matter](/blog/BLM.html)
+- 03/20 [What's in a (Domain) Name?](/blog/domain-names.html)
+
+## 2019
+
+- 12/19 [A New Hope](/blog/a-new-hope.html)

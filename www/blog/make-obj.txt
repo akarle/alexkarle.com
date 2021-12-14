@@ -1,0 +1,87 @@
+# `make obj`: out-of-tree builds with BSD `make(1)`
+
+_Published: September 28, 2021_
+
+If you've ever built parts of OpenBSD from source, you may know
+that the sequence of commands recommended by
+[`release(8)`](https://man.openbsd.org/release.8) is:
+
+	$ make obj
+	$ make
+	# make install
+
+If, like me, you've forgotten the `make obj` step, you'll find
+yourself with many derived files in the current directory of
+whatever program you're building. By running `make obj` first, a
+directory called _obj_ appears and the derived files (usually \*.o
+files) are placed there instead.  Cleverly, the _obj_ directory is
+actually a symlink to another filesystem under _/usr/obj_,
+making it truly an out-of-tree build.
+
+Up until recently, I understood what the `obj` target did and why
+it was useful.  However, it wasn't until I tried to replicate it
+with the build for text.alexkarle.com that I discovered how it
+worked.  I figured I'd document it here in case it helps anyone
+else.
+
+## How it Works
+
+My discovery of the inner workings of this target was a classic
+lesson in RTFM.  After 10-15 minutes of trying to parse the
+makefiles in _/usr/share/mk_, I finally searched for _obj_ in the
+[`make(1)` man page](https://man.openbsd.org/make.1), and sure
+enough the answer was the first hit!  I've copied it for
+convenience below (licensed under the BSD-3 clause):
+
+> *`.OBJDIR:`*
+> Path to the directory where targets are built.  At
+> startup, make searches for an alternate directory to
+> place target files. make tries to `chdir(2)` into
+> `MAKEOBJDIR` (or obj if `MAKEOBJDIR` is not defined), and
+> sets `.OBJDIR` accordingly.  Should that fail, `.OBJDIR`
+> is set to `.CURDIR`.
+
+With this new knowledge, getting an out-of-tree build was almost as
+simple as running `mkdir obj` before `make`!
+
+The one catch was that, having chdir'd in, I had to canonicalize
+the paths to any scripts used in the build recipes.  For instance,
+I have a genpost.sh script in the bin/ directory of this repo.  To
+call it from the obj directory, I needed to use its absolute path
+via the .CURDIR variable:
+
+	$(.CURDIR)/bin/genpost.sh < $< > $@
+
+## Portability
+
+While I mostly build my site on OpenBSD, it's important to me that
+it builds with GNU make too.
+
+Unfortunately, the `.OBJDIR` chdir'ing appears to be an extension in
+OpenBSD's make (and possibly NetBSD too). The good news is that,
+with one more trick, GNU make support is easy to add (albeit
+without out-of-tree builds).
+
+The one final hack to support GNU make was to define a portable
+version of `.CURDIR`.  Since `.CURDIR` isn't defined in GNU make (which
+uses `CURDIR` instead), I had to define the `DIR` variable that's the
+concatenation of the two:
+
+	DIR = $(.CURDIR)$(CURDIR)
+
+## Conclusion
+
+I hope this sheds some light on why `make obj` is common practice
+on OpenBSD as well as how to add similar support to your own
+projects!
+
+While not as flexible as GNU make's pattern matching inference
+rules (that allow builds in subdirectories), I find the chdir-ing
+into obj a cleverly simple way to obtain a similar end result.
+
+## See Also
+
+- [text.alexkarle.com's origin story](/blog/text-only.html)
+- [writing the blog in mdoc(7)](/blog/my-old-man.html)
+
+[Back to blog](/blog)

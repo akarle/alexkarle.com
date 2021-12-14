@@ -1,0 +1,44 @@
+# Learning Through Creative Limitation
+
+_Published: July 18, 2021_
+
+I was talking to a friend recently about hobby coding and ways to
+code creatively.  In the course of that conversation, I was able to
+put a name to one of my favorite tactics: creative limitation.
+
+A quick internet search seems to associate the term with Phil
+Hansen and more traditional art, but I think it applies nicely to
+coding too.  For example, with this site, I've chosen to restrict
+the tech stack to the OpenBSD base system. It wasn't the initial
+goal (which was to learn mdoc(7)), but I quickly realized that
+restricting to base would give me a better chance to learn base.
+
+Overall, I'd call it a success.  The [Jam Tuesday](/jam-tuesday)
+setlist project gave me a chance to learn some
+[sh(1)](https://man.openbsd.org/sh.1) and
+[sed(1)](https://man.openbsd.org/sed.1), and my [blog](.)
+was a [chance to learn mdoc(7)](/blog/my-old-man.html),
+and the site's build system helped me brush up on BSD
+[make(1)](https://man.openbsd.org/make.1).
+
+I'd encourage you to try it -- set an arbitrary restriction and see
+where it takes you!  Here's a few ideas to get you started:
+
+- Write your own X window manager in as few lines of code as you can
+- Write a version control system with
+  [sh(1)](https://man.openbsd.org/sh.1),
+  [diff(1)](https://man.openbsd.org/diff.1), and
+  [patch(1)](https://man.openbsd.org/sh.1)
+- Write a blogging engine updated via email
+- Write your own templating language (and parser)
+
+The goal, for me, is to choose a challenging project that helps me
+understand a technology I use daily but may take for granted
+(windowing systems, VCS, email, parsers, etc).
+
+Restricting size helps understand what the core definition of a
+technology is.  Building clones can help teach edge cases and
+design decisions one might otherwise overlook.  And in all cases,
+it's a good chance to learn a new language!
+
+[Back to blog](/blog)

@@ -1,0 +1,38 @@
+# What's in a (Domain) Name
+
+_Published: March 24, 2020_
+
+I went through a phase this week of really wanting
+`karle.[original-tld]`.  Not for a business.  Not for boosting my
+own webpage (it doesn't really have much traffic).  Just for me.
+
+The results were... disheartening.
+
+*karle.org*
+
+Registered since 2004, no website, just an email DNS record.  WHOIS
+guard ensures I can't even reach out to who owns it.
+
+*karle.com*
+
+For sale by owner on Uniregistry. Ok.  Inquired. Owner wants a
+"serious 5 figure offer". Next!
+
+*karle.net*
+
+Owned by [RealNames](https://realnames.com), a business seemingly
+centered around buying lastname.net domains and charging people
+like me to set up an email.  Almost brilliant enough of a business
+to make me forgive their scumminess.  _Almost._  Nary an option to
+buy it.
+
+
+## Conclusion
+
+So here we are.  Looks like `karle.co` for at least a little
+longer.
+
+*Update:* I've settled on alexkarle.com and plan to use it for the
+foreseeable future.
+
+[Back to blog](/blog)

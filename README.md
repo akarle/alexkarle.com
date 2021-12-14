@@ -4,32 +4,25 @@ My small corner of the internet.
 
 www.
 ----
-A static site comprised of [mdoc(7)][mdoc] flavored man pages, built to
-HTML via [mandoc(1)][mandoc] (managed by [make(1)][make]).
+A small static blog powered by my own personal markup parser, [nihdoc].
 
-Currently hosted with OpenBSD's [httpd(8)][httpd], but any web server
-should be able to serve it up.
-
-The Makefile to build the HTML is portable between gmake and BSD make.
-On OpenBSD, running `make obj` is recommended before running `make` to
-leverage the out-of-tree build extension (see the bit about `.OBJDIR` in
-the man page!).
+Currently hosted with OpenBSD's [httpd(8)], but any web server should be
+able to serve it up.
 
 gopher://
 ---------
-A pure ascii dump of the [mdoc(7)][mdoc] content of the www site, served
-over Gopher by [geomyidae(1)][geomyidae] respectively!
+A pure ascii dump of the content of the www site, served over Gopher by
+[geomyidae(1)] respectively!
 
-Builds via [make(1)][make] at the same time as the HTML. See above for
-instructions.
+Builds via [make(1)] at the same time as the HTML.
 
 Also has gopher-exclusive content!
 
 git.
 ----
-I use a simple setup of git-daemon for anonymous (read-only) downloads,
-ssh+git for read+write access (limited to myself) and
-[stagit(1)][stagit] to host static views into the diffs and files of
+I use a simple setup of [git-daemon(8)] for anonymous (read-only) downloads,
+ssh+git for read+write access (limited to myself) and [stagit(1)] to
+host static views into the diffs and files of
 each repo.
 
 I like the stagit approach in that it is simple, modular, and emphasizes
@@ -38,19 +31,13 @@ etc).
 
 I use the default post-receive and create scripts that ship with the
 tool (with small modifications for the installation). The logo is in
-this repo as logo.png.
+this repo as git/logo.png.
 
-The content, being static, is served up with [httpd(8)][httpd] as well.
+The content, being static, is served up with [httpd(8)] as well.
 
-I also discuss the setup in my blog posts [self-hosted(7)][self-hosted]
-and [my-old-man(7)][my-old-man].
-
-[mdoc]: https://man.openbsd.org/mdoc.7
-[mandoc]: https://man.openbsd.org/mandoc.1
-[make]: https://man.openbsd.org/make.1
-[httpd]: https://man.openbsd.org/httpd.8
-[stagit]: https://git.codemadness.org/stagit
-[git-daemon]: https://git-scm.com/docs/git-daemon
-[self-hosted]: https://alexkarle.com/self-hosted.html
-[my-old-man]: https://alexkarle.com/my-old-man.html
-[geomyidae]: http://r-36.net/scm/geomyidae
+[make(1)]: https://man.openbsd.org/make.1
+[httpd(8)]: https://man.openbsd.org/httpd.8
+[stagit(1)]: https://git.codemadness.org/stagit
+[git-daemon(8)]: https://git-scm.com/docs/git-daemon
+[geomyidae(1)]: http://r-36.net/scm/geomyidae
+[nihdoc]: https://git.sr.ht/~akarle/nihdoc

@@ -1,0 +1,70 @@
+# text-only: Announcing text.alexkarle.com
+
+_Published: September 20, 2021_
+
+This past week I rolled out [https://text.alexkarle.com], and I
+wanted to write a little bit about it!
+
+## What
+
+text.alexkarle.com is a text-only ascii dump of this entire site.
+It's served over HTTP, HTTPS, and Gopher to provide a wide array of
+options for accessing the content.
+
+## Why
+
+I'm a huge fan of the "small internet" and lightweight sites in
+general.  Although I'm not an active participant in any of the
+tilde communities, I really appreciate the commitment to plaintext,
+\*NIX, and simple software.
+
+At some point in my browsing of the tildeverse, I stumbled across
+Gopher and took a liking to the simple protocol.  Surfing
+gopherspace is so awesomely fast and simple compared to the slow,
+ad-filled, modern web.  Better yet, it's totally removed from the
+commercialization of the internet.  No one is serving content on
+Gopher to make money.  It's full of art and real, empathetic,
+humans.
+
+For my own part, I started serving an ascii dump of the `mdoc(7)`
+content on this site over Gopher (via
+[`gophernicus(8)`](https://gophernicus.org)) almost 7 months ago.
+However, I was never really happy with how it was organized or
+generated (hence the lack of an announcement on the `blog(7)`).
+
+It was the discovery of a fellow `mdoc(7)` website over at
+[https://text.causal.agency] that inspired me to revisit my approach
+to publishing a text-only version of this site.  I finally replaced
+the scripted afterthought of a gopher publisher with a first class
+build target and decided to expand the offering from gopher-only to
+HTTP(S).  I figured someone might prefer to browse it that way
+(maybe retro computing enthusiasts?), and with `httpd(8)` already
+running, it came basically for free!
+
+## How
+
+I started to write about all the "challenges" I faced in this
+process, but really these were all self-imposed problems from
+restricting myself to a POSIX subset of BSD `make(1)` (in the name of
+[creative coding](creative-coding.html)).  I think had I chosen either BSD make with
+extensions or GNU make, the build would have been much cleaner, but
+with a couple of hacks it's okay as is.
+
+Maybe I'll write about it someday, but it didn't feel worth holding
+up this "announcement".  The TL;DR: I added another inference rule
+for `*.7` -> `*.txt` and moved from a "build in tree" model (where the
+source tree was what was served by `httpd(8)`) to a "run the install
+target after build" model. The latter is necessary because POSIX
+inference rules only build into the current directory and I don't
+want text.alexkarle.com users to see the `*.html` there too.
+
+Of course, if you're curious to see how the bits come together, I
+publish all of the site source at
+[https://sr.ht/~akarle/alexkarle.com]!
+
+## Update
+
+As of November 15, 2021, text.alexkarle.com was moved entirely to
+gopher.  See [this blog post](/blog/burrowing.html) for more info.
+
+[Back to blog](/blog)

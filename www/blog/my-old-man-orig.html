@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<style>
+/* general defaults */
+body {
+  background-color: #F5F5F5;
+  margin-left: 20px;
+  margin-right: 20px;
+  font-size: 1.3em;
+  line-height: 1.3;
+  font-family: monospace;
+}
+
+/* style tweaks */
+a:link { color: #0a7899; }
+a:visited { color: #033a4a; }
+code { font-size: 1em; }
+h1 { font-size: 1.1em; }
+h2 { font-size: 1em; }
+.foot-license {
+    margin-top: 16px;
+    font-size: .7em;
+    position: static;
+    bottom: 0;
+}
+
+/* override bold/italic colors within permalinks */
+a.permalink { text-decoration: none }
+b,i { color: #000000 }
+
+/* Responsive screen sizes */
+@media only screen and (min-width: 992px) {
+  body {
+    width: 60%;
+    margin: 0 auto;
+  }
+} 
+@media only screen and (min-width: 600px) and (max-width: 991px) {
+  body {
+    width: 80%;
+    margin: 0 auto;
+  }
+}
+
+/* Smaller font on small screens */
+@media only screen and (max-width: 599px) {
+  body { font-size: 1.1em; }
+}
+
+/* margins around head/foot */
+table.foot { margin-top: 3em; }
+table.head { margin-bottom: 3em; }
+
+/* scrollbars on the block-display content */
+div.Bd-indent {
+    border-left-color: gray;
+    border-left-style: solid;
+    border-left-width: 2px;
+    border-radius: 5px;
+    padding-left: 1em;
+}
+
+.Bd > pre {
+    overflow-x: auto;
+}
+
+/* Bl-tag correctly with grid for blog.7 */
+dl.Bl-tag {
+    display: grid;
+    grid-template-columns: max-content auto
+}
+dl.Bl-tag dd {
+     margin-left: 16px;
+     margin-bottom: 1em;
+}
+
+/* defaults from mandoc(1)'s inlined CSS */
+table.head, table.foot { width: 100%; }
+td.head-rtitle, td.foot-os { text-align: right; }
+.Nd, .Bf, .Op { display: inline; }
+.Pa, .Ad { font-style: italic; }
+.Ms { font-weight: bold; }
+.Bl-diag > dt { font-weight: bold; }
+code.Nm, .Fl, .Cm, .Ic, code.In, .Fd, .Fn, .Cd {
+    font-weight: bold;
+}
+</style>
+  <title>MY-OLD-MAN(7)</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body>
+<table class="head">
+  <tr>
+    <td class="head-ltitle">MY-OLD-MAN(7)</td>
+    <td class="head-rtitle">MY-OLD-MAN(7)</td>
+  </tr>
+</table>
+<div class="manual-text">
+<section class="Sh">
+<h1 class="Sh" id="NAME"><a class="permalink" href="#NAME">NAME</a></h1>
+<p class="Pp"><code class="Nm">my-old-man</code> &#x2014;
+    <span class="Nd">adventures in using
+    <a class="Xr" href="https://man.openbsd.org/mdoc.7">mdoc(7)</a> as the
+    markup for this site</span></p>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="SYNOPSIS"><a class="permalink" href="#SYNOPSIS">SYNOPSIS</a></h1>
+<div class="Bd Bd-indent Li">
+<pre>Uh oh,
+looks like,
+I'm seeing more of my old man(1) in me
+       ~ Mac DeMarco (added (1) by me)</pre>
+</div>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="DESCRIPTION"><a class="permalink" href="#DESCRIPTION">DESCRIPTION</a></h1>
+<p class="Pp">While Mac wasn't talking about good old roff-style man pages, I
+    felt his words were a fun description of my effort to move from a markdown
+    based templated site to a
+    <a class="Xr" href="https://man.openbsd.org/mdoc.7">mdoc(7)</a> based
+  site.</p>
+<p class="Pp" id="why">After pointing out that
+    <a class="Lk" href="https://git.alexkarle.com/alexkarle.com/file/intro.7.html">I
+    really did</a> rewrite my site in
+    <a class="Xr" href="https://man.openbsd.org/mdoc.7">mdoc(7)</a>, you might
+    be wondering <a class="permalink" href="#why"><i class="Em">why</i></a> I
+    would do this. This blog post is intended to answer just that.</p>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="WHY"><a class="permalink" href="#WHY">WHY</a></h1>
+<section class="Ss">
+<h2 class="Ss" id="For_the_learning_experience"><a class="permalink" href="#For_the_learning_experience">For
+  the learning experience</a></h2>
+<p class="Pp">The single biggest motivator of the rewrite was that I like to use
+    this site as a playground for learning new (old) technology, and
+    <a class="Xr" href="https://man.openbsd.org/mdoc.7">mdoc(7)</a> was on my
+    list of tech to learn.</p>
+<p class="Pp">What better way to learn a new markup language than to port an
+    existing project to use it?</p>
+<p class="Pp">I had a blast transferring my old posts and coming up with a new
+    build system.</p>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="For_the_look"><a class="permalink" href="#For_the_look">For
+  the look</a></h2>
+<p class="Pp">I really enjoy a good
+    <a class="Xr" href="https://man.openbsd.org/man.1">man(1)</a> page.</p>
+<p class="Pp">You've probably heard it before, but I'll say it again: one of the
+    best parts of using OpenBSD is its concise and comprehensive man pages in
+    the base system.</p>
+<p class="Pp">There's a certain warm fuzzy feeling when you can learn something
+    both without internet access and with the knowledge that it is the
+    authoritative source.</p>
+<p class="Pp">I want my site to be a homage to good, well thought out,
+    <a class="Xr" href="https://man.openbsd.org/man.1">man(1)</a> pages.</p>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="Keeping_it_all_in_base"><a class="permalink" href="#Keeping_it_all_in_base">Keeping
+  it all in base</a></h2>
+<p class="Pp">As an OpenBSD nerd, I find a bit of joy in having a site which is
+    built, deployed, and served all via the base OpenBSD system.</p>
+<p class="Pp">By using
+    <a class="Xr" href="https://man.openbsd.org/mandoc.1">mandoc(1)</a> instead
+    of Markdown.pl, I can now build my site without any additional
+  dependencies.</p>
+<p class="Pp" id="fast">Better yet,
+    <a class="Xr" href="https://man.openbsd.org/mandoc.1">mandoc(1)</a> is
+    ported to the various Linux distros I use day to day, and it is
+    <a class="permalink" href="#fast"><i class="Em">fast</i></a>.</p>
+</section>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="HOW"><a class="permalink" href="#HOW">HOW</a></h1>
+<p class="Pp">If you read this far, I thought you might be interested to hear
+    how I'm deploying the content.</p>
+<p class="Pp">I'm a big fan of automation, so I've rigged up the site to deploy
+    on a push to the master branch. Doing so involved two steps.</p>
+<section class="Ss">
+<h2 class="Ss" id="Building_the_mdoc"><a class="permalink" href="#Building_the_mdoc">Building
+  the mdoc</a></h2>
+<p class="Pp">I created a small Makefile that builds each HTML file from each
+    man page source.</p>
+<p class="Pp">The relevant bit is the implicit suffix rule to convert each .7
+    file to .html:</p>
+<div class="Bd Pp Bd-indent Li">
+<pre>.SUFFIXES: .7 .html
+.7.html:
+	@echo &quot;mandoc $&lt;&quot;
+	@mandoc -Thtml -O 'man=%N.html;https://man.openbsd.org/%N.%S,style=style.css' $&lt; \
+	    | sed 's#&lt;/head&gt;#&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&amp;# ' \
+	    &gt; $@</pre>
+</div>
+<p class="Pp" id="$_">This looks crazy, but it's not too complex. First, know
+    that <a class="permalink" href="#$_"><b class="Sy">$&lt;</b></a> is the
+    source (the &lt;name&gt;.7 page), and
+    <a class="permalink" href="#$@"><b class="Sy" id="$@">$@</b></a> is the
+    target (the &lt;name&gt;.html page). The
+    <a class="permalink" href="#@"><b class="Sy" id="@">@</b></a> prefix is a
+    bit of magic to suppress printing the command run (so that all the output
+    shown on git-push is just a single &quot;mandoc&quot; line for each file
+    updated).</p>
+<p class="Pp" id=".Xr">Moving on to the mandoc command, I use the html output of
+    mandoc via -T, with the -O switch specifying that linked man-page references
+    should look locally first, then to point to man.openbsd.org. This allows me
+    to quickly reference OpenBSD base tools and pages, while also using the
+    terse <a class="permalink" href="#.Xr"><b class="Sy">.Xr</b></a> macro for
+    linking individual site pages.</p>
+<p class="Pp">Finally, I use a
+    <a class="Xr" href="https://man.openbsd.org/sed.1">sed(1)</a> oneliner to
+    splice in a &lt;meta&gt; viewport tag for mobile devices.</p>
+<p class="Pp">And that's really it! The rest is just listing the man pages I
+    want built, with a phony default target depending on the html pages so that
+    a &#x2018;<code class="Li">make</code>&#x2019; builds them all. Check out
+    the full source
+    <a class="Lk" href="https://git.alexkarle.com/alexkarle.com/file/Makefile.html">here</a>.</p>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="Deploying_via_git_hook"><a class="permalink" href="#Deploying_via_git_hook">Deploying
+  via git hook</a></h2>
+<p class="Pp">Since I'm self-hosting git on the same server as the website, it's
+    trivial to deploy when it receives a push by leveraging git hooks.</p>
+<p class="Pp">For the unfamiliar, git hooks are simply shell scripts that are
+    triggered by specific git actions. In this case, I used the post-receive
+    hook to publish after the refs were updated via a
+    &#x2018;<code class="Li">git push</code>&#x2019;.</p>
+<p class="Pp">More specifically, I added the following to
+    <span class="Pa">&lt;git-dir&gt;/hooks/post-receive</span>:</p>
+<div class="Bd Pp Bd-indent Li">
+<pre>echo &quot;Deploying to to /var/www/htdocs... &quot;
+WT=/var/www/htdocs
+git -C ${dir} --work-tree=${WT} checkout -f master
+make -C ${WT}
+echo &quot;done&quot;</pre>
+</div>
+<p class="Pp">So, on any push, it checks out the entire source tree into the
+    webserver's content area and rebuilds only the necessary HTML files (thanks
+    to <a class="Xr" href="https://man.openbsd.org/make.1">make(1)</a>).</p>
+<p class="Pp">If I had files I didn't want served, I would modify it to build
+    elsewhere and copy the contents to /var/www; however, I'm publishing both
+    the source for the site and the git history at
+    <a class="Lk" href="https://git.alexkarle.com">https://git.alexkarle.com</a>,
+    so I don't see any harm to having the README.md accessible from the
+  root.</p>
+</section>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="SEE_ALSO"><a class="permalink" href="#SEE_ALSO">SEE
+  ALSO</a></h1>
+<ul class="Bl-bullet Bl-compact">
+  <li><a class="Xr" href="blog.html">blog(7)</a></li>
+  <li><a class="Lk" href="https://www.git-scm.com/docs/githooks">git
+    hooks</a></li>
+</ul>
+</section>
+</div>
+<table class="foot">
+  <tr>
+    <td class="foot-date">December 30, 2020</td>
+    <td class="foot-os">OpenBSD 7.0</td>
+  </tr>
+</table>
+<p class="foot-license">
+  © 2019-2021 Alex Karle | <a href="/">Home</a> | <a href="/license.html">License</a>
+</p>
+</body>
+</html>

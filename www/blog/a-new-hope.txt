@@ -1,0 +1,13 @@
+# A New Hope
+
+_Published: December 19, 2019_
+
+Toying with the thought of starting a website/blog.
+
+Exploring my hosting options and pleasantly surprised that
+[FastMail](https://fastmail.com) has free static site hosting!
+
+Inspired by [Jeff Huang's article](https://jeffhuang.com/designed_to_last)
+on websites Designed to Last and a general desire for a simpler web.
+
+[Back to blog](/blog)

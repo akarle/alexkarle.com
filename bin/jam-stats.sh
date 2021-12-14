@@ -5,7 +5,7 @@ set -e
 
 N=10
 REPO=$(dirname "$(dirname "$0")")
-DIR="$REPO/jam-tuesday"
+DIR="$REPO/www/jam-tuesday"
 TMP=$(mktemp)
 num_sessions=0
 for set in "$DIR"/[0-9][0-9][0-9][0-9]-*; do

@@ -1,0 +1,102 @@
+# Non-standard uses for `git(1)`
+
+_Published: November 7, 2021_
+
+In this post, I'm not going to teach you how to use
+[`git(1)`](https://git-scm.org).  Instead, I wanted to write a
+quick post to encourage you to use git for non-conventional use
+cases (i.e. things other than source code).
+
+If perchance you're not familiar with git, there's a ton of good
+documentation out there.  I'd recommend starting with the official
+and free [Pro Git](https://git-scm.com/book/en/v2). Also, as a PSA,
+just know that git stores whole snapshots and NOT diffs.
+
+## Background
+
+Git is a distributed version control system, and this is a
+beautiful thing.  I feel it's often lost on us, given that we use
+it most frequently on centralized forges for team collaboration
+(GitHub, GitLab, etc).
+
+Git being distributed means you can:
+
+1. Use it offline (your copy is "first class")
+2. Mirror it to as many places as you want
+
+In other words, git can be used without any dependence on a third-
+party service or company and with complete ownership of private
+data.  Forges (and I recommend [https://sourcehut.org]) are a great
+place to backup your code and collaborate, but you don't have to
+use a forge to use git as a futureproof way to do what it does
+best: version your files.
+
+## Story Time
+
+When I started my first job in tech, I found that it was a good
+habit to take personal notes.  It was incredibly useful to quickly
+reference obscure CLI commands or system knowledge gained from
+pairing.  These were things that were too small or personal to make
+it into standard documentation but invaluable to have on hand.
+
+My first solution was shoving them all into a directory called
+~/notes as plaintext files.  They were easy to write and reference,
+and it was simple to back them up by copying the directory to
+another drive nightly.
+
+Over time, the `cp -a` trick broke down:
+
+- Files deleted in the source prevailed in the backup
+- Changes more than a day old were lost!
+
+Around the same time, I started getting more familiar with git, and
+it finally occurred to me: I could use git and still keep these
+notes private!
+
+Git can clone/push/pull across filesystems, so in the matter of
+minutes I solved both of my issues with just:
+
+	# Set up the backup mirror
+	$ git init --bare /backup/drive/notes.git
+	
+	# Put it to use!
+	$ cd ~/notes
+	$ git init && git add . && git commit -m "import"
+	$ git remote add origin /backup/drive/notes.git
+	$ git push -u origin main
+
+If you don't have a backup drive mounted, it's equally good (or
+better) to make the remote a repo accessed over SSH:
+
+	# On the remote host
+	user@example.com~$ git init --bare ~/notes.git
+	
+	# On the local host
+	$ git remote add origin user@example.com:notes.git
+
+## Going Further
+
+These days, I shudder at the thought of any important plaintext on
+my system that's not version-controlled somewhere. Too many hours
+are spent writing these little files, and it's so easy to version
+them, why risk losing any of that history?
+
+Aside from my private notes, I version:
+
+- System config files from /etc
+- Personal config files (dotfiles)
+- My passwords (via [`pass(1)`](https://passwordstore.org))
+- A small set of personal patches for FOSS projects I have yet to
+  polish and upstream (a-la ports-system)
+- My resume (admittedly still a DOCX from college, but versioning
+  has really helped)
+
+In conclusion, my advice to anyone writing anything of importance:
+just use `git(1)`!
+
+## See Also
+
+- [Commits are snapshots, not diffs](https://github.blog/2020-12-17-commits-are-snapshots-not-diffs/),
+   by Derrick Stolee
+
+[Back to blog](/blog)

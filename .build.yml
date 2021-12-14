@@ -1,0 +1,19 @@
+# srht.site build
+image: openbsd/latest
+oauth: pages.sr.ht/PAGES:RW
+sources:
+  - https://git.sr.ht/~akarle/alexkarle.com
+  - https://git.sr.ht/~akarle/nihdoc
+environment:
+  site: akarle.srht.site
+tasks:
+- package: |
+    make -C nihdoc
+    env PATH="$PWD/nihdoc:$PATH" make -C alexkarle.com
+    cd alexkarle.com/www && tar -cvhzf ../../site.tar.gz .
+- upload: |
+    acurl -f https://pages.sr.ht/publish/$site -Fcontent=@site.tar.gz
+triggers:
+- action: email
+  condition: always
+  to: ci@alexkarle.com

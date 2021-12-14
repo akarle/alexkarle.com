@@ -1,0 +1,78 @@
+# burrowing: From text-only to gopher-only
+
+_Published: November 15, 2021_
+
+## Description
+
+This past month, I've spent a lot of time learning about gopher.
+It's truly a fascinating alternative to the world wide web, not
+just in the content found there but also in terms of the protocol
+itself.
+
+As of this writing, I've decided to deprecate text.alexkarle.com
+in favor of serving that content (and more!) over gopher instead,
+exclusively.
+
+## Implications
+
+This shouldn't have much impact on this blog.  After all,
+text.alexkarle.com was [an experiment](/blog/text-only.html) to begin
+with!  I'll still keep publishing semi-regularly here, I just
+don't plan on maintaining a text dump via HTTP.
+
+I will, however, start publishing gopher-only content.  There's two
+main reasons for this:
+
+1. I want to see more activity on gopher
+2. Gopher is easier to publish on
+
+Admittedly, number 2 is my own doing.  I
+[moved this blog to `mdoc(7)`](/blog/my-old-man.html) willingly to
+learn the language.  I've found that it slows my raw output,
+which, while fine for longer form pieces, is a pain for
+shorter-form thoughts.  No regrets (I learned a ton!), but
+shorter-form thoughts do much better in plaintext!
+
+The first reason is a theme for this blog: be the change you want
+to see.  I would love to see more content on gopher, so I'm taking
+the plunge.
+
+## The Pitch
+
+So, why gopher?  Probably the biggest reason to explore gopher is
+the content.  It's a parallel network totally untouched by
+commercial interests.  You won't see a single ad.
+
+The second reason to try gopher lies in the protocol itself--gopher
+has a standardized menu interface, and individual gopherholes
+cannot change the way you interact with them beyond the standard.
+In a world where it seems every bit of the web's UI has been
+rewritten in JavaScript (looking at you, <div>'s that should be
+<button>'s), it's wildly refreshing to just have a predictable
+menu.
+
+So, gopher separates the interaction (menus) from the content (can
+be anything, but is usually plaintext).  I think this is a cool
+design choice because it emphasizes what the gopher protocol is
+really about: fetching documents.
+
+Ultimately, it's hard to describe and much better experienced.
+For a quick dip, try out a proxy like [https://gopherproxy.net].
+For client recommendations, I'd check out
+[`lynx(1)`](https://lynx.invisible-island.net/),
+[`sacc(1)`](https://git.fifth.space/sacc), or
+[`bombadillo(1)`](https://bombadillo.colorfield.space/).
+Bombadillo has gemini support too, gemini being another
+alternative internet protocol worth checking out. I'll likely put
+my stuff up there too, if time allows.
+
+Not sure where to start in your client? Go to [gopher://alexkarle.com]
+of course! :)
+
+## See Also
+
+- [RFC 1436 (Gopher)](https://datatracker.ietf.org/doc/html/rfc1436)
+- [http://gopherproject.org]
+- [Gemini official site](https://gemini.circumlunar.space)
+
+[Back to blog](/blog)

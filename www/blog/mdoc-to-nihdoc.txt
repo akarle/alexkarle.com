@@ -1,0 +1,164 @@
+# Writing a Custom Markup Parser for this Site
+
+_Published: December 28, 2021_
+
+## How it All Happened
+
+Almost exactly a year ago, I moved this site from templated
+markdown to a [static site built with `mdoc(7)`](/blog/my-old-man.html).
+I ported 5 blog posts in the process and ended up writing 7 more
+over the course of the year.
+
+While it was a success in teaching me
+[`mdoc(7)`](https://man.openbsd.org/mdoc.7), I found that it
+slowed me down a bit in authoring blog posts.
+
+Around the same time as I was feeling this slowness, I began
+actively phlogging on my [gopherhole](gopher://alexkarle.com) and
+[even started posting gopher-only content](/blog/burrowing.html).
+I really enjoyed writing plaintext posts because they are quick
+to write and, more importantly, highly durable to changes in
+technology. I can't imagine a world where one cannot open a plain
+`.txt` file and read/edit it.
+
+I got a real sense for the importance of optimizing for archival
+while browsing gopher--it's incredible to be reading textfiles
+older than me. It made me realize that I want to be sure that my
+content can survive for decades with minimal effort.
+
+So, I started thinking about how I could move my site's source
+(pre-HTML) to a more readable plaintext format. Markdown was the
+obvious choice, but I wanted to stay true to my
+[creative limitation](/blog/creative-coding.html) of keeping this
+site buildable by base OpenBSD, so I had to find another option.
+
+It was about 10 days into solving Advent of Code puzzles that I
+realized I could redirect some of the puzzling effort at the
+problem and write my own markup parser. The result, a few weeks
+later, is [`nihdoc(1)`](https://git.sr.ht/~akarle/nihdoc).
+`nihdoc(1)` (a play on the fact that markdown is *N*ot *I*nvented
+*H*ere) provides support for all the basic syntax I'd want in a
+blog post--nested lists, _inline_ *styles* and `code`, code
+blocks and block quotes, and headers. It was a blast to write,
+and I learned a lot in the process!
+
+I suspect the CSS for the blog will still change (maybe a dark
+mode? or something a little less plain), but I tried to keep the
+resulting HTML pretty bare in support of accessibility and
+portability--it should read well in screenreaders, embedded in
+RSS feeds, and more.
+
+If you want to see the source for any post, just replace the
+`.html` extension in the URL with `.txt`! For example, here's
+[this post's source](/blog/mdoc-to-nihdoc.txt).
+
+## Implementation Highlights
+
+If you read this far, I figure you might be interested in some of
+the implementation details and design decisions.
+
+### Stream Based Parsing
+
+Probably the most interesting detail of the parser is that it is
+stream-based with constant memory usage. In other words, it will
+start spitting out the input and the HTML markup as soon as it
+can decisively figure out what state it's in (i.e. has the
+paragraph ended, etc). Keeping track of this state is done with a
+handful of booleans/integers and doesn't involve storing lines in
+memory. In fact, the current implementation reads the input one
+character at a time!
+
+This is an efficiency win for large documents (not that my posts
+are that long), but was also just a fun constraint to try to code
+within. In practice, I found I was able to get support for almost
+everything I wanted (nested lists, etc) with maybe the exception of
+"bottom of the document" links that markdown allows. More on that
+later.
+
+### Balancing Ease of Implementation with Syntax
+
+One of the most interesting challenges in designing a markup
+language is settling on a syntax that's both easy-ish to
+implement (I'm a big believer in simpler = less bugs) but also
+syntactically appealing in plaintext format (after all, one of
+the main motivations was to make the source archive-ready).
+
+The best example of this was deciding how to write links.
+
+I started off with the easiest implementation, which is also the
+least appealing (IMHO). A link looked like this:
+
+	[https://alexkarle.com/blog my blog]
+
+This is super easy to parse one character at a time. In
+psuedo-code:
+
+1. If current character is *`[`*, print *`<a href="`*
+2. Print all characters (the href) until you see a space/newline
+3. Once we see the space/newline, print *`">`*
+4. Print all characters (the description) up until the `]`
+5. Once we see the *`]`*, print the closing *`</a>`*
+
+This fits really nicely into our "parse one character at a time",
+since each special character in the link corresponds to a direct
+piece of HTML to output. However, it's ugly to print links that
+have no description, such as:
+
+	[https://alexkarle.com https://alexkarle.com]
+
+To address this, the next evolution added a (stack-allocated)
+"link buffer" that would store the href as it was printed so that
+if the ']' was hit before a space/newline, it was assumed that
+the description was the href and it would print the link buffer
+in the place of the description, enabling "bare links" like so:
+
+	[https://alexkarle.com]
+
+I was about to go live on my blog with that iteration because I
+liked it _enough_, but the one thing that really bothered me was
+that it's hard to read the description after the link. To the
+plaintext reader, the description is way more important than the
+link! Especially for long links, it's distracting to have to scan
+ahead to continue a sentence.
+
+I really wanted markdown-style links like so:
+
+	[my blog](https://alexkarle.com/blog)
+
+The immediate problem was that the parser can no longer print the
+characters as it sees them, since the URL happens after the
+description in the input but needs to come before the description
+in the output. I realized however that this is a similar problem
+to the way I used the linkbuf for bare links--all I had to do was
+store the description in the buffer, and play it back after
+printing the href. It's the same amount of memory, but a tad more
+complex, since the description is allowed to have inline styles,
+so before pushing onto the link buf, we need to check for styles
+and push those too (effectively a smaller version of the main
+loop).
+
+The final form of markdown links that I'd like to support but
+can't is a "postfix link", link so:
+
+	This is a [link] in
+	a paragraph
+	...
+	[link]: https://alexkarle.com
+
+Since the actual link could be anywhere in the document, this
+kind of parsing requires buffering potentially the whole
+document, which violates the streaming condition (which I'd like
+to keep!), so I stopped short of it.
+
+## Conclusion
+
+I hope you found this discussion of syntax, tradeoffs, and
+parsers interesting! I'm sure there's a lot more I can learn and
+improve on, but it's been a fun evolution from the `mdoc(7)` I
+started with! Check out the
+[source](https://git.sr.ht/~akarle/nihdoc) if you're curious. I
+expect it'll change rather frequently in the next few weeks, so I
+wouldn't advise depending on it yourself (but I wanted to open
+source it to share with others as a teaching tool regardless!).
+
+[Back to blog](/blog)

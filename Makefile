@@ -1,112 +1,67 @@
 # alexkarle.com makefile
-#
-# a tale of two builds
-#
-# This Makefile builds both gopher://alexkarle.com (text-only) and
-# alexkarle.com (html) from the same mdoc(7) by leveraging inference
-# rules. Since this generates a LOT of derived files, it's recommended
-# to run BSD make and run `make obj` first to get an out-of-tree build.
-# GNU make should work in a pinch though!
-#
-# targets:
-# 	build [default] -- generates html and text in obj (OpenBSD) or $PWD
-#	obj   -- makes the obj/ directory for out-of-tree build on OpenBSD
-# 	clean -- deletes html and text artifacts
-# 	install -- install to $DESTDIR/{www,gopher} (default: /var/www/htdocs)
-# 	jams  -- regenerate jam-tuesday index and stats files
-
-# gmake defines CURDIR, OpenBSD defines .CURDIR -- one should work
-DIR = $(.CURDIR)$(CURDIR)
 DESTDIR = /var/www/htdocs
+CFLAGS = -g -O2 -Wall -Wpedantic -Wextra
 
 # Variables used to determine what to build (and clean)
-HTML != echo $(DIR)/*.[1-9] | sed 's@$(DIR)/\([^\.]*\)\.[1-9]@\1.html@g'
-TEXT != echo $(DIR)/*.[1-9] | sed 's@$(DIR)/\([^\.]*\)\.[1-9]@\1.txt@g'
-SETS != find $(DIR)/jam-tuesday -name '[0-9][0-9][0-9][0-9]-*'
-NOTES != find $(DIR)/gopher/notes/all
-PHLOG != find $(DIR)/gopher/phlog
+HTML != echo www/*.txt www/blog/*.txt | sed 's@\([^\.]*\)\.txt@\1.html@g'
+SETS != find www/jam-tuesday -name '[0-9][0-9][0-9][0-9]-*'
+NOTES != find gopher/notes/all
+PHLOG != find gopher/phlog
 
 BUILT = $(HTML) \
-	$(TEXT) \
-	atom.xml \
-	index.html \
 	gopher/notes/index.gph \
-	gopher.atom
-
+	gopher/phlog/atom.xml \
+	www/atom.xml
 
 # Top level targets
 .PHONY: build
 build: $(BUILT)
 
 .PHONY: jams
-jams: jam-tuesday/stats jam-tuesday/index.html
-
-obj:
-	mkdir -p obj/jam-tuesday obj/bin obj/gopher/notes
+jams: gopher/jam-tuesday/stats www/jam-tuesday/index.html
 
 .PHONY: install
 install: build
-	# HTML to DESTDIR/www
-	install -m 755 -Dd $(DESTDIR)/www/jam-tuesday
-	install -m 444 $(SETS) $(DIR)/jam-tuesday/index.html $(DESTDIR)/www/jam-tuesday
-	install -m 444 *.html atom.xml $(DIR)/LICENSE $(DIR)/style.css $(DESTDIR)/www
-	# Text + gopher exclusives to DESTDIR/gopher
-	cd $(DIR) && pax -rw gopher $(DESTDIR)
-	pax -rw gopher $(DESTDIR)  # for out-of-tree builds
+	pax -rw www $(DESTDIR)
+	pax -rw gopher $(DESTDIR)
 	install -m 444 $(SETS) $(DESTDIR)/gopher/jam-tuesday
-	install -m 444 $(DIR)/LICENSE $(DESTDIR)/gopher
-	for f in *.txt; do \
-		install -m 444 $$f $(DESTDIR)/gopher/blog/$$(grep $$f $(DIR)/ORDER); \
-	done
-	install -m 444 atom.xml $(DESTDIR)/gopher/blog
-	cp $(DIR)/gopher/bin/* $(DESTDIR)/gopher/code
-	for d in jam-tuesday blog code; do \
-		(cat $(DIR)/gopher/$$d/index.gph; \
-		 $(DIR)/gopher/bin/dirlist $(DESTDIR)/gopher/$$d)\
+	install -m 444 LICENSE $(DESTDIR)/gopher
+	install -m 444 www/blog/*.txt www/atom.xml $(DESTDIR)/gopher/blog
+	install -m 444 gopher/bin/* $(DESTDIR)/gopher/code
+	for d in jam-tuesday code; do \
+		(cat gopher/$$d/index.gph; \
+		 gopher/bin/dirlist $(DESTDIR)/gopher/$$d)\
 		 > $(DESTDIR)/gopher/$$d/index.gph; \
 	done
-	install -m 444 gopher.atom $(DESTDIR)/gopher/phlog/atom.xml
+	(cat gopher/blog/index.gph; gopher/bin/blogidx.sh) > $(DESTDIR)/gopher/blog/index.gph
 
 .PHONY: clean
 clean:
-	rm -f $(BUILT) bin/fixlinks
-
+	rm -f $(BUILT)
 
 # Individual files to build
-jam-tuesday/stats: $(SETS) bin/jam-stats.sh
-	(date; echo; $(DIR)/bin/jam-stats.sh -f) > $@
+gopher/jam-tuesday/stats: $(SETS) bin/jam-stats.sh
+	(date; echo; ./bin/jam-stats.sh -f) > $@
 
-jam-tuesday/index.html: $(SETS) bin/jam-index.sh bin/jam-stats.sh
-	$(DIR)/bin/jam-index.sh > $@
+www/jam-tuesday/index.html: $(SETS) bin/jam-index.sh bin/jam-stats.sh
+	./bin/jam-index.sh > $@
 
-index.html:
-	ln -sf intro.html index.html
-
-atom.xml: blog.7 bin/genatom.sh
-	$(DIR)/bin/genatom.sh > $@
-
-bin/fixlinks: LINKS
-	mkdir -p bin
-	printf "#!/bin/sh\n# GENERATED DO NOT EDIT\nsed" > $@
-	awk '{ printf " \\\n  -e s#https://man.openbsd.org/%s#%s#g", $$1, $$2 } END { printf "\n" }' $(DIR)/LINKS >> $@
-	chmod +x $@
+www/atom.xml: $(HTML) bin/genatom.sh
+	./bin/genatom.sh > $@
 
 gopher/notes/index.gph: $(NOTES)
-	(cd $(DIR)/gopher/notes && $(DIR)/gopher/bin/notetag) > $@
+	(cd gopher/notes && ../bin/notetag) > $@
 
-gopher.atom: $(PHLOG) gopher/bin/gophatom.sh
-	$(DIR)/gopher/bin/gophatom.sh > $@
+gopher/phlog/atom.xml: $(PHLOG) gopher/bin/gophatom.sh
+	./gopher/bin/gophatom.sh > $@
 
-# Inference rules (*.txt and *.html)
-$(HTML): bin/genpost.sh bin/fixlinks
+# Inference rules (*.txt -> *.html)
+$(HTML): Makefile www/header.html www/footer.html bin/gencrumbs
 
-.SUFFIXES: .7 .txt .html
-.7.html:
-	@echo "mandoc -Thtml $<"
-	@mandoc -Tlint -Werror $<
-	@$(DIR)/bin/genpost.sh < $< > $@
-
-.7.txt:
-	@echo "mandoc -Tascii $<"
-	@mandoc -Tlint -Werror $<
-	@mandoc -Tascii -Owidth=72 < $< | col -b > $@
+.SUFFIXES: .txt .html
+.txt.html:
+	@echo "building $@"
+	@(cat www/header.html; \
+	  ./bin/gencrumbs $@; \
+	  nihdoc < $< ; \
+	  cat www/footer.html) > $@

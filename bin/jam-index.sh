@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 REPO=$(dirname "$(dirname "$0")")
-DIR="$REPO/jam-tuesday"
+DIR="$REPO/www/jam-tuesday"
 
 # Prep for the by artist listing
 ALL=$(mktemp)
@@ -10,33 +10,73 @@ for f in "$DIR"/[0-9][0-9][0-9][0-9]-*; do
 done | sort -f > "$ALL"
 
 cat <<EOM
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<link rel="stylesheet" href="/style.css" type="text/css" media="all"/>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- Inspired by https://www.swyx.io/css-100-bytes/ -->
 <style>
-h1 {
-  font-size: 1.6em;
-  margin-top: 40px;
-}
-h2 {
-  font-size: 1.3em;
-  margin-top: 32px;
-  margin-bottom: 0;
-}
-h3 {
+html {
+  max-width: 70ch;
+  padding: 3em 1em;
+  margin: auto;
   font-size: 1em;
+  font-family: sans-serif;
+}
+footer {
+  margin-top: 50px;
+  font-size: .8em;
+}
+code { font-family: consolas, courier, monospace; }
+h1 { font-size: 1.5em; }
+h2 { font-size: 1.2em; }
+h3 { font-size: 1.1em; }
+blockquote, code pre {
+  background: #f2f2f2;
+  overflow: auto;
+  padding: 10px;
+  border: 2px solid black;
+}
+.jam-artists tr:nth-child(even) {
+    background-color: #e3e3e3;
+}
+td.jam-artists, th.jam-artists, table.jam-artists {
+    border: 1px solid black;
 }
 </style>
 <title>Jam Tuesday Archive</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
 </head>
 <body>
+<small><code><a href="/">/home/alex</a> / <a href="/jam-tuesday">jam-tuesday</a></code></small>
 <h1>Jam Tuesday Archive</h1>
-<p>Welcome to the archive! For more information on the project,
-refer to <a href="/jam-tuesday.html">jam-tuesday(7)</a>.</p>
+<h2>About</h2>
+<p>
+From about October 2020 up until August 2021, my brother Matt and I
+got together every Tuesday evening to play music. It started as a
+way to stay sane during the COVID quarantine, but it quickly became
+a tradition and a highlight of the week.  No matter how stressful
+work was, or what was going on in the outside world, we could leave
+it all behind as we played some of our favorite tunes.
+</p>
+<p>
+At some point (woefully late), I realized it would be fun to start
+cataloging what we played.
+</p>
+<p>
+This archive includes the setlists and some play stats.
+</p>
+<p>
+There are no audio recordings (at least publicly), but there's a
+stray note here and there to "set the scene".
+</p>
+<p>
+The setlist notation is hopefully pretty straightforward. Unless
+otherwise noted, I'm on guitar and Matt's on keys (and if only one
+instrument is specified, it's me switching to it).  We both
+(attempt to) sing.  Sometimes we even harmonize :)
+</p>
 <h2>Stats</h2>
-<hr>
 EOM
 
 "$REPO"/bin/jam-stats.sh | sed \
@@ -48,20 +88,18 @@ EOM
 cat <<EOM
 </ul>
 <h2>Setlists</h2>
-<hr>
 Updated weekly:
 <ul>
 EOM
 
 for f in "$DIR"/[0-9][0-9][0-9][0-9]-*; do
     name=$(basename "$f")
-    echo "<li><a href=\"$name\">$name</a></li>"
+    echo "<li><a href=\"/jam-tuesday/$name\">$name</a></li>"
 done
 
 cat <<EOM
 </ul>
 <h2>All Songs, by Artist</h2>
-<hr>
 <table class="jam-artists">
 <tr><th>Artist</th><th>Song</th><th>Plays</th></tr>
 EOM
