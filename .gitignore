@@ -1,7 +1,5 @@
 # generated html
 *.html
-!www/header.html
-!www/footer.html
 !www/jam-tuesday/index.html
 !www/blog/my-old-man-orig.html
 

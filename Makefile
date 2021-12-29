@@ -56,12 +56,8 @@ gopher/phlog/atom.xml: $(PHLOG) gopher/bin/gophatom.sh
 	./gopher/bin/gophatom.sh > $@
 
 # Inference rules (*.txt -> *.html)
-$(HTML): Makefile www/header.html www/footer.html bin/gencrumbs
+$(HTML): Makefile bin/genpage
 
 .SUFFIXES: .txt .html
 .txt.html:
-	@echo "building $@"
-	@(cat www/header.html; \
-	  ./bin/gencrumbs $@; \
-	  nihdoc < $< ; \
-	  cat www/footer.html) > $@
+	./bin/genpage $< > $@

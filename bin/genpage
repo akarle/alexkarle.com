@@ -1,3 +1,12 @@
+#!/bin/sh
+# nihdoc -> html with header and footer
+
+[ -z "$1" ] && echo "usage: genpage FILE" 1>&2 && exit 1
+
+REPO=$(dirname "$(dirname "$0")")
+title=$(grep '^# ' "$1" | cut -c3- | tr -d '`*_')
+
+cat <<EOM
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,6 +36,19 @@ blockquote, pre {
   border: 2px solid black;
 }
 </style>
-<title>alexkarle.com</title>
+<title>$title</title>
 </head>
 <body>
+EOM
+
+
+"$REPO/bin/gencrumbs" "${1%%txt}html"
+nihdoc < "$1"
+
+cat <<EOM
+<footer>
+  © 2019-2021 Alex Karle | <a href="/">Home</a> | <a href="/license.html">License</a>
+</footer>
+</body>
+</html>
+EOM
