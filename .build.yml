@@ -15,5 +15,5 @@ tasks:
     acurl -f https://pages.sr.ht/publish/$site -Fcontent=@site.tar.gz
 triggers:
 - action: email
-  condition: always
+  condition: failure
   to: ci@alexkarle.com
