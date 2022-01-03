@@ -6,6 +6,14 @@ REPO=$(dirname "$(dirname "$0")")
 
 POSTS=$(grep '^- ../..' "$REPO/www/blog/index.txt" | sed 's#.*/blog/\([^)]*\).*#\1#')
 
+ARCH="$(uname)"
+parsedate() {
+    case "$ARCH" in
+        Linux) date +%F --date="$1" ;;
+        *) date -juf"%b %d, %Y" +%F "$1" ;;  # assume *BSD
+    esac
+}
+
 cat <<HEADER
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
@@ -23,8 +31,7 @@ for post in $POSTS; do
     src="$REPO/www/blog/$p.txt"
     [ "$p" = "index" ] && continue
 
-    d=$(date -juf"%b %d, %Y" +%F \
-        "$(grep '^_Published' "$src" | sed 's/_Published: \([^_]*\)_/\1/')")
+    d=$(parsedate "$(grep '^_Published' "$src" | sed 's/_Published: \([^_]*\)_/\1/')")
     if [ -z "$printed_update" ]; then
         printed_update=1
         printf "  %s\n" "<updated>${d}T00:00:00Z</updated>"
