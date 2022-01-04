@@ -120,7 +120,7 @@ cat <<EOM
 <br><br>
 <p style="font-size: 0.7em">Last Updated: $(date)</p>
 <p class="foot-license">
-© 2019-2021 Alex Karle | <a href="/">Home</a> | <a href="/license.html">License</a>
+© 2019-2022 Alex Karle | <a href="/">Home</a> | <a href="/license.html">License</a>
 </p>
 </body>
 </html>

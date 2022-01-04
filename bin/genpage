@@ -49,7 +49,7 @@ nihdoc < "$1"
 
 cat <<EOM
 <footer>
-  © 2019-2021 Alex Karle | <a href="/">Home</a> | <a href="/license.html">License</a>
+  © 2019-2022 Alex Karle | <a href="/">Home</a> | <a href="/license.html">License</a>
 </footer>
 </body>
 </html>
