@@ -12,7 +12,7 @@ For an up to date list of software/hardware I use, see
 
 ## 2021
 
-- 12/28 [Writing a Custom Markup Parser for this Site](/blog/mdoc-to-nihdoc.html)
+- 12/21 [Writing a Custom Markup Parser for this Site](/blog/mdoc-to-nihdoc.html)
 - 11/21 [From text-only to gopher-only](/blog/burrowing.html)
 - 11/21 [Some Non-Standard Uses of `git(1)`](/blog/use-git.html)
 - 09/21 [Out-of-tree Builds with `BSD make(1)`](/blog/make-obj.html)
