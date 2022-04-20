@@ -10,6 +10,10 @@ If you'd like to get notifications on new articles, I publish an
 For an up to date list of software/hardware I use, see
 [my "uses" page](/uses.html).
 
+## 2022
+
+- 04/22 [Exploring Acme, Plan 9, and `NO_COLOR`](/blog/exploring-plan9.html)
+
 ## 2021
 
 - 12/21 [Writing a Custom Markup Parser for this Site](/blog/mdoc-to-nihdoc.html)

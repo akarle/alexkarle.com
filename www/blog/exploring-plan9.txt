@@ -1,0 +1,198 @@
+# Exploring Acme, Plan 9, and `NO_COLOR`
+
+_Published: April 19, 2022_
+
+For the past couple months I've been exploring Plan 9, a distributed
+operating system from Bell Labs from the same group that developed
+UNIX and C. It's been a pretty deep rabbit hole, so I thought I'd
+write about it here.
+
+## How it Started
+
+It all started with an interest in tooling. I'm generally really
+interested in human-computer interaction, and Plan 9 presents a
+radically different approach to using a computer. I watched Russ
+Cox's [Tour of Acme](https://research.swtch.com/acme) (a text editor
+that was written for Plan 9) and was blown away by the way the
+plumber allowed hyperlinking plain text through a simple rule-based
+system. If you haven't seen Acme in use, I'd highly recommend
+watching that first.
+
+After reading everything I could about Acme, I knew I wanted to
+give it a try, so I downloaded
+[plan9port](https://9fans.github.io/plan9port/) (a userspace port
+of many Plan 9 programs) and tried to integrate it into my workflow.
+
+## Early Days: Trying out Acme
+
+Trying to code in Acme was immediately jarring. I had grown fond
+of dark themes and syntax highlighting, so the cream colored
+background with plain black text seemed washed out.
+
+After the shock of the colors came the reality check: I'm no good
+with a mouse, and Acme requires precise mouse use.  Acme not only
+needs a three button mouse (select, execute, and plumb/open), but
+common operations like copy/paste use mouse chording (i.e. button 1
+and 3 at the same time).
+
+Now, I've invested countless hours into learning Vim and have years
+of muscle memory built up. I've chosen keyboard-driven tools wherever
+possible. So to type on something that lacks what would be considered
+primitive keyboard motions (up/down scroll, don't move the cursor)
+was a huge adjustment.
+
+Even so, that wasn't the end of my trial. I swapped my trackball
+for a real mouse and gave it an earnest shot. I really enjoyed the
+right-click to plumb and grew fond of the colors and simple stacking
+interface.
+
+There was also a certain appeal to it's take on extensions--rather
+than have an extension language like VimL or Emacs Lisp, Acme
+presents it's contents to other processes as files on a filesystem.
+The user can write programs in any language to interact with Acme,
+which is so cool.
+
+Unfortunately, I didn't have the time to invest into fully customizing
+Acme via scripts. And given the spartan interface, I really did
+need to to continue to use it. For example, the TAB key inputs TAB
+characters.  To write Python you'd need to use a script to convert
+them to spaces.  Ultimately, I chose to crawl back to tools I was
+familiar with.
+
+## Middle Ground: Bringing Acme to my Tools
+
+Acme was too hard to transition to, but I was still bent on bringing
+the benefits to my existing tools. I focused on two things:
+
+1. Building a "plumber" (to decide how to open/display things)
+2. Trying out the monochrome colors
+
+### Building The Plumber
+
+This turned out to be rather easy. The key realization was that
+`tmux(1)` allows external programs to manipulate the session.  So
+with `tmux` as my replacement for acme-windows, I was able to write
+a [`plumb`](https://git.sr.ht/~akarle/dotfiles/tree/main/item/bin/plumb)
+script that takes in text from the `tmux` selection and opens it
+in the browser if it's a URL, `vi` in a new split if it's a file,
+`man` if it's a man-page, `git show` if it's a SHA, etc.
+
+To make this useful, I paired it with several hotkeys that use the
+`search-backward` `tmux` command to search for all instances of a
+`plumb`-able object. For example, `prefix-H` finds URLs in the
+scrollback:
+
+	bind-key H copy-mode \; send-keys -X search-backward "http[^ ]*"
+
+Then the `'a'` key in `copy-mode` (while searching) sends the URL
+to `plumb`:
+
+	bind-key -T copy-mode-vi a send-keys -X copy-pipe-no-clear "plumb #{pane_current_path}"
+
+After a couple months of use, I've found that while searching for
+man pages and git-sha's are a cool screensharing trick, I only
+really use the URL search. For files, it's nifty that I can teach
+`tmux` to open the output of `grep -n` to the exact line, but I've
+found that I generally don't want that many Vim's kicking around.
+
+In other words: Acme did it better. `tmux` can create the splits,
+but it doesn't feel cohesive since not all splits are editable.
+
+### My Life in Monochrome
+
+This was a fun experiment. Apologies upfront to Cal, my work friend
+who had to go through it with me while we paired a feature :)
+
+Rob Pike (the author of Acme, amongst many other achievements) has
+been
+[quoted](https://groups.google.com/g/golang-nuts/c/hJHCAaiL0so/m/kG3BHV6QFfIJ)
+saying that "syntax highlighting is juvenile". I wanted to know
+why. Could monochrome code really make me a better programmer?
+
+So, one evening I configured all of my tools to disable color using
+the `NO_COLOR` environment variable and individual settings as
+described at [https://no-color.org]. I updated my terminal to be
+Acme-cream colored and wrote a Vim
+[colorscheme](https://git.sr.ht/~akarle/dotfiles/tree/main/item/.config/nvim/colors/acme.lua)
+to match. I was ready to take the plunge.
+
+The initial feeling of switching to `syntax off` was that of being
+lost.  I had become so used to the same colorscheme that the colors
+themselves act as guideposts to navigate the code. Red for
+keywords--helps find the `else` block. Green for strings--easy to
+see the end of it. And so on.
+
+When I disabled syntax highlighting and looked at our codebase, it
+felt completely overwhelming and unfamiliar. I had lost my ability
+to read it efficiently.
+
+What followed was interesting--I had to read more intently, and
+in doing so I understood the code better. It took longer, but
+frequently the time was worth it. Over time, I adjusted and started
+to rely on different signposts--the structure of the code (whitespace,
+newlines, etc) proved much more important. I never got up to my
+full skimming speed though, possibly due to code styles that don't
+lend themselves to good visual structure (i.e. super long variable
+names causing wrapped lines).
+
+To my surprise, I actually really enjoyed programming without syntax
+highlighting.  It made the little bits of color still there really
+stick out in a way that would otherwise get lost in the sea of
+color.  Color became a much more intentional indicator, and things
+like blue for matching parenthesis and pink for compile errors stood
+out.  I felt focused and I do think my code might have been slightly
+better structured.
+
+However, after a few weeks like this, I switched back because, as
+Cal put it, "we evolved to see color for a reason". I think there's
+definitely a scale of "useful color" and less is more in many cases,
+but being able to skim code is super powerful when on a timecrunch.
+Plus, it involves less explanation when I pop into a pairing session
+and share my screen :)
+
+## Going All In: Bare Metal Install
+
+A month or so ago, still interested in the non-tooling bits of Plan 9,
+I decided it was time to give it a true install. I found an old
+SSD and put [9front](https://9front.org) on my X220 ThinkPad.
+
+I was greeted by the now familiar face of Acme, but a lot of other
+things about the system felt unfamiliar. For example, while in UNIX
+the shell has a bunch of complexity to handle line-editing, in Plan 9
+this is all built into the windowing system.  The window for the
+terminal allows editing any text, and that's the mechanism used to,
+say, rerun the previous command with changes.
+
+Likewise, there was no pager like `less` to capture and scroll in
+the terminal. Instead, the terminal doesn't scroll by default, so
+`man` just prints the whole manual and lets the user scroll.
+
+I didn't get to dive too deep into the actual distributed nature,
+since this was a single computer install. That said, I was left in
+awe by the realization that the original authors of UNIX had
+envisioned a different (and better in many ways) future.
+
+I find this so interesting because I think it's easy to put one's
+favorite technologies on a pedestal. But to see the original authors
+create something so different and imagine what could have been...
+It really drove home that there's a certain network effect for
+software. Once it's used it gets stuck. CLI tools for example--
+`git` would take years to change `checkout` due to the number of
+scripts that use it.
+
+It made me wonder--what are the quirks of UNIX that we put up with
+as "the way things are"? How could it be better?  Plan 9 was the
+closest look at the original authors' responses to these questions.
+
+## Going Forward
+
+I'm writing this now on my OpenBSD install. I spent multiple evenings
+getting 9front to work and kept a somewhat detailed log that I've
+published on my gopherhole:
+[plan9-journal.txt](gopher://alexkarle.com/0/notes/all/plan9-journey.txt)
+
+Installing and perusing Plan 9 has changed the way I think about
+UNIX, mouses, and how I've idolized certain software. It's refreshing
+to peek into an alternate universe in which all things truly are
+files and resources can be distributed seamlessly across machines,
+but it's always nice to come home to the familiar.
