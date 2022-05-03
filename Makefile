@@ -34,6 +34,7 @@ install: build
 		 > $(DESTDIR)/gopher/$$d/index.gph; \
 	done
 	(cat gopher/blog/index.gph; gopher/bin/blogidx.sh) > $(DESTDIR)/gopher/blog/index.gph
+	gzip -k -f $(DESTDIR)/www/*.html $(DESTDIR)/www/*/*.html
 
 .PHONY: clean
 clean:
