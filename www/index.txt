@@ -47,3 +47,5 @@ lightweight markup parser, [`nihdoc`](https://git.sr.ht/~akarle/nihdoc).
 - Email: _contact AT this-domain_
 - IRC: `akarle` on [libera.chat](https://libera.chat)
 - sourcehut: [`~akarle`](https://sr.ht/~akarle)
+- Resume: `$ curl -sS https://alexkarle.com/resume.7 | mandoc -l`
+  # [PDF](https://alexkarle.com/akarle.pdf)

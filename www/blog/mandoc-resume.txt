@@ -1,0 +1,117 @@
+# Typesetting a Resume with `mandoc(1)`
+
+_Published: May 18, 2022_
+
+## History
+
+My first real resume was written freshman year of college in a haste
+because a friend told me his dad's software company was looking to
+hire interns. It was a scraped together Word doc that had typos in
+the headers because ALLCAPSWORDS were considered acronyms and are
+not subject to the red squiggly spell check. I didn't notice until
+someone pointed it out to me after sending it out. I didn't get the
+job.
+
+Updating a resume was always way low on my todo list--the kind of
+thing that didn't happen until it was needed. So this first resume
+lived on for years in a similar format. Needless to say, I was never
+really proud of how my resume looked.
+
+Towards the end of college, I got really into version controlling
+my written assignments. `git` for code wasn't enough--I wanted to
+know, without another proofread, that I hadn't fat fingered a typo
+into my essay since the last time I proofread it. So I started
+writing my non-technical essays in `LaTeX`, which fit well into my
+`git` workflow.
+
+I decided somewhere around then that I would one day rewrite my
+resume in `LaTeX`; however, there was no need at the time, since I
+had already accepted a return offer to MathWorks. So I put it on
+hold.
+
+As I moved to Linux and OpenBSD on personal computers, the desire
+to leave `docx` behind became even greater; but again, updating a
+resume just wasn't fun.  I had better things to do, like write
+[Gopher clients](https://sr.ht/~akarle/gc/) using `nc(1)` and
+`awk(1)` or [install Plan 9](/blog/exploring-plan9.html).
+
+At this point, it's been years since I've touched `LaTeX`. I don't
+have a compiler installed, nor do I remember the Vim setup I had
+going that made for a reasonably fast preview cycle. Could I find
+it in my [dotfile history](https://sr.ht/~akarle/dotfiles/)? Of
+course (`git` for everything!). But the effort to port it kept
+looking less appealing until a few months ago when it occurred to
+me: _what if I could write a reasonable looking resume in `mdoc(7)`_?
+I [had the experience](/blog/my-old-man.html), and UNIX has a long
+history of typesetting. It felt like the perfect blend of:
+
+- Easily versionable
+- Plaintext / archivable
+- Exportable to PDF
+- (IMHO) The right amount of nerdy
+
+So I set out to do it.
+
+## The Results
+
+See for yourself:
+
+	$ curl -sS https://alexkarle.com/resume.7 | mandoc -l
+
+There's of course a [PDF version](https://alexkarle.com/akarle.pdf)
+too.
+
+Overall, I'm really happy with how it turned out!
+
+## Lessons Learned
+
+Originally I thought I'd try to replicate a more traditional resume.
+Or at least hide the fact that it's typeset using a man-page tool.
+
+I discovered pretty quickly though that `mandoc(1)` is focused on
+`man` pages and less suited for general typesetting. Reading the
+[`roff(7)` man page](https://man.openbsd.org/roff.7#COMPATIBILITY),
+things like setting font, margins, etc are pretty limited (which
+makes total sense if targeting a terminal more than a printer).
+
+I realized my options were to switch to `groff(1)`, which looks to
+be a more fully featured typesetting tool, or double down on the
+man-page appearance.
+
+For now, I've chosen the latter, mostly because I think it's a cute
+hat tip to one of my favorite tools--`man(1)`.
+
+In lieu of margin/spacing/font adjustments I was able to keep a
+relatively compact feeling by:
+
+- Using `.br` (line breaks) instead of `.Pp` (new paragraphs)
+- Using `.Sy` (bold font) instead of `.Ss` (subsections) in WORK EXPERIENCE
+- Creating a two column work experience layout using a `-tag` list
+  (importantly, the list items themselves can be lists for job description!)
+
+	.Bl -tag -width "YYYY-MM - YYYY-MM" -compact
+	.It 2021-10 - Present
+	.Em Senior Software Engineer
+	.Bl -dash -compact
+	.It
+	Wrote custom CLI tooling for bug triage and local development
+	...
+	.El
+	.El
+
+## Conclusion
+
+For the first time maybe ever, I'm happy with how my resume looks.
+I had a blast learning some fine-grained `roff(7)` commands that
+don't show up in regular man-pages even though I removed them in
+favor of the classic `NAME`, `SYNOPSIS`, ... `SEE ALSO` layout.
+
+I am not a lawyer, so I don't know for sure if traditional software
+licenses apply to `mdoc(7)` resumes, but the MIT license does mention
+"associated documentation" so I put one in the comments of the
+source.
+
+If you like how it looks, feel free to remix it and make it your
+own!  If you do, I'd appreciate if you keep the link to this post
+and license in the header, but more importantly, I'd love to see
+it! My email is in the source :)

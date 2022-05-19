@@ -12,6 +12,7 @@ For an up to date list of software/hardware I use, see
 
 ## 2022
 
+- 05/22 [Typesetting a Resume with `mandoc(1)`](/blog/mandoc-resume.html)
 - 04/22 [Exploring Acme, Plan 9, and `NO_COLOR`](/blog/exploring-plan9.html)
 
 ## 2021
