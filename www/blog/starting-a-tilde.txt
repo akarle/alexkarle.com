@@ -1,0 +1,82 @@
+# Starting a Tilde Community for Fun and the Learnings
+
+_Published: May 19, 2022_
+
+Like most good projects, this one started with a name: _garbash_.
+
+The name was my friend [Anthony's](https://anthonymorris.dev) idea.
+It came out of a PR review as a self-deprecating take on his bash
+code (which actually turned out to be mine).
+
+We laughed and I realized the domain was for sale, so I snagged it
+and resolved to find its purpose later.
+
+That purpose came in the form of starting a small tilde community
+together: [garbash.com](https://garbash.com).
+For those unfamiliar, a [tilde](https://tildeverse.org) is a public UNIX system,
+usually combining external services (web hosting) with a small
+internal social network (local only IRC, `talk(1)`, etc). It's
+a harkening back to the days when UNIX was a multi-user system--
+a fun escape from the complexities and ephemerality of modern
+container based infrastructure.
+
+In this blog post, I don't want to go too much into the technical
+setup (I wrote [detailed notes](https://garbash.com/~alex/) and
+published [all the configs](https://git.garbash.com/alex/config/files.html)).
+Instead I want to write about the experience creating it.
+
+I wasn't sure I'd ever write this post.
+Originally I thought I'd keep garbash separate from my personal
+portfolio. There's a certain feeling of freedom when coding,
+writing, or self-hosting services without association to a career or
+professional life (something that has touched this blog more recently).
+I imagine it's how writers feel when using a nom de plume.
+
+But ultimately, I spent days on garbash, and it's a project that I'm
+really proud of. It's something I do want associated with me,
+and above all I want to broadcast it in hopes that someone finds
+the collective research, configs, or notes valuable.
+
+## Reflections on Success
+
+On the outside, garbash might look like a failure or abandoned side
+project. A "budding tilde" with only two users--the admins.
+And while it's true that we never quite got around to making it a
+larger community, garbash was, to me, a massive success.
+
+The simplest win was that I got to explore new technologies.  Having
+a sandbox to set up services I've always wanted to use proved
+invaluable in terms of learning. The best example of this is email;
+almost every hackernews comment will tell you *not* to self host
+it.  Don't even try! You'll forget some DNS record and big senders
+will mark your domain as bad.  You'll never be able to reach their
+inboxes. Well, with garbash, I was able to say "so what" and
+[set up email addresses with OpenSMTPD](https://garbash.com/~alex/notes/004-mail-server.html)
+fully featured with DKIM signing and proper SPF and DMARC records.
+
+Better yet, the act of pairing and explaining services I've set up
+before like [git hosting via `stagit(1)`](https://garbash.com/~alex/notes/007-git-coding.html)
+or [a Wireguard VPN tunnel for internal services](https://garbash.com/~alex/notes/009-wireguard.html)
+solidified my mental model of the technologies. Writing scripts
+together to automate things like setting up users or Wireguard
+key management was both fun and a chance to share coding
+tips and tricks.
+
+But best of all, I came away from garbash with a stronger friendship.
+We [set up an IRC server](https://garbash.com/~alex/notes/008-local-irc.html)
+expecting it to be the hub of the network. Instead it became our
+preferred way to chat just the two of us about life and tech.
+
+We may still find friends who want to join, but if we don't
+that's OK; as a project it's been one of my favorites. To
+Anthony--thanks for all the good times pairing and for agreeing
+to take on such an out-there project.
+
+## Conclusion
+
+If there's one takeaway from this post, it's not just to
+try self-hosting your services--_find a friend to set them up with
+you and learn from each other._
+
+And of course feel free to use what we wrote as a
+[starting place](https://garbash.com/~alex/)--it's all FOSS!
