@@ -1,0 +1,261 @@
+# Automating Multi-User WireGuard setup on OpenBSD
+
+_Published: June 13, 2022_
+
+## Background
+
+In my previous post, I wrote about how I [started a tilde
+community](/blog/starting-a-tilde.html) with my friend
+[Anthony](https://anthonymorris.dev) in 2021. In this post I want
+to do a deep dive into how we set up and manage our VPN.
+
+We knew early on that we wanted to host web services such as a
+web-based IRC client and mailing list archives, so we decided to
+set up a VPN to ensure that only tilde members could access these
+services.
+
+It was pretty easy to settle on WireGuard as our VPN of choice--it
+comes in base OpenBSD (added to the kernel in recent years) and has
+great clients for all platforms. However, the set up can be a bit
+manual, and after surveying the slew of WireGuard configuration
+management tools out there, we decided it'd be a better learning
+experience and more fun to write one ourselves (that's what the
+tilde is all about!).
+
+## The Setup
+
+Our tilde machine is a single VM on Linode, and we have multiple
+clients that need to connect to it. While developing a mesh network
+like Tailscale would be ideal, we don't currently have any use case
+for client->client communication; we just want to enable members
+to reach the VM (and keep non-members out).
+
+As such, the resulting network topology mirrors a hub and spoke,
+but the VM doesn't do any routing between clients--it can talk to
+each of them but they can't talk to eachother without IP forwarding
+enabled on the server (likewise they can't eat the VM's bandwidth
+by sending external traffic through it).  To a client, it's really
+just an auth-wall and less of a network.
+
+Regardless, the tool should be usable for setups where clients do
+want access to eachother--the only changes needed would be to
+configure the Allowed IPs to send traffic to the other hosts down
+the wg interface and set up the sysctl.conf to allow IP forwarding.
+
+
+## Setting Up One Client
+
+### Technical Details
+
+For the purpose of this demo, we'll use 10.6.6.1 as the private IP
+for the VM and 10.6.6.0/24 addresses for the clients.
+
+To understand how this topology is set up, a brief overview of the
+"Allowed IPs" WireGuard concept is helpful.  Because WireGuard is
+peer to peer, there are no true clients and servers.  In our case
+we made a single server, but it doesn't change the fact that the
+server is just a peer with N peers (clients) and the clients are
+just a peer with 1 peer (the server).
+
+Allowed IPs are used both for outbound and inbound traffic in
+WireGuard.  When sending traffic outbound, the packets are routed
+to the peer with the most specific matching IP range. For a client,
+having a peer of 10.6.6.1/32 will route all the traffic to that
+address to that peer. When receiving traffic from a peer, the Allowed
+IP range is used to filter incoming traffic. So in the case of the
+server, my peer (10.6.6.2) can't send back traffic pretending to
+be Anthony (10.6.6.3), because we configured the server's peers to
+have Allowed IPs of just their specific IP address (10.6.6.2/32).
+This server-side Allowed IP is necessary to route the traffic
+destined for our clients back to the right client too.
+
+### Configuration
+
+Since the server and client are all peers, the basic information
+needed for each one is the same:
+
+1. An IP address
+2. A private key and the corresponding public key
+
+In addition the server requires choosing a port so clients can find
+it (clients will choose their own port dynamically).
+
+Each peer that needs to communicate with another peer requires the
+public key of the other peer. So in our setup, the server is
+configured to allow traffic from all the clients by specifying their
+public keys and the clients require the public key of the server.
+
+As of OpenBSD 7.0, here's the configuration files we used (for how
+to create the keys, see "Generating the Key Combo" below).
+
+*Note:* the [`wg(4)`](https://man.openbsd.org/wg.4) man page is a
+great reference and should be referred to before copying any configs
+in case they have changed.
+
+#### Server
+
+For the server, a [`hostname.if(5)`](https://man.openbsd.org/hostname.if)
+file should be created (in our case `/etc/hostname.wg0` for the
+`wg0` interface).
+
+	wgkey <server private key> wgport <secret port>
+	inet 10.6.6.1 255.255.255.0
+	wgpeer <public key 1> wgaip 10.6.6.2/32
+	wgpeer <public key 2> wgaip 10.6.6.3/32
+	...
+
+Where `wgpeer` defines a peer's public key and the Allowed IPs
+for that peer are specified by `wgaip`.
+
+Once created the interface can be brought up with the following:
+
+	# sh /etc/netstart
+
+Make sure to `chmod 600` and `chown root:wheel` that file! The
+private key for the server is.. uh private.
+
+#### Client
+
+The client config file looks like so:
+
+	[Interface]
+	PrivateKey = <private>
+	Address = 10.6.6.2/24
+	
+	[Peer]
+	PublicKey = <public key of server>
+	AllowedIPs = 10.6.6.1/32
+	Endpoint = <server-ip>:<secret-port>
+
+The config file can be used with `wg-quick` on the client:
+
+	# wg-quick up client.conf
+
+Again notice that only traffic destined for the server will be
+routed differently. Normal internet traffic will be sent through
+the default interface.
+
+## Creating a Config Management Tool
+
+With our tool, which we called `wggen(1)`, we wanted to focus on
+easing the maintenance burden more so than the initial setup. While
+we only have a small handful of users (a couple more since I last
+wrote!), we knew we'd need some key management to make creating new
+users (and new secondary clients for existing members) easy.
+
+Looking at the setup, the things that need to be done are:
+
+1. Finding the next available IP address on the private network
+2. Creating a public/private key combo
+3. Updating the server `hostname.if` file to accept traffic from the public key
+4. Generating a config file for the client
+5. Sending the member their config file
+
+### Storing the Credentials
+
+For each client, we create a directory `/etc/wg/<client>` to store
+the client's keys and configuration file.
+
+As a one time setup, the `/etc/wg` directory should be created with
+permissions set to only give the root user access:
+
+	# mkdir /etc/wg
+	# chmod 700 /etc/sg
+	# chown root:wheel /etc/wg
+
+### Finding an IP Address
+
+Given that we expect a small number of these, a simple solution
+here was to register the hosts and their IP addresses in a flat
+text file (managed by the tool).
+
+This file, `/etc/wg/hosts`, looks like so:
+
+	server  10.6.6.1
+	alex    10.6.6.2
+	anthony 10.6.6.3
+	...
+
+To find the next available IP, we make use of the fact that the
+file is sorted and grab the last line using `tail(1)` to see the
+most recently used IP. From that, we get the last digit of that
+line by using `cut(1)` splitting on the `.` separator. That number
+is all we need to determine the next IP allocated.
+
+	NAME="$1"
+	DATADIR=${DATADIR:-/etc/wg}
+	HOSTFILE=${HOSTFILE:-${DATADIR}/hosts}
+	
+	CUR=$(tail -n 1 "$HOSTFILE" | cut -d. -f 4)
+	NEXT=$((CUR + 1))
+
+Saving the selection back is as easy as appending:
+
+	echo "$NAME	10.6.6.$NEXT" >> "$HOSTFILE"
+
+### Generating the Key Combo
+
+The private key is generated and saved into /etc/wg/<hostname>
+by using the following `openssl` oneliner (from `wg(4)`):
+
+	CONF="$DATADIR/$NAME"
+	mkdir -p "$CONF"
+	openssl rand -base64 32 > "$CONF/private.key"
+
+Obtaining the public key could use the `wg(1)` tool, but
+to prevent the need to install `wg-tools`, we used the clever
+_"create a temporary interface and grab the public key from that"_
+trick from `wg(4)`:
+
+	ifconfig wg9 destroy 2>/dev/null   || true
+	ifconfig wg9 create wgport 13421 wgkey "$(cat "$CONF/private.key")"
+	ifconfig wg9 | grep wgpubkey | cut -d ' ' -f 2 > "$CONF/public.key"
+	ifconfig wg9 destroy 2>/dev/null   || true
+
+### Generating the Config
+
+Generating the config is straightforward. Just a heredoc multi-line
+comment (with the server-specific bits hardcoded but left out for
+the sake of publishing).
+
+
+	cat <<EOM > "$CONF/client.conf"
+	# public key: $(cat "$CONF/public.key")
+	[Interface]
+	PrivateKey = $(cat "$CONF/private.key")
+	Address = 10.6.6.$NEXT/24
+	
+	[Peer]
+	PublicKey = <server-public-key>
+	AllowedIPs = 10.6.6.1/32
+	Endpoint = <server-ip>:<server-port>
+	EOM
+
+### Updating the Server's Known Peers
+
+To update the known peers, we update the existing server config
+file by appending the public key and allowed IP followed by a
+restart of the interface:
+
+	cat <<EOM >> /etc/hostname.wg0
+	wgpeer $(cat "$CONF/public.key") wgaip 10.6.6.$NEXT/32
+	EOM
+	
+	sh /etc/netstart
+
+### Sending the Config
+
+Sending the config is easy--we already have email on the
+[machine!](https://garbash.com/~alex/notes/004-mail-server.html)
+Using the `mail(1)` client to deliver internally is a oneliner:
+
+	mail -s "Your wireguard info" "$USERNAME" < "/etc/wg/$USERNAME/client.conf"
+
+## Conclusion
+
+Prior to writing `wggen(1)`, I'd set up WireGuard a few times on
+my own mostly to learn the technology. The tilde was the perfect
+excuse to solidify that knowledge and create something useful!
+
+As with all our little tools that came out of the tilde, the source code
+is FOSS and available [here](https://git.garbash.com/alex/config/file/usr/local/bin/wggen.html).
