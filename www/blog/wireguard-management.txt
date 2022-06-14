@@ -77,7 +77,7 @@ needed for each one is the same:
 1. An IP address
 2. A private key and the corresponding public key
 
-In addition the server requires choosing a port so clients can find
+In addition, the server requires choosing a port so clients can find
 it (clients will choose their own port dynamically).
 
 Each peer that needs to communicate with another peer requires the
@@ -107,7 +107,7 @@ file should be created (in our case `/etc/hostname.wg0` for the
 Where `wgpeer` defines a peer's public key and the Allowed IPs
 for that peer are specified by `wgaip`.
 
-Once created the interface can be brought up with the following:
+Once created, the interface can be brought up with the following:
 
 	# sh /etc/netstart
 
@@ -131,9 +131,9 @@ The config file can be used with `wg-quick` on the client:
 
 	# wg-quick up client.conf
 
-Again notice that only traffic destined for the server will be
-routed differently. Normal internet traffic will be sent through
-the default interface.
+Notice that only traffic destined for the server will be routed
+differently (due to the specific AllowedIPs). Normal internet traffic
+will be sent through the default interface.
 
 ## Creating a Config Management Tool
 
@@ -195,17 +195,17 @@ Saving the selection back is as easy as appending:
 
 ### Generating the Key Combo
 
-The private key is generated and saved into /etc/wg/<hostname>
+The private key is generated and saved into `/etc/wg/<hostname>`
 by using the following `openssl` oneliner (from `wg(4)`):
 
 	CONF="$DATADIR/$NAME"
 	mkdir -p "$CONF"
 	openssl rand -base64 32 > "$CONF/private.key"
 
-Obtaining the public key could use the `wg(1)` tool, but
-to prevent the need to install `wg-tools`, we used the clever
-_"create a temporary interface and grab the public key from that"_
-trick from `wg(4)`:
+Obtaining the public key could use the `wg(1)` tool, but to prevent
+the need to install `wireguard-tools`, we used the clever _"create
+a temporary interface and grab the public key from that"_ trick
+from `wg(4)`:
 
 	ifconfig wg9 destroy 2>/dev/null   || true
 	ifconfig wg9 create wgport 13421 wgkey "$(cat "$CONF/private.key")"
@@ -214,10 +214,10 @@ trick from `wg(4)`:
 
 ### Generating the Config
 
-Generating the config is straightforward. Just a heredoc multi-line
-comment (with the server-specific bits hardcoded but left out for
+Generating the config is straightforward. Just a heredoc
+string `cat`'d into a file for safekeeping.  (with the
+server-specific bits hardcoded but left out for
 the sake of publishing).
-
 
 	cat <<EOM > "$CONF/client.conf"
 	# public key: $(cat "$CONF/public.key")
@@ -234,8 +234,8 @@ the sake of publishing).
 ### Updating the Server's Known Peers
 
 To update the known peers, we update the existing server config
-file by appending the public key and allowed IP followed by a
-restart of the interface:
+file by appending the public key and the allocated IP as the
+AllowedIP followed by a restart of the interface:
 
 	cat <<EOM >> /etc/hostname.wg0
 	wgpeer $(cat "$CONF/public.key") wgaip 10.6.6.$NEXT/32
@@ -245,8 +245,8 @@ restart of the interface:
 
 ### Sending the Config
 
-Sending the config is easy--we already have email on the
-[machine!](https://garbash.com/~alex/notes/004-mail-server.html)
+Sending the config is easy--we already have [email on the
+VM](https://garbash.com/~alex/notes/004-mail-server.html)!
 Using the `mail(1)` client to deliver internally is a oneliner:
 
 	mail -s "Your wireguard info" "$USERNAME" < "/etc/wg/$USERNAME/client.conf"
