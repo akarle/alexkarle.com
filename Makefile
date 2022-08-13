@@ -6,7 +6,7 @@ CFLAGS = -g -O2 -Wall -Wpedantic -Wextra
 HTML != echo www/*.txt www/blog/*.txt | sed 's@\([^\.]*\)\.txt@\1.html@g'
 SETS != find www/jam-tuesday -name '[0-9][0-9][0-9][0-9]-*'
 NOTES != find gopher/notes/all
-PHLOG != find gopher/phlog
+PHLOG != find gopher/phlog | grep -v atom.xml
 
 BUILT = $(HTML) \
 	gopher/notes/index.gph \
