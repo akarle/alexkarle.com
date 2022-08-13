@@ -23,7 +23,11 @@ html {
   margin: auto;
   font-size: 1em;
   font-family: sans-serif;
+  /* amcme inspired background */
+  background: #FFFFEA;
 }
+a { color: #0939AD; }
+a:visited { color: #613583; }
 footer {
   margin-top: 50px;
   font-size: .8em;
@@ -36,7 +40,7 @@ blockquote, code pre {
   background: #f2f2f2;
   overflow: auto;
   padding: 10px;
-  border: 2px solid black;
+  border: 2px solid #8888cc;
 }
 .jam-artists tr:nth-child(even) {
     background-color: #e3e3e3;

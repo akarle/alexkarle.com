@@ -17,12 +17,16 @@ cat <<EOM
 <!-- Inspired by https://www.swyx.io/css-100-bytes/ -->
 <style>
 html {
-  max-width: 70ch;
+  max-width: 80ch;
   padding: 3em 1em;
   margin: auto;
   font-size: 1em;
   font-family: sans-serif;
+  /* amcme inspired background */
+  background: #FFFFEA;
 }
+a { color: #0939AD; }
+a:visited { color: #613583; }
 footer {
   margin-top: 50px;
   font-size: .8em;
@@ -31,11 +35,20 @@ code { font-family: consolas, courier, monospace; }
 h1 { font-size: 1.5em; }
 h2 { font-size: 1.2em; }
 h3 { font-size: 1.1em; }
-blockquote, pre {
-  background: #f2f2f2;
+pre {
+  background: #e9feff;
   overflow: auto;
   padding: 10px;
-  border: 2px solid black;
+  border: 2px solid #8888cc;
+}
+blockquote {
+  background: #eeec9a;
+  overflow: auto;
+  padding: 10px;
+  border: 2px solid #989849;
+}
+blockquote p {
+  margin: 0px;
 }
 </style>
 <title>$title</title>

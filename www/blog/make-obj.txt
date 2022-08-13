@@ -34,6 +34,7 @@ enough the answer was the first hit!  I've copied it for
 convenience below (licensed under the BSD-3 clause):
 
 > *`.OBJDIR:`*
+>
 > Path to the directory where targets are built.  At
 > startup, make searches for an alternate directory to
 > place target files. make tries to `chdir(2)` into
