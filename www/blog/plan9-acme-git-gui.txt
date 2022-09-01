@@ -1,0 +1,213 @@
+# Using the Plan 9 Plumber to Turn Acme into a Git GUI
+
+_Published: August 31, 2022_
+
+## Backstory
+
+I first gave Acme a [somewhat serious spin](/blog/exploring-plan9.html)
+~4 months ago and decided that the mouse-driven editor was a bit too
+unwieldy coming from my keyboard focused tool suite.
+
+
+However, a couple weeks ago I watched a snippet of the Lex Fridman podcast
+where he [interviewed John Carmack](https://www.youtube.com/watch?v=tzr7hRXcwkw)
+on IDEs (the tldr being that an IDE with a powerful debugger is crucial).
+Carmack advocating for a heavy IDE naturally inspired me to revisit one
+of the most spartan editors I've worked with: Acme.
+
+My previous post covered some of my first impressions and basics of what
+Acme is, so in this post I wanted to do a deep dive into one of my favorite
+features: the "look"/"plumb" behavior. To illustrate it, I'll walk through
+how I was able to use it to turn Acme into a Git GUI.
+
+## The Power of Button 3
+
+Button 3, or "right click", will "look" in Acme. More specifically, it
+will take either the selected text (via Button 1) or the word under the
+cursor and try to:
+
+1. Identify if it's a file/directory that exists, and open it in a buffer
+2. Send the snippet to the `plumber(4)`
+3. If all else fails, search for the word in the buffer
+
+Number (3) can be a great way to quickly click through usages of a
+variable in a function, and (1) is super helpful in exploring the
+filesystem and navigating to specific portions of files from tool
+output, but (2) is where the magic begins.
+
+
+The plumber gets its name from being a message bus between Plan 9
+programs.  In a Plan 9 ecosystem, it appears (I haven't tested this)
+that individual servers for things like "web" or "mail" run and
+programs like Acme can interact with them by sending messages with
+`plumb(1)` through the plumber.
+
+In practice on a UNIX-like system, I'm running very few servers
+(just the plumber itself and `fontsrv(4)` for nicer fonts in Acme),
+so the plumbing rules usually have a fallback option of running a
+command (rather than passing it to a server).
+
+The plumber deciphers the messages from `plumb` by matching the
+data it receives (in this case the text under our click) against a
+series of patterns in a set of rules outlined in `plumb(7)`. By
+adding your own rules, you can configure button 3 to open any
+external program. Simple rules might match URLs and open a browser,
+but given that Acme itself exposes effectively an API through the
+filesystem, we can write little programs that in turn modify the
+contents of Acme.
+
+## Plumbing Rules for Git
+
+In Git, all objects (primarily commits, blobs, and trees) have a
+SHA, which is a hexidecimal string, making it easy to match on. Git
+likes to shorten them in tool output, so a primitive regex to match
+them might be:
+
+
+	[a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9]+
+
+That's 6 or more hex digits in a row (an astute reader might warn
+that this would also match, say, CSS color codes, but for our
+purposes it'll work!).
+
+The full plumbing rule looks like so (in `~/lib/plumbing`):
+
+	type is text
+	data matches '[a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9]+'
+	plumb start rc -c 'git -C '$wdir' show '$0' >[2=1] | plumb -i -d edit -a ''action=showdata filename=/'$wdir'/'$0''''
+
+We tell the plumber that if the type of the message is text, and if
+it matches our pattern, that it should start the external program `rc(1)`
+(the plan9 shell) with the command:
+
+	git -C $wdir show $0 >[2=1]
+
+To run git in the working directory of the buffer the click was
+made on and run `git-show(1)` on the full text that was matched
+(with stderr duped to stdout).
+
+This command of course doesn't do much by itself--it will output
+to stdout.  So to make use of the output, we send it back to
+`plumb(1)`, this time telling it to send to the `-d` (destination)
+`edit` (editor) with the action of showing data. This will open a
+new Acme buffer with the contents of the git object (whether it's
+a commit, the file for the blob, etc).
+
+
+## Going Full GUI
+
+At this point, we could run `git-log(1)` in a `win(1)` buffer (a
+shell session in Acme) and start clicking SHAs to see the diffs,
+but that's not super helpful.
+
+Looking at how I like to interact with Git in Vim, I commonly do
+the following:
+
+
+1. Look at the full git log, with ability to dive into commits
+2. View the short git log for a specific file to see when things changed at a high level
+3. View the `git-blame(1)` to see when things changed at a line-level
+
+The first can be solved by writing a small wrapper around git-log, `gl`:
+
+	#!/bin/sh
+	# git-log, but piped through plumb so that it:
+	#   1. doesn't scroll to the end
+	#   2. has the proper "filename" so that plumbing SHA's works
+	git log "$@" | plumb -i -d edit -a "action=showdata filename=/$(pwd)/git-log"
+
+For a shortened version (easier to browse), we can simply call this
+with `--oneline` (`glo`):
+
+
+	#!/bin/sh
+	exec gl --oneline "$@"
+
+The output on this repo looks like so:
+
+	[/path/to/alexkarle.com/git-log Del Snarf Redo | Look]
+	28a5f1c blog: Edit typos and small rephrasings for wggen post
+	85b54e2 blog: Add post on wggen tool to manage wg creds
+	6c6d8e0 blog: Add post about garbash.com
+	da01dba blog: Add post about mandoc resume
+	...
+
+Finally, we can get a per-file history by just filtering `glo` (`gv`):
+
+	#!/bin/sh
+	# gv -- imitation of :GV! vim plugin
+	file=${1:-$samfile}
+	glo -- "$file"
+
+Here we see a nice trick: `gv` takes in an argument (so that we can
+specify the file to log), but if it's empty it defaults to `$samfile`,
+which is set by Acme to be the current buffer being edited. So
+putting `gv` in the tag of the README and middle clicking to execute
+gives the same output as before, but filtered!
+
+
+Git blame uses the same concepts (`gbl`):
+
+	#!/bin/sh
+	# git blame, in acme!
+	file=${1:-$samfile}
+	git blame --date="short" "$file" | plumb -i -d edit -a "action=showdata filename=$file:BLAME"
+
+Calling `gbl` on the README pops up a new buffer with the following:
+
+	[/path/to/alexkarle.com/README.md:BLAME Del Snarf Redo | Look]
+	5e9783a6 (Alex Karle 2020-06-18  1) alexkarle.com
+	5e9783a6 (Alex Karle 2020-06-18  2) =============
+	016a5d70 (Alex Karle 2020-07-14  3) My small corner of the internet.
+
+This may seem unhelpful, but remember that clicking any of those SHA's will
+open then in a new buffer with the full diff! Clicking 5e9783a6 gives:
+
+	[/path/to/alexkarle.com/5e9783a6 Del Snarf Redo | Look]
+	commit 5e9783a6ce559f76da83b2530059c9664f43306e
+	Author: Alex Karle <email @ domain>
+	Date:   Thu Jun 18 00:18:48 2020 -0400
+    (snip)
+    diff \--git a/.gitignore b/.gitignore
+	new file mode 100644
+	index 0000000..84c048a
+	\--- /dev/null
+	+++ b/.gitignore
+	@@ -0,0 +1 @@
+	+/build/
+
+
+And what's this? More SHA's to click? 84c048a will give the full
+contents of .gitignore at this commit (if the diff doesn't show
+it).
+
+The most incredible bit is that Acme doesn't need to do much to
+support this use case--the flexibility of choosing an external (and
+extensible) program to match the text and the ability to spawn new
+buffers in Acme via any language externally enables this beautifully.
+Compare this to the [~500L of VimL in
+vim-fugitive](https://github.com/tpope/vim-fugitive/blob/9fcac5b/autoload/fugitive.vim#L6712)
+to convert the Vim sidebar into an interactive blame viewer. (No
+shade towards Tim Pope--if you're reading this, huge thanks for
+everything you've ever written, it's inspired me and shaped my
+career!).
+
+
+
+## Conclusion
+
+I'm really glad I chose to revisit Acme. While it's probably never
+going to replace Vim in my toolkit, it was such an incredible
+experience to be able to turn the tool into a pretty solid Git GUI
+(minus syntax highlighting of course) in just about an hour or so
+(including time to learn plumbing rules).
+
+The concept of a universal yet personally customizable plumber is
+beyond cool, and the fact that Acme has one of the 3 buttons reserved
+to plumb text allows for developers to easily hyperlink
+plaintext, which is awesome.
+
+If you'd like to give it a spin, all my scripts (including my starter
+script for Acme) are Open Source and live in my
+[dotfiles](https://sr.ht/~akarle/dotfiles).
+

@@ -12,6 +12,7 @@ For an up to date list of software/hardware I use, see
 
 ## 2022
 
+- 08/22 [Using the Plan 9 Plumber to Turn Acme into a Git GUI](/blog/plan9-acme-git-gui.html)
 - 06/22 [Automating Multi-User WireGuard setup on OpenBSD](/blog/wireguard-management.html)
 - 05/22 [Starting a Tilde Community for Fun and the Learnings](/blog/starting-a-tilde.html)
 - 05/22 [Typesetting a Resume with `mandoc(1)`](/blog/mandoc-resume.html)
