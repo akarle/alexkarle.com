@@ -167,11 +167,12 @@ open then in a new buffer with the full diff! Clicking 5e9783a6 gives:
 	commit 5e9783a6ce559f76da83b2530059c9664f43306e
 	Author: Alex Karle <email @ domain>
 	Date:   Thu Jun 18 00:18:48 2020 -0400
-    (snip)
-    diff \--git a/.gitignore b/.gitignore
+	...
+	...
+	diff --git a/.gitignore b/.gitignore
 	new file mode 100644
 	index 0000000..84c048a
-	\--- /dev/null
+	--- /dev/null
 	+++ b/.gitignore
 	@@ -0,0 +1 @@
 	+/build/
