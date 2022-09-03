@@ -18,16 +18,12 @@ cat <<EOM
 <!-- Inspired by https://www.swyx.io/css-100-bytes/ -->
 <style>
 html {
-  max-width: 70ch;
+  max-width: 80ch;
   padding: 3em 1em;
   margin: auto;
   font-size: 1em;
   font-family: sans-serif;
-  /* amcme inspired background */
-  background: #FFFFEA;
 }
-a { color: #0939AD; }
-a:visited { color: #613583; }
 footer {
   margin-top: 50px;
   font-size: .8em;
@@ -37,10 +33,10 @@ h1 { font-size: 1.5em; }
 h2 { font-size: 1.2em; }
 h3 { font-size: 1.1em; }
 blockquote, code pre {
-  background: #f2f2f2;
+  background: #ffffea;
   overflow: auto;
   padding: 10px;
-  border: 2px solid #8888cc;
+  border: 2px solid black;
 }
 .jam-artists tr:nth-child(even) {
     background-color: #e3e3e3;
