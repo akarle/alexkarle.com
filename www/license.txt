@@ -5,5 +5,10 @@ licensed under a Creative Commons Attribution 4.0 license
 [(CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/).
 
 Any code snippets, including the
-[code used to build this site](https://sr.ht/~akarle/alexkarle.com)
+[code used to build this site](https://sr.ht/~akarle/alexkarle.com),
 are licensed under a [MIT license](/LICENSE).
+
+The site is made to look like the
+[Acme editor](https://en.wikipedia.org/wiki/Acme_%28text_editor%29)
+running inside [Plan 9](https://9p.io/plan9/)'s
+`rio(1)` window manager.

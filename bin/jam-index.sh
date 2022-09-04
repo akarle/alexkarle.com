@@ -17,38 +17,29 @@ cat <<EOM
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <!-- Inspired by https://www.swyx.io/css-100-bytes/ -->
 <style>
-html {
-  max-width: 80ch;
-  padding: 3em 1em;
-  margin: auto;
-  font-size: 1em;
-  font-family: sans-serif;
-}
-footer {
-  margin-top: 50px;
-  font-size: .8em;
-}
-code { font-family: consolas, courier, monospace; }
-h1 { font-size: 1.5em; }
-h2 { font-size: 1.2em; }
-h3 { font-size: 1.1em; }
-blockquote, code pre {
-  background: #ffffea;
-  overflow: auto;
-  padding: 10px;
-  border: 2px solid black;
-}
+EOM
+cat "$REPO/www/style.css"
+cat <<EOM
 .jam-artists tr:nth-child(even) {
-    background-color: #e3e3e3;
+    background-color: #f2f2bd;
 }
-td.jam-artists, th.jam-artists, table.jam-artists {
+table.jam-artists {
+    margin: 0 auto;
     border: 1px solid black;
 }
 </style>
 <title>Jam Tuesday Archive</title>
 </head>
 <body>
-<small><code><a href="/">/home/alex</a> / <a href="/jam-tuesday">jam-tuesday</a></code></small>
+<div id="acme">
+<div id="home-tag">
+<a href="/">Home</a>
+<a href="/blog">Blog</a>
+<a href="/license.html">License</a>
+</div>
+<div id="tag">/home/alex/jam-tuesday.html
+Del Snarf Get | Look</div>
+<div id="content">
 <h1>Jam Tuesday Archive</h1>
 <h2>About</h2>
 <p>
@@ -117,11 +108,9 @@ sed 's/.*, *//' "$ALL" | sort -u -f | while read artist; do
 done
 cat <<EOM
 </table>
-<br><br>
-<p style="font-size: 0.7em">Last Updated: $(date)</p>
-<p class="foot-license">
-© 2019-2022 Alex Karle | <a href="/">Home</a> | <a href="/license.html">License</a>
-</p>
+<p>Last Updated: $(date)</p>
+</div>
+</div>
 </body>
 </html>
 EOM

@@ -21,6 +21,8 @@ most important tool, it's definitely the most impactful.
 
 Other editors I use:
 
+- [`acme(1)`](https://en.wikipedia.org/wiki/Acme_%28text_editor%29)
+  for fun / in my plan 9 explorations (if you can't tell by the theme)
 - [`vi(1)`](https://man.openbsd.org/vi.1) for system configs
   (super snappy on OpenBSD)
 - [`ed(1)`](https://man.openbsd.org/ed.1) for fun and for slow/serial

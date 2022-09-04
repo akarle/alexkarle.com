@@ -3,11 +3,13 @@
 ## About Me
 
 Hi!  I'm Alex.  I'm a software engineer living near Boston, MA.
-My current technical interests include operating systems,
-developer tooling, and small internet protocols like
-[Gopher](/blog/burrowing.html), but I'm constantly learning new
-things that I get excited about. Occasionally, I might write
-about it here on my [blog](/blog).
+By day I work at [Studio](https://studio.com) as
+a backend generalist and infrastructure/tooling specialist.
+By night I spend my time exploring niche operating
+systems like [Plan 9](/blog/exploring-plan9.html), perusing the
+"smolweb" via internet protocols like [Gopher](/blog/burrowing.html),
+and sysadmin-ing [several servers](/blog/starting-a-tilde.html).
+Occasionally, I might write about it here on my [blog](/blog).
 
 Outside of tech, I enjoy playing music, hiking, and a good board
 game shared among friends.
@@ -31,6 +33,10 @@ site buildable by base OpenBSD as a
 [creative limitation](/blog/creative-coding.html),
 I took the opportunity to write my own
 lightweight markup parser, [`nihdoc`](https://git.sr.ht/~akarle/nihdoc).
+
+Currently, this site is an homage to [Plan 9](https://9p.io/plan9/)
+and its editor/interface [Acme](https://en.wikipedia.org/wiki/Acme_%28text_editor%29).
+
 [Stay tuned](/atom.xml) for more!
 
 ## Projects Found Here

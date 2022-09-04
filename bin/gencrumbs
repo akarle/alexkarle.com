@@ -14,13 +14,11 @@ FILE=$(readlink -f "$1")
 rel=${FILE##$REPO/www}
 parts=$(echo "$rel" | sed 's#/# #g')
 
-printf "<small><code><a href=\"/\">/home/alex</a>"
-curr=""
+printf "/home/alex"
 for p in $parts; do
     if [ "$p" = "index.html" ]; then
         continue
     fi
-    curr="$curr/$p"
-    printf " / <a href=\"$curr\">$p</a>"
+    printf "/$p"
 done
-echo "</code></small>"
+echo
