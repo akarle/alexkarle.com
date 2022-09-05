@@ -57,7 +57,7 @@ gopher/phlog/atom.xml: $(PHLOG) gopher/bin/gophatom.sh
 	./gopher/bin/gophatom.sh > $@
 
 # Inference rules (*.txt -> *.html)
-$(HTML): Makefile bin/genpage
+$(HTML): Makefile bin/genpage www/style.css
 
 .SUFFIXES: .txt .html
 .txt.html:
