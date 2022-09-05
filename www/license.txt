@@ -12,3 +12,11 @@ The site is made to look like the
 [Acme editor](https://en.wikipedia.org/wiki/Acme_%28text_editor%29)
 running inside [Plan 9](https://9p.io/plan9/)'s
 `rio(1)` window manager.
+
+Favicon generated using [favicon.io](https://favicon.io). Font details
+as follows:
+
+- *Font Title*: Courier Prime
+- *Font Author*: [Copyright 2015 The Courier Prime Project Authors](https://github.com/quoteunquoteapps/CourierPrime)
+- *Font Source*: [Google Fonts](http://fonts.gstatic.com/s/courierprime/v7/u-450q2lgwslOqpF_6gQ8kELWwZjW-_-tvg.ttf)
+- *Font License*: [SIL Open Font License, 1.1](http://scripts.sil.org/OFL)
