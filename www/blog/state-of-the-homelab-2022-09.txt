@@ -1,0 +1,246 @@
+# State of the Homelab
+
+_Published: September 12, 2022_
+
+I've been sinking some time recently into organizing my
+homelab, spurred by the recent addition of a NAS, and thought
+it might be a good time to write about it.
+
+## Birds Eye View
+
+Here's the network topology:
+
+	          ┌──────────────┐     ┌───────┐
+	          │ Wifi Clients │     │ Wired │
+	          └──────────────┘     │Clients│
+	                 :             └───┬───┘
+	                 :                 │
+	         ┌───────▼───────┐    ┌────▼─────┐
+	Internet │   Verizon     ├────► OpenBSD  │
+	─────────►    Router     │    │  Router  │
+	         │ (FiosGateway) ◄────┤ (apu2e4) │
+	         └──────┬──▲─────┘    └──┬───▲───┘
+	                │  │             │   │
+	            ┌───▼──┴──┐      ┌───▼───┴────┐
+	            │ pi.hole │      │  NAS/Git   │
+	            │ (Rpi4b) │      │(Odroid HC4)│
+	            └─────────┘      └────────────┘
+
+
+Excluding the Fios router, that's 3 servers hosting
+the following services:
+
+- A git server for private repos (public repos hosted on
+  [git.alexkarle.com](https://git.alexkarle.com), and
+  [sourcehut](https://git.sr.ht)).
+- A NAS (network attached storage) for backups, photos, music, etc
+- A network wide ad-blocker ([pi-hole](https://pi-hole.net/))
+- An OpenBSD router/firewall (dhcp / pf) to provide extra security
+  to my wired devices.
+
+
+## Why Bother with a Homelab, Anyways?
+
+Before I dive into each component, I want to take a step back and
+ask _why_.
+
+In a world where you can pay `$HIP_COMPANY` $5/mo to
+run or host anything, it may seem like a homelab
+is a waste of time and effort. Looking at what I'm running,
+a lot of it could even be hosted for free!
+
+Despite the time cost of tending to this digital garden,
+I've found that
+running my homelab has been an incredible source of learning from
+hands-on experimentation. At this stage in my career, this type
+of experience is invaluable, especially because a lot of it
+(hardware tinkering, sysadmin tasks, linux distros, etc) doesn't
+come across my desk often.
+
+As an added bonus, I really enjoy the feeling of digital ownership
+I get from hosting my private data. It certainly comes with the
+weight of responsibility that I need to keep (and test!) backups,
+but the learning and ownership feel worthwhile for now.
+
+## The Nitty Gritty
+
+### Fios Gateway
+
+I have no special attachment to Verizon--I wouldn't go so far as
+to endorse them, but my coworkers don't complain about lag during
+video calls, so I haven't mustered the courage to switch providers.
+
+It's on my long todo list to switch to a more local ISP, but with
+both me and my fiance working from home it's the last place
+I want an outage.
+
+### Pi Hole
+
+Pi-hole is a network wide adblocker. It works by acting as the DNS
+server for your network and responding with localhost (0.0.0.0) for
+known spammy domains.
+
+As a concrete example, with pi-hole running right now, I can't access
+doubleclick.net (Google ads):
+
+	# Response from my router
+	$ host doubleclick.net 192.168.1.1
+	Using domain server:
+	Name: 192.168.1.1
+	Address: 192.168.1.1#53
+	Aliases: 
+	
+	doubleclick.net has address 0.0.0.0
+	doubleclick.net has IPv6 address ::
+	
+	
+	# Response from Google's DNS resolver
+	$ host doubleclick.net 192.168.1.1
+	Using domain server:
+	Name: 8.8.8.8
+	Address: 8.8.8.8#53
+	Aliases: 
+	
+	doubleclick.net has address 142.251.41.14
+	[...]
+
+The default configuration for the Gateway router is to tell clients
+to use it (192.168.1.1) as a DNS server. By updating Gateway to use
+pi-hole as _it's_ server (instead of the Verizon supplied ones), all
+clients on the network receive pi-hole's filtering.
+
+What's brilliant about this is that no clients need updating. As far
+as they're aware, they _really are_ trying to reach out to doubleclick.net.
+It's just a network failure that 0.0.0.0 isn't listening on 443!
+
+The results are most noticeable on mobile since I use uBlock Origin on
+all my browsers. It's amazing how much faster and less cluttered
+certain mobile apps are without ads (cough nytimes cough please stop
+it with the full screen banners).
+
+Finally, as the name might imply, the pi-hole was designed to run on the
+Raspberry Pi. I'm running mine on a
+[Raspberry Pi 4b](https://www.raspberrypi.com/products/raspberry-pi-4-model-b/),
+which is definitely overkill for the resources it needs.
+
+
+### Git Server
+
+Running a private git server is incredibly easy. In fact, there isn't
+really any separate git daemon that needs running. So long as you have
+ssh access to the host, you can clone/push/pull from:
+
+	$ git clone user-on-host@host:/path/to/server
+
+I like to get a bit fancy and `adduser` a `git` user on the server so
+that the repos can be stored in its home directory and ssh access can
+be managed separately from the user account I would normally use.
+
+Assuming the `git` user has the home directory `/home/git`, the following
+will clone `/home/git/repo.git`:
+
+	$ git clone git@host:repo.git
+
+Much cleaner!
+
+A lot more detail, including securing the git user by assigning it the
+`git-shell` for the login shell, can be found in the amazing
+[Pro Git](https://git-scm.com/book/en/v2/Git-on-the-Server-Setting-Up-the-Server)
+book.
+
+As far as _what_ I keep on my personal server (that I wouldn't trust
+to sourcehut, or even really my own git.alexkarle.com), I host the following
+repos:
+
+- My password repository (for [`pass(1)`](https://www.passwordstore.org/))
+- Personal notes (public notes go on [gopher://alexkarle.com/1/notes]!)
+
+In the past (mostly for fun), I've hosted [cgit](https://git.zx2c4.com/cgit/about/),
+[gitea](https://gitea.io/) and even GitLab (reverse chronologically
+and also least to most heavy). I've found that for the few private
+repos I host, I rarely want a web UI (let alone forking/user accounts/etc).
+
+### NAS
+
+The most recent upgrade to my homelab was the addition of a purpose-built
+NAS using the [Odroid HC4](https://www.hardkernel.com/shop/odroid-hc4/)
+toaster-style dual hard drive board.
+
+Previously, my backups were distributed across multiple drives and
+frequently offline (with all my operating system tinkering I have 5
+SSD's of which only 2 are in use at any time...). Things that I
+needed frequent access to were stored on a (rather fragile) Raspberry Pi 3b
+on a 64GB thumbdrive! Needless to say, the HC4 is a step up.
+
+It's only really been online for ~24hrs so I don't have a solid review
+of the hardware yet, but initial impressions are:
+
+- I was a bit bummed that the Linux they support is an old forked kernel,
+  which strikes me as probably missing security patches (didn't poke around
+  hard enough to confirm though--it may be up to date and just old!)
+- Despite being on the OpenBSD hardware list, I couldn't get it to boot.
+  Given the need to unscrew the plastic top to get the UART serial connection
+  in, I stopped trying after a few hours :(. I might email the mailing list
+  in the future to see what I overlooked.
+- I was pleased to find that the [Armbian](https://www.armbian.com/odroid-hc4/)
+  project supported it (with a newer kernel!). This is what I ended up
+  installing (with no issues so far)
+- I stumbled across [Chandler Swift's](https://chandlerswift.com/2021/05/07/odroid-hc4-nas)
+  awesome writeup about his experience with the HC4 and his golang
+  [odroidhc4-display](https://github.com/ChandlerSwift/odroidhc4-display) tool
+  is the perfect easy-to-deploy service for the little display
+
+Overall, operating system quirks aside, I'm really happy with how it turned
+out. I put in two 2TB western digital drives (whatever BestBuy had on sale
+a few weekends ago) and encrypted both of them with `cryptsetup` using the
+LUKS encryption mode as described in the
+[Arch Wiki](https://wiki.archlinux.org/title/Dm-crypt/Device_encryption).
+I intentionally did not RAID-1 the drives together because I'm more worried
+about accidentally `rm`-ing a file than I am not having access to the data
+in case of drive failure. Instead, I have only one drive always online. A
+cron job mounts the offline drive daily, `rsync`'s over the data, and
+unmounts it when done. This should give me hopefully a few hours or more
+if I realize I deleted a file. (I'll eventually also cycle in a third drive
+for offsite storage somewhere trusted like my parents' house).
+
+In the future I'd love to use this NAS as an excuse to explore fancier
+filesystems like ZFS, but I stuck to ext4 for now.
+
+
+### OpenBSD Firewall/Router
+
+*Puts tinfoil hat on.*
+
+The final piece of the topology is maybe the least functional in terms
+of hosting required services but the best learning tool: the OpenBSD router.
+
+There are arguably some security wins here by bisecting my network between
+wifi and wired clients. For one, the Verizon router itself may or may not
+be receiving security patches (it's proprietary, who knows?). By setting
+up a firewall so that the only traffic going in to wired clients is the
+traffic expected, the wired clients are a tad safer.
+
+While the security angle is certainly appealing, the much bigger reason
+to have this in my homelab has been experimenting with router technologies.
+In setting this up I had to grok `pf` (packet filtering for the firewall),
+`dhcpd` (to give clients IP addresses), and just basic networking
+(how _does_ a machine in one network talk to another?). There's no better
+way to learn networking than having my wifi laptop trying to ping my
+wired desktop and `tcpdump`ing the traffic.
+
+This is running on a PC Engines [apu2e4](https://www.pcengines.ch/apu2e4.htm),
+mostly since it seemed popular with the community and I wanted to make sure
+the device had good OpenBSD support. It's been running since April 2021
+without issues, so I'd recommend it!
+
+I would eventually love to write my own pi-hole using the DNS tools in
+base, but for now it's low on my todo list.
+
+## Conclusion
+
+If you made it this far, thanks! I hope you learned something or found
+something of interest.
+
+I'll hopefully write a similar "state of the cloud" post to cover the
+services I'm running outside home, but I think this post might just be
+long enough for now :)
