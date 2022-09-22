@@ -12,6 +12,7 @@ For an up to date list of software/hardware I use, see
 
 ## 2022
 
+- 09/22 [State of the Cloud](/blog/state-of-the-cloud-2022-09.html)
 - 09/22 [State of the Homelab](/blog/state-of-the-homelab-2022-09.html)
 - 08/22 [Using the Plan 9 Plumber to Turn Acme into a Git GUI](/blog/plan9-acme-git-gui.html)
 - 06/22 [Automating Multi-User WireGuard setup on OpenBSD](/blog/wireguard-management.html)

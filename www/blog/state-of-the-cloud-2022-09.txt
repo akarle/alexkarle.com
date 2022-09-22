@@ -1,0 +1,145 @@
+# State of the Cloud
+
+_Published: September 21, 2022_
+
+As promised, this post is a followup to my previous post on
+the [state of my homelab](/blog/state-of-the-homelab-2022-09.html).
+
+## My Approach to the Cloud
+
+Before listing off hosts, I thought it'd be worth a discussion of
+how I approach "the cloud". I'll start off by apologizing for
+using the word "cloud" so much--it does feel buzzwordy
+but it's significantly shorter than "services hosted by cloud providers".
+
+In general, I prefer to self host my own services, and have been since
+[2020](/blog/self-hosted.html). I self host because:
+
+- It's a great learning opportunity
+- I prefer controlling my data
+- I feel it's important to maintain some semblance of an internet
+  where anyone can run their own node (not just big companies).
+
+There are, however, pragmatic limitations. I don't own the hardware
+in a rack in the datacenter because I simply have no need for that
+kind of compute power. Likewise, I don't run the services off of my
+home network because most internet providers explicitly disallow it
+in their terms of service. So "self hosting" is more about running
+software on a VM in "the cloud" and minimizing my reliance on hosted
+services.
+
+## alexkarle.com
+
+The server hosting this site is a base-tier VM (1GB RAM/1 CPU) from
+[OpenBSD.Amsterdam](https://openbsd.amsterdam/). It's reasonably
+priced at 60 euros/yr (Linode has the same host spec for $60/yr),
+especially when you consider the fact that 10-15 of those are donated
+to the OpenBSD foundation.
+
+Ultimately I chose it because:
+
+1. It's the only service I know running OpenBSD VMs on OpenBSD servers
+   and that's just plain cool. This really has nothing to do with
+   security concerns, I just appreciate the fact that _someone_ is
+   doing it (and that they donate to the OpenBSD foundation!)
+2. It's so small scale that you end up emailing a real live human to
+   register and for support which has been really pleasant (and said human
+   is also super cool and gives [conference talks about the
+   setup](https://www.youtube.com/watch?v=9TuWCR9X-wY)--thanks
+   Mischa if you're reading this!)
+3. They [publish their scripts](https://git.high5.nl/) used to provision
+   and deploy VMs, which is also really cool (have I said "cool"
+   enough?)
+
+I've been using them for a little over a year now and am a happy
+renewing customer. My only qualm has been that, being in Amsterdam,
+the latency from Boston is noticeable.
+
+I can't say how well it would take load, since I've never had any
+real traffic spikes. If my site got uber-popular I'd re-evaluate the
+Acme theme first and then maybe make sure the VM is doing OK :)
+
+As it says on the [homepage](/), this server hosts:
+
+- This blog / related archives (like jam setlists)
+- [https://euchre.live]
+- [My gopherhole](gopher://alexkarle.com)
+- [Several git projects](https://git.alexkarle.com)
+- Email -- I use the akarle.com domain for outbound mail from
+ `cron` so I don't have to ssh in to check if my TLS cert renewal
+ failed (without tarninshing my personal alexkarle.com reputation)
+- The [soju](https://soju.im) IRC bouncer
+
+This is the second iteration of alexkarle.com, the first being on
+Linode (running the same software). Migrating was manual, and I wish
+I blogged about it at the time--I'm sure I learned something in the
+process. Having been running for 1+ years now, the minutiae of the
+configs escape me a bit (although I of course [track them privately
+in git](/blog/use-git.html)).
+
+## garbash.com
+
+Garbash, the [tilde that I started with a friend](/blog/starting-a-tilde.html),
+runs on Linode on a base $5/mo shared 1CPU/1RAM VM. It's running
+OpenBSD since booting a new Linux VM on Linode is just too dang
+easy (I really enjoy their developer experience!) and we needed
+a challenge.
+
+Linode has treated me really well over the past few years, and I
+would use them for any professional work if I could (I've never
+worked somewhere early-stage enough to dictate the cloud provider).
+
+I chose them originally because I wanted a hosting provider that wasn't
+one of the big three (Amazon, Google, Microsoft). Since self hosting
+is about exercising my freedoms, it feels backwards to do it on the
+servers of some of the largest tech monopolies.
+
+The tilde project includes hosting almost all the same services
+(email, wireguard, web, git, etc) as alexkarle.com.
+
+## Looking Forward
+
+Every once and a while I kick around the idea of reducing my
+"sysadmin debt" and moving from self-hosted to "foss-hosted". It's
+still really important to me to stay indie and support small
+hosting providers, but I feel like a lot of the learning took
+place in the first year and has left me with only maintenance
+(and small bills to pay).
+
+I've been a paying subscriber to [Sourcehut](https://sourcehut.org)
+for almost 3 years now and in that time they've released
+several projects that would alleviate some load:
+
+- [chat.sr.ht](https://chat.sr.ht) would save me from hosting soju
+  (there is the real concern about someone having my personal chat
+  logs, but realistically I mostly lurk on IRC and all the channels
+  I'm in are public anyways--no private dms occurring to be worried
+  about and for those I could always connect directly/avoid the
+  bouncer).
+- [sourcehut pages](https://srht.site) would easily host my site
+  (it actually [already does](https://akarle.srht.site) in my
+  experimenting with foss-hosted)
+- Of course their [git hosting](https://git.sr.ht), which I already
+  use (and link to in blog posts since it has whole file blobs at
+  every commit unlike my `stagit(1)` setup; I don't want dead links
+  in posts!)
+
+More problematic would be finding a home for euchre.live. Since
+it requires a running Perl backend, finding hosting might be a challenge.
+That said, the project hasn't seen much love since I started seeing
+my family for dinner and games in person (after COVID concerns
+became lesser), so I may sunset it soon.
+
+Lastly, my gopherhole would have to find a new home. [SDF](https://sdf.org)
+is a good candidate since it has [free Gopher hosting](https://gopher.club),
+but I would lose my personal domain and, unless I'm missing something,
+it's a stretch to call SDF "foss" since most of their code is proprietary
+(no shade on the tilde--the community is incredible and it's amazing
+to have lasted 35 years).
+
+All things considered, the 5-10 minutes I spend per month
+`syspatch(8)`-ing my servers is worth the freedoms that come
+with root access and being able to run the software I want under
+my own domain name, at least for now. If and when I need to migrate
+hosting providers, I may feel differently about setting it all up
+again a third time.

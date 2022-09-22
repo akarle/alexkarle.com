@@ -244,3 +244,6 @@ something of interest.
 I'll hopefully write a similar "state of the cloud" post to cover the
 services I'm running outside home, but I think this post might just be
 long enough for now :)
+
+*Update:* [State of the Cloud](/blog/state-of-the-cloud-2022-09.html)
+post has been written!
