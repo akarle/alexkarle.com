@@ -50,7 +50,7 @@ www/jam-tuesday/index.html: $(SETS) bin/jam-index.sh bin/jam-stats.sh
 www/atom.xml: $(HTML) bin/genatom.sh
 	./bin/genatom.sh > $@
 
-gopher/notes/index.gph: $(NOTES)
+gopher/notes/index.gph: $(NOTES) gopher/bin/notetag
 	(cd gopher/notes && ../bin/notetag) > $@
 
 gopher/phlog/atom.xml: $(PHLOG) gopher/bin/gophatom.sh
