@@ -2,15 +2,15 @@ alexkarle.com
 =============
 My small corner of the internet.
 
-www.
-----
+web
+---
 A small static blog powered by my own personal markup parser, [nihdoc].
 
 Currently hosted with OpenBSD's [httpd(8)], but any web server should be
 able to serve it up.
 
-gopher://
----------
+gopher
+------
 A pure ascii dump of the content of the www site, served over Gopher by
 [geomyidae(1)] respectively!
 
@@ -18,8 +18,8 @@ Builds via [make(1)] at the same time as the HTML.
 
 Also has gopher-exclusive content!
 
-git.
-----
+git
+---
 I use a simple setup of [git-daemon(8)] for anonymous (read-only) downloads,
 ssh+git for read+write access (limited to myself) and [stagit(1)] to
 host static views into the diffs and files of
