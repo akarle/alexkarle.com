@@ -16,7 +16,8 @@ A pure ascii dump of the content of the www site, served over Gopher by
 
 Builds via [make(1)] at the same time as the HTML.
 
-Also has gopher-exclusive content!
+Also has gopher-exclusive content! Content stored in a different repo
+to encourage you to try gopher :)
 
 git
 ---
