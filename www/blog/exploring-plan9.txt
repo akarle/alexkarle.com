@@ -189,7 +189,7 @@ closest look at the original authors' responses to these questions.
 I'm writing this now on my OpenBSD install. I spent multiple evenings
 getting 9front to work and kept a somewhat detailed log that I've
 published on my gopherhole:
-[gopher://alexkarle.com/0/notes/all/plan9-journey.txt]
+[gopher://alexkarle.com/0/notes/plan9-journey.txt]
 
 Installing and perusing Plan 9 has changed the way I think about
 UNIX, mouses, and how I've idolized certain software. It's refreshing
