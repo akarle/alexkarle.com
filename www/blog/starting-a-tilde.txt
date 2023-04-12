@@ -80,3 +80,12 @@ you and learn from each other._
 
 And of course feel free to use what we wrote as a
 [starting place](https://garbash.com/~alex/)--it's all FOSS!
+
+
+## Update 2023-04
+
+After a good long run, we decided to retire garbash; the
+services weren't getting much use, and the maintenance/cost
+was non-zero (albeit small). I've kept the "field notes" on
+setup there, but I spun down the server / hosted services.
+Thanks to all who participated--it was fun!
