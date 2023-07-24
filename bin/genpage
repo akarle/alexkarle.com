@@ -4,6 +4,7 @@
 [ -z "$1" ] && echo "usage: genpage FILE" 1>&2 && exit 1
 
 REPO=$(dirname "$(dirname "$0")")
+GITDIR=${GITDIR:-$REPO}
 title=$(grep '^# ' "$1" | cut -c3- | tr -d '`*_')
 
 cat <<EOM
@@ -36,7 +37,7 @@ if echo "$1" | grep -q -v "blog/"; then
 	cat <<EOM
 <footer>
 <br>
-<em>Last Updated: $(git log --pretty="%cs" -n 1 -- "$1")</em>
+<em>Last Updated: $(git -C "$GITDIR" log --pretty="%cs" -n 1 -- "$1")</em>
 </footer>
 </body>
 </html>
