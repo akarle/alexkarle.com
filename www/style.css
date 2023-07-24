@@ -4,33 +4,7 @@ html {
   margin: auto;
   font-size: 1em;
   font-family: sans-serif;
-  background: #757a76;  /* rio gray */
-}
-body {
-  margin: 12px 0 12px 0;
-}
-#acme {
-  border: 4px solid #58a9aa; /* rio aqua */
   background: #ffffea; /* acme yellow */
-}
-#content {
-  margin: 0 12px 0 12px;
-  padding: 6px;
-  border-left: 1px solid #9a984b;
-}
-#home-tag {
-  width: 100%;
-  background: #eafeff;
-  border-bottom: 2px solid black;
-  padding: 0 4px 0 4px;
-  box-sizing: border-box;
-}
-#tag {
-  display: block;
-  background: #eafeff;
-  padding-left: 4px;
-  border-left: 13px solid #8887c9;
-  border-bottom: 1px solid #8887c9;
 }
 code { font-family: consolas, courier, monospace; }
 h1 { font-size: 1.5em; }
@@ -43,9 +17,6 @@ blockquote, pre {
 }
 ::selection {
   background: #eeeda0;
-}
-#tag::selection, #home-tag::selection, #home-tag a::selection {
-  background: #9fefe7;
 }
 a {
   color: #020097;

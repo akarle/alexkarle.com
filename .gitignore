@@ -1,6 +1,7 @@
 # generated html
 *.html
 !www/jam-tuesday/index.html
+!www/acme-index.html
 !www/blog/my-old-man-orig.html
 
 # atom feeds are generated

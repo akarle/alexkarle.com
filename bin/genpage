@@ -23,27 +23,16 @@ cat <<EOM
 <title>$title</title>
 </head>
 <body>
-<div id="acme">
-<div id="home-tag">
-<a href="/">Home</a>
-<a href="/blog">Blog</a>
+<nav>
+<a href="/">Home</a> |
+<a href="/blog">Blog</a> |
 <a href="/license.html">License</a>
-</div>
-<div id="tag">
-EOM
-
-"$REPO/bin/gencrumbs" "${1%%txt}html"
-
-cat <<EOM
-Del Snarf Get | Look</div>
-<div id="content">
+</nav>
 EOM
 
 nihdoc < "$1"
 
 cat <<EOM
-</div>
-</div>
 </body>
 </html>
 EOM

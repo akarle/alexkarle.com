@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<!-- Inspired by https://www.swyx.io/css-100-bytes/ -->
+<style>
+/* inlined via bin/genpage to limit network calls */
+html {
+  max-width: 85ch;
+  margin: auto;
+  font-size: 1em;
+  font-family: sans-serif;
+  background: #757a76;  /* rio gray */
+}
+body {
+  margin: 12px 0 12px 0;
+}
+#acme {
+  border: 4px solid #58a9aa; /* rio aqua */
+  background: #ffffea; /* acme yellow */
+}
+#content {
+  margin: 0 12px 0 12px;
+  padding: 6px;
+  border-left: 1px solid #9a984b;
+}
+#home-tag {
+  width: 100%;
+  background: #eafeff;
+  border-bottom: 2px solid black;
+  padding: 0 4px 0 4px;
+  box-sizing: border-box;
+}
+#tag {
+  display: block;
+  background: #eafeff;
+  padding-left: 4px;
+  border-left: 13px solid #8887c9;
+  border-bottom: 1px solid #8887c9;
+}
+code { font-family: consolas, courier, monospace; }
+h1 { font-size: 1.5em; }
+h2 { font-size: 1.2em; }
+h3 { font-size: 1.1em; }
+blockquote, pre {
+  overflow: auto;
+  padding: 10px;
+  border: 2px solid black;
+}
+::selection {
+  background: #eeeda0;
+}
+#tag::selection, #home-tag::selection, #home-tag a::selection {
+  background: #9fefe7;
+}
+a {
+  color: #020097;
+  text-decoration: none;
+}
+a:visited {
+  color: #400070;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+</style>
+<title>Welcome</title>
+</head>
+<body>
+<div id="acme">
+<div id="home-tag">
+<a href="/">Home</a>
+<a href="/blog">Blog</a>
+<a href="/license.html">License</a>
+</div>
+<div id="tag">
+/home/alex
+Del Snarf Get | Look</div>
+<div id="content">
+<h1>Welcome</h1>
+<h2>About Me</h2>
+<p>
+Hi!  I'm Alex.  I'm a software engineer living near Boston, MA.
+By day I work at a remote startup as
+a backend generalist and infrastructure/tooling specialist.
+By night I spend my time exploring niche operating
+systems like <a href="/blog/exploring-plan9.html">Plan 9</a>, perusing the
+"smolweb" via internet protocols like <a href="/blog/burrowing.html">Gopher</a>,
+and sysadmin-ing <a href="/blog/starting-a-tilde.html">several servers</a>.
+Occasionally, I might write about it here on my <a href="/blog">blog</a>.
+</p>
+<p>
+Outside of tech, I enjoy playing music, hiking, and a good board
+game shared among friends.
+</p>
+<h2>About This Site</h2>
+<p>
+This site is an ever-changing hobby project where I use the
+markup and build system as an excuse to learn and/or build new
+tools.
+</p>
+<p>
+In 2020, I <a href="/blog/my-old-man.html">rewrote the site</a> as a series
+of man-pages in <a href="https://man.openbsd.org/mdoc.7"><code>mdoc(7)</code></a>,
+writing new blog posts in the language and developing a toolchain
+to <a href="/blog/use-feeds.html">support feeds</a>, <a href="/blog/text-only.html">text-only versions</a>,
+and eventually a <a href="/blog/burrowing.html">gopher mirror</a>.
+</p>
+<p>
+At the end of 2021, I really wanted a lower-friction medium to
+blog on (akin to the plaintext I was writing on my
+<a href="gopher://alexkarle.com/1/phlog">phlog</a>).  Looking to keep the
+site buildable by base OpenBSD as a
+<a href="/blog/creative-coding.html">creative limitation</a>,
+I took the opportunity to write my own
+lightweight markup parser, <a href="https://git.sr.ht/~akarle/nihdoc"><code>nihdoc</code></a>.
+</p>
+<p>
+Currently, this site is an homage to <a href="https://9p.io/plan9/">Plan 9</a>
+and its editor/interface <a href="https://en.wikipedia.org/wiki/Acme_%28text_editor%29">Acme</a>.
+</p>
+<p>
+<a href="/atom.xml">Stay tuned</a> for more!
+</p>
+<h2>Projects Found Here</h2>
+<ul>
+<li>
+<a href="/blog">yet another weblog</a>: Thoughts on tech and life
+</li>
+<li>
+<a href="https://euchre.live">euchre.live</a>: A Euchre web-app for my family
+</li>
+<li>
+<a href="/jam-tuesday">jam-tuesday</a>: An archive of my jam setlists
+</li>
+<li>
+<a href="/uses.html">uses</a>: Software and hardware that I use
+</li>
+<li>
+<a href="gopher://alexkarle.com">gopher://alexkarle.com</a>: my gopherhole -- phlog, notes &amp; more!
+</li>
+<li>
+<a href="https://git.alexkarle.com">https://git.alexkarle.com</a>: A personal git server
+</li>
+</ul>
+<h2>Contact / Elsewhere</h2>
+<ul>
+<li>
+Email: <em>contact AT this-domain</em>
+</li>
+<li>
+IRC: <code>akarle</code> on <a href="https://libera.chat">libera.chat</a>
+</li>
+<li>
+sourcehut: <a href="https://sr.ht/~akarle"><code>~akarle</code></a>
+</li>
+<li>
+Resume: <code>$ curl -sS https://alexkarle.com/resume.4 | mandoc -l</code>
+# <a href="https://alexkarle.com/akarle.pdf">PDF</a>
+</li>
+</ul>
+</div>
+</div>
+</body>
+</html>

@@ -34,8 +34,11 @@ site buildable by base OpenBSD as a
 I took the opportunity to write my own
 lightweight markup parser, [`nihdoc`](https://git.sr.ht/~akarle/nihdoc).
 
-Currently, this site is an homage to [Plan 9](https://9p.io/plan9/)
-and its editor/interface [Acme](https://en.wikipedia.org/wiki/Acme_%28text_editor%29).
+For a brief period, this site was a [lookalike](/acme-index.html)
+of [Plan 9](https://9p.io/plan9/)'s editor/interface
+[Acme](https://en.wikipedia.org/wiki/Acme_%28text_editor%29),
+but as I haven't used it in a while I've toned it back to
+a simple background-color homage :)
 
 [Stay tuned](/atom.xml) for more!
 
@@ -46,7 +49,6 @@ and its editor/interface [Acme](https://en.wikipedia.org/wiki/Acme_%28text_edito
 - [jam-tuesday](/jam-tuesday): An archive of my jam setlists
 - [uses](/uses.html): Software and hardware that I use
 - [gopher://alexkarle.com]: my gopherhole -- phlog, notes & more!
-- [https://git.alexkarle.com]: A personal git server
 
 ## Contact / Elsewhere
 

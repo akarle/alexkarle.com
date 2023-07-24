@@ -31,15 +31,11 @@ table.jam-artists {
 <title>Jam Tuesday Archive</title>
 </head>
 <body>
-<div id="acme">
-<div id="home-tag">
-<a href="/">Home</a>
-<a href="/blog">Blog</a>
+<nav>
+<a href="/">Home</a> |
+<a href="/blog">Blog</a> |
 <a href="/license.html">License</a>
-</div>
-<div id="tag">/home/alex/jam-tuesday.html
-Del Snarf Get | Look</div>
-<div id="content">
+</nav>
 <h1>Jam Tuesday Archive</h1>
 <h2>About</h2>
 <p>
@@ -109,8 +105,6 @@ done
 cat <<EOM
 </table>
 <p>Last Updated: $(date)</p>
-</div>
-</div>
 </body>
 </html>
 EOM
