@@ -3,16 +3,18 @@
 ## About Me
 
 Hi!  I'm Alex.  I'm a software engineer living near Boston, MA.
-By day I work at a remote startup as
-a backend generalist and infrastructure/tooling specialist.
-By night I spend my time exploring niche operating
-systems like [Plan 9](/blog/exploring-plan9.html), perusing the
-"smolweb" via internet protocols like [Gopher](/blog/burrowing.html),
-and sysadmin-ing [several servers](/blog/starting-a-tilde.html).
-Occasionally, I might write about it here on my [blog](/blog).
+My professional career has been quite the journey from developer
+tooling to infrastructure/devops to web backends and now data
+pipelines.  However, I mostly [blog](/blog) about hobbies.
+Things like:
 
-Outside of tech, I enjoy playing music, hiking, and a good board
-game shared among friends.
+- Exploring niche operating systems like
+  [Plan 9](/blog/exploring-plan9.html)
+- Perusing the "smolweb" via internet protocols like [Gopher](/blog/burrowing.html)
+- Sysadmin-ing [several servers](/blog/starting-a-tilde.html)
+
+Outside of tech, I enjoy playing music, hiking, and a sharing
+a good board among friends.
 
 ## About This Site
 
