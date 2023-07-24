@@ -32,6 +32,17 @@ EOM
 
 nihdoc < "$1"
 
+if echo "$1" | grep -q -v "blog/"; then
+	cat <<EOM
+<footer>
+<br>
+<em>Last Updated: $(git log --pretty="%cs" -n 1 -- "$1")</em>
+</footer>
+</body>
+</html>
+EOM
+fi
+
 cat <<EOM
 </body>
 </html>
