@@ -40,13 +40,11 @@ seriously at work. At some point in ~2020, I discovered OpenBSD
 and slowly started putting it on all of my personal machines.  I'm
 currently running:
 
-- [OpenBSD](https://openbsd.org) for my laptop, desktop, server
+- [OpenBSD](https://openbsd.org) for my laptop, server
   ([hosting this site](/blog/self-hosted.html)), and home router/firewall
-- [Arch Linux](https://archlinux.org) for work (needed a cutting
-  edge kernel for newer work laptop)
+- [Debian](https://debian.org) on my desktop
 
-In the past I've also used Alpine Linux on my laptop and Debian on
-my desktop.
+In the past I've also used Alpine Linux and Arch Linux on my laptop.
 
 ## Other Tools
 
@@ -86,11 +84,12 @@ installed Arch on my old macbook and suffered at the hands of
 NVIDIA and poor hardware support until I ditched my macbook for a
 [ThinkPad X220](https://www.thinkwiki.org/wiki/Category:X220)
 (2011, i7, 2GB RAM) that I bought used for ~$130 off Ebay.  A
-simple upgrade to a SSD and it runs great!
+simple upgrade to a SSD and it ran great (minus a poor cpu
+for big compilations)!
 
-I use the laptop for casual browsing and hobby coding (I try to
-ensure my hobby projects all run on old hardware!), but its CPU age
-really shows on big websites or compilations.
+In 2022 I upgraded to a Thinkpad X13 (8 core AMD, 16gb RAM)
+that I acquired from an old workplace. I keep the X220 around
+for things like Plan 9 (better hardware support) :)
 
 ### Desktop
 
