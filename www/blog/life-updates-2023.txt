@@ -1,0 +1,68 @@
+# Life Updates 2023
+
+_Published: November 14, 2023_
+
+A year ago, the most exciting thing I had to report on for
+this blog was my [homelab](state-of-the-homelab-2023.html).
+
+While generally the focus of this blog has been tech, it's
+been a big year, so I thought I'd make this a bit more personal.
+
+## Life and Love
+
+The biggest life update by far was that my wife Jennie and
+I got married in September <3. It was an amazing day and
+I feel so grateful to have such loving and supporting friends
+and family who traveled to celebrate us. Thank you to all who
+came.
+
+As if planning the wedding wasn't stressful enough, we bought
+our first house mere months before in June! We were immediately
+thrown into the deep end with a leaky roof, an oil tank double
+the maximum age about to become an environmental disaster, a
+hot water heater with a broken coil flooding the boiler, a
+collapsed flue that was a CO risk needing a new liner, and
+a fireplace mantle that fell off and almost seriously hurt
+our home inspector. 5 months (and a good bit of stress) later,
+it's starting to finally feel like home. I'm still glad we
+bought the place, but I wouldn't do it again any time soon.
+
+## Hobbies
+
+I've always found that my interests come and go in intense
+phases of deep study. This blog partially documents some of
+the technical ones; from wireguard to plan9 to gopher to 
+text editors...
+
+\2023 was notable for breaking a common theme: the tech.
+
+I became interested in Digital Minimalism earlier in the
+year. The general idea being to identify the technology
+that aids our lives and reject that which is just
+distracting and attention-grabbing. I don't claim to
+be the perfect practitioner (I reach for my phone more often
+than I should when bored), but with that mindset I've
+spent a lot less of my off-work hours at a computer
+(at the expense of this blog).
+
+Among the new interests were:
+
+- Re-kindling my love of reading
+- Learning Chess (admittedly mostly online, but also
+  some over-the-board!)
+- Home improvement (lots to do on the new house: fixing
+  leaky sinks, upgrading light switches, painting, etc)
+- Personal finance / investing / FIRE
+
+In diversifying my hobbies beyond hacking at a terminal
+screen I've found some balance I was definitely missing.
+There's something inherently satisfying about fixing
+something physical in the real world in a way that
+solving puzzles in Scheme doesn't provide :)
+
+## Looking Forward
+
+With the wedding and majority of home work (a whole new
+type of homework) behind us, I'm hopeful I'll have time
+to go back and write about some of what I've learned! If
+not, well, know that it's been a great year :)
