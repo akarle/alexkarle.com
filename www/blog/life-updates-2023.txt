@@ -3,7 +3,7 @@
 _Published: November 14, 2023_
 
 A year ago, the most exciting thing I had to report on for
-this blog was my [homelab](state-of-the-homelab-2023.html).
+this blog was my [homelab](state-of-the-homelab-2023-09.html).
 Oh wow what a year it's been since then!
 
 While generally the focus of this blog has been tech, it's
