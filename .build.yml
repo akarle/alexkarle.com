@@ -2,7 +2,6 @@
 image: openbsd/latest
 oauth: pages.sr.ht/PAGES:RW
 sources:
-  - https://git.sr.ht/~akarle/alexkarle.com#preview
   - https://git.sr.ht/~akarle/nihdoc
 environment:
   site: akarle.srht.site
