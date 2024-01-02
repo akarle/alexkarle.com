@@ -21,7 +21,7 @@ EOM
 cat "$REPO/www/style.css"
 cat <<EOM
 </style>
-<title>$title</title>
+<title>$title | alexkarle.com</title>
 </head>
 <body>
 <nav>

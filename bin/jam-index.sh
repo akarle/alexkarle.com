@@ -28,7 +28,7 @@ table.jam-artists {
     border: 1px solid black;
 }
 </style>
-<title>Jam Tuesday Archive</title>
+<title>Jam Tuesday Archive | alexkarle.com</title>
 </head>
 <body>
 <nav>
