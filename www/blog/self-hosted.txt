@@ -12,7 +12,7 @@ a pipeline to build my static content and deploy it without ever
 leaving the terminal.
 
 That excuse presented itself in the form of needing to get a VPS to
-stand up my hobby-project, [`euchre.live`](https://euchre.live).
+stand up my hobby-project, [`euchre.live`](https://sr.ht/~akarle/euchre-live).
 If I was going to pay for a tiny VM, it was a no-brainer to move
 my personal site to it too.
 
@@ -33,7 +33,7 @@ I'm currently running (in no particular order):
   - Serves the `www.` static content
   - Also serves [https://git.alexkarle.com]
 - *Reverse proxy:* OpenBSD's `relayd(8)`
-  - Used to send traffic between [https://euchre.live] (which uses
+  - Used to send traffic between https://euchre.live (which uses
     a Mojolicious web server as the backend) and
     [https://alexkarle.com] based on URL
 - *`www` content:*
