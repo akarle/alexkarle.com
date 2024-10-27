@@ -1,0 +1,47 @@
+# Life Updates 2024
+
+_Published: October 27, 2024_
+
+Another year gone by since I last wrote here (although the
+[phlog](gopher://alexkarle.com) saw some love for you gopher fans out
+there). And what a year it has been!
+
+## Hobbies
+
+Since my [last update](life-updates-2023.html), the trend of taking on
+non-tech hobbies has stayed. In fact, for the past few months, one might
+say I haven't had time for hobbies at all... why, you ask?
+
+## Life and Love
+
+In July, Jennie and I welcomed our first child, our beautiful boy Wesley
+<3. Parenting has been the hardest and most rewarding thing I've ever
+taken on, and we've just begun! Words can't describe the rollercoaster
+of emotions that have become my daily life, but I can say that I have so
+much newfound respect for parents and Moms in particular. And that
+Jennie is truly a superhero <3
+
+I don't plan to blog much about it, as it feels too personal to
+broadcast to the public. Likewise, I don't feel qualified enough to give
+any parenting advice. Instead I'll stay on-brand and give some technical
+advice for software-engineers-soon-to-become-parents :)
+
+ _Always Leave a Note!_
+
+Yes thats right! For the nerds like me who are constantly chasing new
+technical rabbit holes and learning obscure software, its easy to think
+that you'll forever remember the `cryptsetup(8)` command to mount your
+homemade NAS' LVM-on-LUKS encrypted drive. Or that you'll know how to
+connect that Plan 9 install to wifi (you've been doing it every day for
+weeks!).
+
+But alas, when the baby comes and these sit idle for months or more,
+those chops do fade. So do yourself a favor. Leave yourself a note!
+
+## Looking Forward
+
+I won't fool myself like last year with a prediction of more blog
+activity :) I expect it'll stay relatively quiet over here. But there is
+oh so much to look forward to: first words, family time over the
+holidays, rolling, crawling, walking! Life has just begun, and its
+beautiful.

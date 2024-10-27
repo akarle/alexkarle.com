@@ -10,6 +10,10 @@ If you'd like to get notifications on new articles, I publish an
 For an up to date list of software/hardware I use, see
 [my "uses" page](/uses.html).
 
+## 2024
+
+- 10/24 [Life Updates 2024](/blog/life-updates-2024.html)
+
 ## 2023
 
 - 11/23 [Life Updates 2023](/blog/life-updates-2023.html)
