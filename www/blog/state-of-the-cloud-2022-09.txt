@@ -77,7 +77,7 @@ process. Having been running for 1+ years now, the minutiae of the
 configs escape me a bit (although I of course [track them privately
 in git](/blog/use-git.html)).
 
-## garbash.com
+## garbash
 
 Garbash, the [tilde that I started with a friend](/blog/starting-a-tilde.html),
 runs on Linode on a base $5/mo shared 1CPU/1RAM VM. It's running

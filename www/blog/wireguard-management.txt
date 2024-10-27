@@ -246,7 +246,7 @@ AllowedIP followed by a restart of the interface:
 ### Sending the Config
 
 Sending the config is easy--we already have [email on the
-VM](https://garbash.com/~alex/notes/004-mail-server.html)!
+VM](https://alexkarle.com/garbash/~alex/notes/004-mail-server.html)!
 Using the `mail(1)` client to deliver internally is a oneliner:
 
 	mail -s "Your wireguard info" "$USERNAME" < "/etc/wg/$USERNAME/client.conf"
@@ -258,4 +258,4 @@ my own mostly to learn the technology. The tilde was the perfect
 excuse to solidify that knowledge and create something useful!
 
 As with all our little tools that came out of the tilde, the source code
-is FOSS and available [here](https://git.garbash.com/alex/config/file/usr/local/bin/wggen.html).
+is FOSS and available [here](https://git.alexkarle.com/garbash-config/file/usr/local/bin/wggen.html).
