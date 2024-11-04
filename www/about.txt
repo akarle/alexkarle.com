@@ -1,0 +1,43 @@
+# About Me
+
+Hi!  I'm Alex.  I'm a software engineer living near Boston, MA.
+My professional career has been quite the journey from developer
+tooling to infrastructure/devops to web backends and now data
+pipelines.  However, I mostly [blog](/blog) about hobbies.
+Things like:
+
+- Exploring niche operating systems like
+  [Plan 9](/blog/exploring-plan9.html)
+- Perusing the "smolweb" via internet protocols like [Gopher](/blog/burrowing.html)
+- Sysadmin-ing [several servers](/blog/starting-a-tilde.html)
+
+Outside of tech, I enjoy playing music, hiking, and a sharing
+a good board among friends.
+
+## About This Site
+
+This site is an ever-changing hobby project where I use the
+markup and build system as an excuse to learn and/or build new
+tools.
+
+In 2020, I [rewrote the site](/blog/my-old-man.html) as a series
+of man-pages in [`mdoc(7)`](https://man.openbsd.org/mdoc.7),
+writing new blog posts in the language and developing a toolchain
+to [support feeds](/blog/use-feeds.html), [text-only versions](/blog/text-only.html),
+and eventually a [gopher mirror](/blog/burrowing.html).
+
+At the end of 2021, I really wanted a lower-friction medium to
+blog on (akin to the plaintext I was writing on my
+[phlog](gopher://alexkarle.com/1/phlog)).  Looking to keep the
+site buildable by base OpenBSD as a
+[creative limitation](/blog/creative-coding.html),
+I took the opportunity to write my own
+lightweight markup parser, [`nihdoc`](https://git.sr.ht/~akarle/nihdoc).
+
+For a brief period, this site was a [lookalike](/acme-index.html)
+of [Plan 9](https://9p.io/plan9/)'s editor/interface
+[Acme](https://en.wikipedia.org/wiki/Acme_%28text_editor%29),
+but as I haven't used it in a while I've toned it back to
+a simple background-color homage :)
+
+[Stay tuned](/atom.xml) for more!

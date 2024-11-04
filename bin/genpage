@@ -33,7 +33,7 @@ EOM
 
 nihdoc < "$1"
 
-if echo "$1" | grep -q -v "blog/"; then
+if echo "$1" | grep -q -v "index.txt"; then
 	cat <<EOM
 <footer>
 <br>

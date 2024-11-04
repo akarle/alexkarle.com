@@ -1,0 +1,8 @@
+# Projects
+
+- [yet another weblog](/blog): Thoughts on tech and life
+- [garbash](/garbash): Configs and setup notes from a [tilde experiment](/blog/starting-a-tilde.html)
+- [euchre.live](https://sr.ht/~akarle/euchre-live): A Euchre web-app for my family
+- [jam-tuesday](/jam-tuesday): An archive of my jam setlists
+- [uses](/uses.html): Software and hardware that I use
+- [gopher://alexkarle.com]: my gopherhole -- phlog, notes & more!
