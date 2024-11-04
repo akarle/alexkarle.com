@@ -21,7 +21,7 @@ a fun escape from the complexities and ephemerality of modern
 container based infrastructure.
 
 In this blog post, I don't want to go too much into the technical
-setup (I wrote [detailed notes](https://alexkarle.com/garbash/~alex/) and
+setup (I wrote [detailed notes](https://alexkarle.com/garbash/) and
 published [all the configs](https://git.alexkarle.com/garbash-config/files.html)).
 Instead I want to write about the experience creating it.
 
@@ -51,19 +51,19 @@ almost every hackernews comment will tell you *not* to self host
 it.  Don't even try! You'll forget some DNS record and big senders
 will mark your domain as bad.  You'll never be able to reach their
 inboxes. Well, with garbash, I was able to say "so what" and
-[set up email addresses with OpenSMTPD](https://alexkarle.com/garbash/~alex/004-mail-server.html)
+[set up email addresses with OpenSMTPD](https://alexkarle.com/garbash/004-mail-server.html)
 fully featured with DKIM signing and proper SPF and DMARC records.
 
 Better yet, the act of pairing and explaining services I've set up
-before like [git hosting via `stagit(1)`](https://alexkarle.com/garbash/~alex/007-git-coding.html)
-or [a Wireguard VPN tunnel for internal services](https://alexkarle.com/garbash/~alex/009-wireguard.html)
+before like [git hosting via `stagit(1)`](https://alexkarle.com/garbash/007-git-coding.html)
+or [a Wireguard VPN tunnel for internal services](https://alexkarle.com/garbash/009-wireguard.html)
 solidified my mental model of the technologies. Writing scripts
 together to automate things like setting up users or Wireguard
 key management was both fun and a chance to share coding
 tips and tricks.
 
 But best of all, I came away from garbash with a stronger friendship.
-We [set up an IRC server](https://alexkarle.com/garbash/~alex/008-local-irc.html)
+We [set up an IRC server](https://alexkarle.com/garbash/008-local-irc.html)
 expecting it to be the hub of the network. Instead it became our
 preferred way to chat just the two of us about life and tech.
 
@@ -79,7 +79,7 @@ try self-hosting your services--_find a friend to set them up with
 you and learn from each other._
 
 And of course feel free to use what we wrote as a
-[starting place](https://alexkarle.com/garbash/~alex/)--it's all FOSS!
+[starting place](https://alexkarle.com/garbash/)--it's all FOSS!
 
 
 ## Update 2023-04
@@ -93,7 +93,7 @@ Thanks to all who participated--it was fun!
 ## Update 2024-10
 
 I let the domain lapse and moved the contents to
-[alexkarle.com/garbash]. I have a bit of "domain lapse
+[https://alexkarle.com/garbash]. I have a bit of "domain lapse
 remorse", but its already been snatched up. I've attempted
 to update all relevant links and moved the configs all
-to [git.alexkarle.com].
+to [https://git.alexkarle.com].
