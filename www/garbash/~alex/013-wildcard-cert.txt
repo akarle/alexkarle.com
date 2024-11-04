@@ -1,0 +1,90 @@
+# 013-wildcard-cert
+
+_Thur Apr 28, 2022_
+
+I've been running two internal services for a while:
+
+- lists.garbash.com -- mailing list archive
+- irc.garbash.com -- [gamja](https://git.sr.ht/~emersion/gamja) IRC client
+  (and [soju](https://soju.im) bouncer)
+
+Because we're not using split DNS (hosting our own DNS server for
+clients on the VPN), these are kept internal only by having the public
+DNS have the internal IP addresses:
+
+	$ host irc.garbash.com
+	irc.garbash.com has address 10.6.6.1
+
+This works great, except it becomes harder to obtain a TLS certificate.
+My favorite way to get a TLS certificate on OpenBSD is acme-client(8),
+which is in base and works out of the box but does not support dns-01
+ACME challenges required for wildcard certs. As such, all sites requiring
+certs need to be publicly accessible for HTTP challenges.
+
+It would have been OK to serve over plain HTTP (in the sense that the
+services are served over a wireguard tunnel, so they're already encrypted),
+but browsers only allow desktop notifications for HTTPS sites, so to get
+notifications for `gamja`, I needed a wildcard cert.
+
+The wildcard cert turned out to be not too hard. For a couple months I
+used [`uacme`](https://github.com/ndilieto/uacme) because it was in ports,
+but getting the client to update our DNS in Linode wasn't supported in
+the upstream project (as far I can tell). So for a couple times I actually
+ran the tool with manual DNS mode--updating the TXT records by hand myself.
+
+This clearly isn't sustainable (mostly because it requires remembering every
+couple months to redo it), so I moved to [`acme.sh`](https://github.com/acmesh-official/acme.sh),
+which, despite not being in ports, was super easy to install and use.
+
+To get the new certs, I created a new user:
+
+	# adduser
+	... acmesh, nologin, daemon, etc ...
+
+Then I created a `certs` group so that all the services that need the certs
+can read the certificates:
+
+	# addgroup certs
+	# usermod -G _soju certs
+	# usermod -G acmesh certs
+
+I had to manually `chmod` some of the directories of `acme.sh` to allow
+group-writable, and `chown` those directories to `acmesh:certs`.
+
+Finally, installing the cert was as simple as:
+
+	$ export LINODE_V4_API_KEY=...
+	$ ./acme.sh --install -m alex@garbash.com  # one time
+	$ ./acme.sh --issue --dns dns_linode_v4 --dnssleep 300 -d *.garbash.com
+
+This installed the certs to `/home/acmesh/.acme.sh`. `httpd(8)` needs the
+fullchain and private key:
+
+
+	server "lists.garbash.com" {
+		listen on * tls port 443
+		directory auto index
+		root "/htdocs/lists"
+		tls {
+			certificate "/home/acmesh/.acme.sh/*.garbash.com/fullchain.cer"
+			key "/home/acmesh/.acme.sh/*.garbash.com/*.garbash.com.key"
+		}
+		location "/.well-known/acme-challenge/*" {
+			root "/acme"
+			request strip 2
+		}
+	}
+
+
+The final step is to modify the crontab to restart the services
+when it runs successfully! Since this is running as the `acmesh`
+user, I needed to give it permission to run the `rcctl` command
+passwordless by adding the following to doas.conf:
+
+	permit nopass acmesh as root cmd /usr/sbin/rcctl args restart httpd
+
+Adding the following to the crontab will cause it to run on success:
+
+	--reloadcmd '/usr/sbin/rcctl restart httpd'
+
+Hopefully I won't need to think about this for a while!

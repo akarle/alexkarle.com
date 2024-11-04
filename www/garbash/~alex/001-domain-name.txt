@@ -1,0 +1,19 @@
+# 001-domain-name
+
+_Fri Sep 17, 2021_
+
+garbash the word was all ~anthony's idea.
+
+It came out of a PR review as a self-deprecating take on his bash
+(which actually turned out to be mine).
+
+We laughed and I realized the domain was for sale, so I snagged it
+and resolved to find its purpose later.
+
+I've always wanted to be part of a tilde community, but struggle
+opening up to strangers on the internet. Starting a tilde with a
+friend, however, felt much more promising. All the ascii and none
+of the awkwardness!
+
+So here we are a week later, standing up this site. Hope you enjoy
+your stay!

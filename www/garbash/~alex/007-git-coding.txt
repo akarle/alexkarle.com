@@ -1,0 +1,69 @@
+# 007-git-coding
+
+_Fri Sept 24, 2021_
+
+git(1) is one of my favorite tools. All good tilde's should host it!
+After all, tilde's are for sharing and what better way to share than
+publishing your code!
+
+## Git Hosting
+
+Out of the box, git supports hosting for users with accounts via ssh.
+You can clone like so:
+
+	user@host:path/relative/to/home
+
+or:
+
+	user@host:/abs/path/on/host
+
+For anonymous access, git-daemon(1) can be configured to serve over
+the git:// protocol. On OpenBSD, enable and start it with the path
+to the directories to serve:
+
+	$ rcctl enable gitdaemon
+	$ rcctl set gitdaemon flags "--base-path=/var/git"
+	$ rcctl start gitdaemon
+
+The last bit of the puzzle is of course the shared git layout! For
+git-daemon to work, we need all users to put their files under the
+same dir (/var/git). But, we want to prevent accidental clobbering
+via stray rm -rf, so we make a directory for each user and chown
+it to their account so soley they can access it:
+
+	/var/git/alex
+		.../www
+		.../config
+	/var/git/anthony
+		...
+
+Then, for easy clone URLs, we ln(1) the dir into the home directory:
+
+	ln -s /var/git/$USER /home/$USER/git
+
+Now they can clone via $USER@garbash.com:git/REPO
+
+## Web Hosting
+
+git hosting is one thing, but these days everyone likes to show off
+their code in the browser for onlookers. Enter stagit(1).
+
+I tried cgit(1), one of the more popular git-frontends, but with httpd(8)'s
+chroot(8)-ing, it was kind of a pain to get the more advanced features.
+
+stagit(1) generates static HTML for individual repos, which is a nice
+balance of flexible and lightweight.
+
+The hardest part here was that I had to hack stagit(1) and stagit-index(1)
+to support our two-tiered directory layout (by default it only supports
+single directory layouts). This turned out to be not _that_ hard. See
+my [fork](https://git.alexkarle.com/garbash-stagit/) for the specifics.
+
+These HTML files are then generated on-the-fly at push time via git-hooks,
+specifically a post-receive hook.
+
+The whole process requires quite a bit of setup at repo-creation time
+(assigning ownership, description, clone-url, and the post-receive hook),
+so I rolled it all into a script globally available to our users: `newrepo`.
+That too is available via the system [config files](https://git.alexkarle.com/garbash-config/).
+Give it a look!

@@ -1,0 +1,83 @@
+# 010-irc-bouncer
+
+_Tues Sept 28, 2021_
+
+After ~anthony and I set up wggen(1), we could properly access IRC
+outside of ssh(1) (on our laptops, phones, etc).
+
+The next missing piece of the IRC puzzle was setting up a bouncer.
+For those less familiar with IRC (read: me 6 months ago), a bouncer
+is simply a special IRC client that is always on, staying in the
+channels for you, listening. When you connect, you then connect to
+the bouncer, which feeds you missed messages.
+
+This is necessary because IRC has no concept of history or buffered
+messages built in. So if you're not active on the network, there's
+no way to get missed messages.
+
+Of course bouncers provide all sorts of other nice features--a single
+login point for multiple networks (garbash, libera.chat, etc),
+auto-away, logging support, etc.
+
+For our users on this tilde, we wanted to make sure they could have
+chat history without having to set up their own bouncer.
+
+We picked [soju(1)](https://soju.im), since I've set it up before and I'm a general
+fan of the software coming from the sourcehut team. It was relatively
+painless to set up on OpenBSD:
+
+	$ pkg_add go sqlite3 scdoc # dependencies
+	$ git clone https://git.sr.ht/~emersion/soju/
+	$ cd soju
+	$ make
+	# make install
+
+Then, I added a new \_soju user using adduser(8) and created the cfg
+to listen on our wireguard port in /home/\_soju/soju.cfg:
+
+	listen irc+insecure://10.6.6.1:6677
+	db sqlite3 /home/_soju/soju.db
+
+Finally, I used sojuctl(1) to add myself as a user:
+
+	$ sojuctl -config /home/_soju/soju.cfg create-user alex -admin
+
+Add made a small /etc/rc.d script:
+
+	#!/bin/ksh
+	daemon="/usr/local/bin/soju -config /home/_soju/soju.cfg"
+	daemon_user="_soju"
+	daemon_logger="daemon.info"
+	. /etc/rc.d/rc.subr
+	rc_bg=YES
+	rc_cmd "$1"
+
+And enabled and started soju:
+
+	# rcctl enable soju
+	# rcctl start soju
+
+We're still ironing out the kinks in the user registration process, but
+the current process is to connect to the soju instance first and add
+the local network like so:
+
+In irssi:
+
+	/network add -sasl_username <login> -sasl_password <password> -sasl_mechanism PLAIN garbash
+	/server add -auto -net garbash irc.garbash.com 6677
+	/connect garbash
+
+Once connected, start a DM with the BouncerServ (provided by soju)
+
+	/msg BouncerServ help
+	 network create -name garbash -addr irc+insecure://localhost:6667
+
+Finally, modify our garbash network username to run soju in "single
+upstream mode" (aka it should only connect to this one network) by
+changing our username to be /garbash (the network we just created):
+
+	/network modify -sasl_username <login>/garbash garbash
+	/connect garbash
+	/save
+
+And 10 commands and 2 connections later, we have a bouncer!

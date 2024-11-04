@@ -1,0 +1,29 @@
+# ~alex's page
+
+## Sysadmin Notes
+
+As ~anthony and I set up the tilde, I tried to document
+every step of the way so that others could learn from it
+and/or follow in our footsteps!
+
+As the years have gone by, I'm also just glad I did it
+for myself :)
+
+**NOTE:** As of 2024 the garbash.com domain was decommissioned.
+I've updated any URLs to alexkarle.com, but left tutorials
+referencing it where appropriate. It's been snatched up by
+domain squatters, so don't go visiting :(
+
+- [Awesome domain name :)](001-domain-name.html)
+- [OpenBSD install on Linode](002-install.html)
+- [HTTP(S) server](003-httpd.html)
+- [Email (SPF, DKIM, etc)](004-mail-server.html)
+- [SSH hardening](005-ssh-hardening.html)
+- [Obtained the source code for the system](006-use-the-src.html)
+- [Set up git hosting via stagit(1)](007-git-coding.html)
+- [Set up IRC for tilde members](008-local-irc.html)
+- [Set up wireguard](009-wireguard.html)
+- [Set up IRC bouncer](010-irc-bouncer.html)
+- [Basic backup solution](011-backups.html)
+- [Primitive Mailing Lists and Archive](012-mailing-lists.html)
+- [Wildcard certificate for internal services](013-wildcard-cert.html)

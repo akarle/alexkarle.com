@@ -1,0 +1,62 @@
+# 009-wireguard
+
+_Tues Sep 28, 2021_
+
+Wireguard is probably one of the coolest technologies I've encountered
+in a long time. The simplicity of public key auth (ssh-style where the
+protocol doesn't care how you get the public key on the server) all
+in the kernel? Sign me up!
+
+On our tilde, we want to set up wireguard so that we can provide vpn-only
+services (for security reasons such as not allowing brute-force password
+attempts).
+
+The very first of these services is IRC--we want people to be able to
+connect from mobile devices and personal computers, but our network is
+currently not password protected and has no services like NickServ, etc.
+
+The solution? Have it listen on a wireguard IP and distribute wg keys
+to trusted tilde members :)
+
+I'll start with the obligatory RTFM -- wg(8) and ifconfig(8) are both
+really well documented. However, there was a bit of fun hackery that went
+down on our tuesday pair-admining call that's worth documenting!
+
+~anthony and I needed a simple tool to manage wireguard keys and IPs.
+When a new device is to be given access we want to:
+
+1. Generate a private key, public key, and wg-quick(1) config file
+   to distribute to the user
+2. Obtain the next numerical hostname
+3. Add the peer to our wg endpoint on the server
+
+To do this, we used a small sh(1) script that has a catalog of names in
+a flat file like so:
+
+	host1	10.6.6.1
+	host2	10.6.6.2
+	...
+
+And then each host has a directory:
+
+	host1/
+	     private.key
+	     public.key
+	     client.conf
+
+The tool is called [wggen(1)](https://git.alexkarle.com/garbash-config/file/usr/local/bin/wggen.html),
+and it ends up effectively:
+
+1. Creating a directory for NAME
+2. Generating a wg(8) key using openssl(1):
+3. Creating a temporary wg endpoint to get the public key using
+   the grep/cut hack in wg(8)'s EXAMPLES
+4. tail(1)-ing the host file to get the next available IP
+5. Using all the above to generate the client.conf
+6. Adding the wgpeer line to /etc/hostname.wg0 and restarting the
+   prod endpoint with sh /etc/netstart
+
+I'll leave the exact details as an exercise for the reader to go look
+at the git repo :)
+
+Needless to say, this was a lot of fun to write!

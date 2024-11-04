@@ -1,0 +1,45 @@
+# 006-use-the-src
+
+_Tues Sept 21, 2021_
+
+Use the source, Luke!
+
+One of the main reasons to use a FOSS OS is that you can see the code!
+For me as a dev, it's been a lifechanging experience. Often it's faster
+to just look at the code than try to decipher Stack Overflow answers,
+and I always learn more that way!
+
+Another perk of the \*BSD's is that all of their source is in one repo.
+This can of course make SCM slow, but from a curious-developer perspective
+it's a dream come true.
+
+OpenBSD uses cvs(1) to manage their source, but they publish a read-only
+git(1) mirror to GitHub, which I like to use for familiarity sake.
+
+Traditionally, all the source lives in /usr/src , and OpenBSD expects
+you to put it there (for build purposes).
+
+To get it, first add yourself to the wsrc and wobj groups so you can build without doas
+
+	# usermod -G wsrc,wobj <user>
+
+Then clone a bare repo to /var/git (default /usr/src not big enough for .git)
+
+	# mkdir /var/git
+	# chmod 775 /var/git
+	# chown root:wsrc /var/git
+	$ cd /var/git
+	$ git clone --bare https://github.com/openbsd/src
+
+Now check out a new worktree at /usr/src
+
+	$ git -C /var/git/src.git worktree add /usr/src
+
+Finally find your favorite tool and build it
+
+	$ cd /usr/src/bin/ed
+	$ make obj  # for out of tree build, see make(1) OBJDIR
+	$ make
+	$ ./obj/ed
+
+How cool is that?

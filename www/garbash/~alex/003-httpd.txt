@@ -1,0 +1,30 @@
+# 003-httpd
+
+_Tues Sept 21, 2021_
+
+One of the first things I do when I set up a machine is set up
+httpd(8) and grab a HTTPS cert via acme-client(8).
+
+Here's a quick rundown (though reading the man pages is worth
+the time!).
+
+	# sed 's/example.com/garbash.com/g' \
+	    /etc/examples/httpd.conf > /etc/httpd.conf
+	# sed 's/example.com/garbash.com/g' \
+	    /etc/examples/acme-client.conf > /etc/acme-client.conf
+
+Then go in and edit the files to add aliases if needed!
+
+To get the certs for the first time:
+
+	# rcctl enable httpd
+	# rcctl start httpd
+	# acme-client -v garbash.com   # get certs
+	# rcctl reload httpd           # load certs
+
+Finally, to keep the certs up to date, add the following to the
+crontab:
+
+	# crontab -e
+	...
+	~ * * * * acme-client garbash.com && rcctl reload httpd

@@ -51,19 +51,19 @@ almost every hackernews comment will tell you *not* to self host
 it.  Don't even try! You'll forget some DNS record and big senders
 will mark your domain as bad.  You'll never be able to reach their
 inboxes. Well, with garbash, I was able to say "so what" and
-[set up email addresses with OpenSMTPD](https://alexkarle.com/garbash/~alex/notes/004-mail-server.html)
+[set up email addresses with OpenSMTPD](https://alexkarle.com/garbash/~alex/004-mail-server.html)
 fully featured with DKIM signing and proper SPF and DMARC records.
 
 Better yet, the act of pairing and explaining services I've set up
-before like [git hosting via `stagit(1)`](https://alexkarle.com/garbash/~alex/notes/007-git-coding.html)
-or [a Wireguard VPN tunnel for internal services](https://alexkarle.com/garbash/~alex/notes/009-wireguard.html)
+before like [git hosting via `stagit(1)`](https://alexkarle.com/garbash/~alex/007-git-coding.html)
+or [a Wireguard VPN tunnel for internal services](https://alexkarle.com/garbash/~alex/009-wireguard.html)
 solidified my mental model of the technologies. Writing scripts
 together to automate things like setting up users or Wireguard
 key management was both fun and a chance to share coding
 tips and tricks.
 
 But best of all, I came away from garbash with a stronger friendship.
-We [set up an IRC server](https://alexkarle.com/garbash/~alex/notes/008-local-irc.html)
+We [set up an IRC server](https://alexkarle.com/garbash/~alex/008-local-irc.html)
 expecting it to be the hub of the network. Instead it became our
 preferred way to chat just the two of us about life and tech.
 

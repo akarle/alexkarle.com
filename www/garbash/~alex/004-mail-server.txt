@@ -1,0 +1,21 @@
+# 004-mail-server
+
+_Tues Sept 21, 2021_
+
+We threw this together late in our first pairing session to set
+up the site. I think having a solid email server is an important
+part of standing up a site (allows forwarding cron email to an
+inbox that's read, etc). And of course giving out email accounts
+is crucial to attract people to a tilde ;)
+
+The setup mostly followed Gilles' [excellent
+post](https://poolp.org/posts/2019-09-14/setting-up-a-mail-server-with-opensmtpd-dovecot-and-rspamd/)
+but I replaced the rspamd bits with opensmtpd-filter-dkimsign, which is super
+simple to set up (see the README that comes with the installed pkg).
+
+I'll post the whole config soon once we get git hosting set up!
+
+EDIT: Sat Sep 25 00:20:01 EDT 2021
+
+Git hosting is up and here's the
+[config](https://git.alexkarle.com/garbash-config/file/etc/mail/smtpd.conf.html)

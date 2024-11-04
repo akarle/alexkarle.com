@@ -1,0 +1,32 @@
+# 008-local-irc
+
+_Fri Sep 24 23:56:43 EDT 2021_
+
+Tonight I took the first steps towards on-tilde communication.
+It's far from done, but it'll give ~anthony and I something to
+chat on while we set up the other services!
+
+The current plan is to have (for security reasons) a IRC server
+ONLY listening on localhost. Then, we'll spin up a bouncer for
+users to connect to so they can get chat history while offline.
+That bouncer will be exposed externally (either over TLS or over
+wireguard).
+
+The first step was to install ngircd. To be honest, I didn't
+survey the scene toooo much. I did a search:
+
+	pkg_info -Q irc
+
+And just picked the ircd that seemed most promising.
+
+Set up was a simple service start:
+
+	rcctl enable ngircd
+	rcctl start ngircd
+
+And the config file was super well documented so even with my
+very beginner knowledge of server admin-ship, I was able to get
+it up in no time!
+
+The [config](https://git.alexkarle.com/garbash-config/file/etc/ngircd/ngircd.conf.html),
+of course, is public!

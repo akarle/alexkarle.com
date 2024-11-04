@@ -1,0 +1,67 @@
+# 011-backups
+
+_October 12, 2021_
+
+My usual take on server backups is "don't put anything worth
+backing up on the server that's not stored in git elsewhere".
+
+This has treated me pretty well in the past. Source code,
+configuration files, and even documentation on setup are all
+stored in git both on the server and on my laptop, and so
+I can sleep at night knowing a catastrophic disk failure wouldn't
+mean I lost any serious work.
+
+This strategy breaks down when thinking about a tilde. First,
+the array of services we're providing is _much_ more complex
+than my normal blog server. Second, there are more people
+involved!
+
+I want to guarantee any tilde members that I will at least try
+my best to keep backups of their data in case of failure or
+accidental deletion.
+
+There are tons of backup tools, but a lot of them are fairly
+complex (with good reason I suppose.. compression, deduplication,
+etc). Since this tilde is about exploring OpenBSD, I took the
+opportunity to home-roll a simple backup solution with dump(8)
+and restore(8).
+
+The meat of it is in a script I'm calling "dumpster" that runs
+via cron with the day of the week (1-7) as the dump level
+and a weekly job dumping the whole system fresh:
+
+	#!/bin/sh
+	# dumpster -- taking out the garbash with dump(8)
+	
+	# %u is 1=mon 7=sun (unless given in ARGV)
+	LVL=${1:-"$(date +%u)"}
+	BAKDIR="/bak/$(date +%F)_$LVL"
+	
+	mkdir -p "$BAKDIR"
+	dump -$LVL -auf "$BAKDIR/root.dump.$LVL" /
+	dump -$LVL -auf "$BAKDIR/home.dump.$LVL" /home
+	dump -$LVL -auf "$BAKDIR/var.dump.$LVL" /var
+
+This dumps to /bak, which is a separate Linode Volume, which
+has better data redundancy guarantees than the VPS volume and
+can be detached/attached to other hosts in the event of VPS
+failure.
+
+As you can see, I'm only really dumping areas that have user
+data (/var for git, /home, and / for configs). /usr/\* can be
+rebuilt from /var/backups/pkglist for the most part!
+
+A note to anyone trying this: the Linode Volume was a bit hacky
+to get set up, since it expects to be mounting against a Linux
+machine. Linode's console will error on attaching, but I found
+that rebooting the host made the drive appear as wdN and from
+there I was able to format it, etc.
+
+As a bonus, I took the opportunity to set up /altroot backups,
+which is a brilliantly simple way to ensure you can boot into
+a known-good state of your host even if something goes very
+wrong with the main drive!
+
+Overall, I went from a backup-avoider to a backup-fan in the
+process :) it's so cool to watch the daily script create dump
+files of things that changed!

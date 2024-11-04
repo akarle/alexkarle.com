@@ -1,0 +1,26 @@
+# Welcome
+	   .
+	   ').
+	  /;((
+	.'____`.
+	| g    | create
+	|  a   | something
+	|   r  | worth
+	| bash | rewriting
+	`-____-'
+
+garbash was an invite-only [tilde](https://tildeverse.org)
+community that was retired in early 2023.
+
+[~alex's page](/garbash/~alex) as well as the
+[config](https://git.alexkarle.com/garbash-config) were kept
+for historical purposes, and has some info on how to set
+up a tilde, should you be interested!
+
+To all who participated--thanks, it was fun!
+
+*NOTE:* As of 2024 the garbash.com domain was decommissioned.
+I've updated any URLs to alexkarle.com, but left tutorials
+referencing it where appropriate. It's been snatched up by
+domain squatters, so don't go visiting :(
+

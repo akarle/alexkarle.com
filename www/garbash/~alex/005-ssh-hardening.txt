@@ -1,0 +1,21 @@
+# 005-ssh-hardening
+
+_Tues Sept 21, 2021_
+
+Just a quick note/reminder that one of the FIRST things you should
+ALWAYS do on a new machine is make sure:
+
+1. root cannot log in (PermitRootLogin no)
+2. passwords are not accepted (ssh-key only -- PasswordAuthentication no)
+
+Both these are set under `/etc/ssh/sshd_config`. Make sure to upload
+your `~/.ssh/id_rsa.pub` first to `~/.ssh/authorized_keys` (so as not
+to lock yourself out!) and then make the edits and reload the daemon:
+
+	# rcctl reload sshd
+
+We waited literally only 4 hrs to do this and we already had script
+kiddies knocking down our /var/log/authlog :(
+
+If my old coworker Joe was right about one thing, it's that the
+internet these days is a cesspool.

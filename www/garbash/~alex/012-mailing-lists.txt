@@ -1,0 +1,38 @@
+# 012-mailing-lists
+
+_Weds April 27, 2022_
+
+I surprised myself today while revisiting this site
+to find that I had set up mailing lists months ago.
+Or something that resembles them.
+
+We don't have any users other than myself and ~anthony,
+so they've gone unused, but my vision for the tilde
+is one that uses email for collaboration (outside of
+IRC).
+
+I don't have any experience setting up majordomo or
+anything like that, but since all accounts are local I
+was able to create a "mailing list" by just updating
+/etc/mail/aliases with the lists:
+
+	announce: alex, anthony
+
+And rerunning `newaliases(8)`. Hacky but it works!
+I wonder if they have a limit...
+
+In addition, I had set up primitive HTML archives using
+`hypermail(1)`. A dedicated user account to manage the
+archives simply runs the following every 5m via `cron(8)`:
+
+
+	#!/bin/sh
+	# archiveit -- regular archives
+	for l in announce bugs dev misc; do
+		hypermail -d /var/www/htdocs/lists/$l -g -m /var/lists/$l
+	done
+
+
+Pop it behind the VPN and serve it up with `httpd(8)` and
+we have a mailing list archive so new members can see
+the old conversations!

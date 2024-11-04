@@ -246,7 +246,7 @@ AllowedIP followed by a restart of the interface:
 ### Sending the Config
 
 Sending the config is easy--we already have [email on the
-VM](https://alexkarle.com/garbash/~alex/notes/004-mail-server.html)!
+VM](https://alexkarle.com/garbash/~alex/004-mail-server.html)!
 Using the `mail(1)` client to deliver internally is a oneliner:
 
 	mail -s "Your wireguard info" "$USERNAME" < "/etc/wg/$USERNAME/client.conf"

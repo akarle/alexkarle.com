@@ -3,7 +3,7 @@ DESTDIR = /var/www/htdocs
 CFLAGS = -g -O2 -Wall -Wpedantic -Wextra
 
 # Variables used to determine what to build (and clean)
-HTML != echo www/*.txt www/blog/*.txt | sed 's@\([^\.]*\)\.txt@\1.html@g'
+HTML != find www -name '*.txt' | sed 's@\([^\.]*\)\.txt@\1.html@g'
 SETS != find www/jam-tuesday -name '[0-9][0-9][0-9][0-9]-*'
 
 BUILT = $(HTML) \

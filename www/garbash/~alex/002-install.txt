@@ -1,0 +1,43 @@
+# 002-install
+
+_Tues Sept 21, 2021_
+
+I'm a huge fan of OpenBSD. The simplicity of the system, the cohesive
+feel it has, the proactive stance on security... when we decided we'd
+set up a tilde, I knew I wanted it to be on OpenBSD.
+
+The only problem? My preferred registrar (Linode) doesn't support it!
+
+Fortunately there's a comprehensive post on the Linode forum of how to
+do it [here](https://www.linode.com/community/questions/10329/openbsd-on-linode).
+
+It took us ~45m, the longest OpenBSD install I've had since I first
+flashed it on an old thinkpad. 40m of that was waiting for the node to
+boot and reboot, etc (we kept messing up the configuration).
+
+1. Create a New Linode (any OS will do)
+2. Once booted, shut it down
+3. Under the "Storage" tab delete the ext4 partitions
+4. Create two new disks, both "Raw" format:
+   1. One labeled "install", 1GB (could do less)
+   2. One labeled "os", the rest of the space
+5. Boot in "Rescue" mode
+6. In the serial console, wget the minirootXX.img
+   1. Check the sha256 against the SHA256 file
+   2. Check the signature using signify (on a different machine that
+      has signify)
+7. Find the install disk with `lsblk`
+8. Flash the img using: `dd if=minirootXX.img of=/dev/sdX bs=1M`
+9. In the Configurations tab, create a new one:
+   1. Full Virtualization
+   2. Select a Kernel > Direct Disk
+   3. /dev/sda - os
+   4. /dev/sdb - install
+   5. boot from sdb
+10. Reboot into configuration, install OpenBSD from serial console
+11. Halt/shutdown, and change configuration to boot from sda
+12. Rejoice!
+
+In our case, our main problem was that we skipped the "Direct Disk"
+kernel step so we were booting a Linux kernel and trying to load the
+img... it panic'd every time! Took us a few boots to figure that out :)
