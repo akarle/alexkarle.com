@@ -28,13 +28,12 @@ table.jam-artists {
     border: 1px solid black;
 }
 </style>
-<title>Jam Tuesday Archive | alexkarle.com</title>
+<title>Jam Tuesday Archive</title>
 </head>
 <body>
 <nav>
-<a href="/">Home</a> |
-<a href="/blog">Blog</a> |
-<a href="/license.html">License</a>
+/
+<a href="/">home</a>
 </nav>
 <h1>Jam Tuesday Archive</h1>
 <h2>About</h2>
