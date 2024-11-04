@@ -1,4 +1,4 @@
-# /home
+# `~alex`
 
 - [about me](/about.html)
 - [blog](/blog/)
