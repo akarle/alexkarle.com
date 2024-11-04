@@ -39,5 +39,3 @@ of [Plan 9](https://9p.io/plan9/)'s editor/interface
 [Acme](https://en.wikipedia.org/wiki/Acme_%28text_editor%29),
 but as I haven't used it in a while I've toned it back to
 a simple background-color homage :)
-
-[Stay tuned](/atom.xml) for more!
