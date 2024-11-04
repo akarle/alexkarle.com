@@ -25,24 +25,36 @@ cat <<EOM
 </head>
 <body>
 <nav>
-<a href="/">Home</a> |
-<a href="/blog">Blog</a> |
-<a href="/license.html">License</a>
-</nav>
 EOM
+
+dir=$(dirname "/$1")
+if [ $(basename "$1") = "index.txt" ]; then
+	dir=$(dirname $dir)
+fi
+
+while [ "$dir" != "/" ]; do
+	part=$(basename $dir)
+	path=${dir##/www}
+	if [ -z "$path" ]; then
+		path="/"
+	fi
+	echo " / <a href=\"$path\">$part</a>" | sed 's/www/home/'
+	dir=$(dirname $dir)
+done | sed -n '1!G;h;$p' # reverse lines
+
+echo '</nav>'
 
 nihdoc < "$1"
 
-if echo "$1" | grep -q -v "index.txt"; then
-	cat <<EOM
+cat <<EOM
 <footer>
 <br>
-<em>Last Updated: $(git -C "$GITDIR" log --pretty="%cs" -n 1 -- "$1")</em>
+<em>Last Updated: $(git -C "$GITDIR" log --pretty="%cs" -n 1 -- "$1")
+(<a href="/license.html">License</a>)</em>
 </footer>
 </body>
 </html>
 EOM
-fi
 
 cat <<EOM
 </body>
