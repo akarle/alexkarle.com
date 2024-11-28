@@ -2,6 +2,7 @@
 
 - [about me](/about.html)
 - [blog](/blog/)
+- [projects](https://git.alexkarle.com)
 - [jam setlists](/jam-tuesday/)
 - [sysadmin notes](/garbash/)
 - [gopher](gopher://alexkarle.com)
